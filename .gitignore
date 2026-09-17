@@ -1,0 +1,10 @@
+﻿# Configuración con datos sensibles (contraseñas de BD)
+config/credenciales.php
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpeta de dependencias (por si en el futuro usamos Composer/npm)
+vendor/
+node_modules/
