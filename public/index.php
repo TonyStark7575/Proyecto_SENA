@@ -29,4 +29,6 @@ switch ($recurso) {
         echo "Ruta no reconocida: " . $recurso;
         break;
 }
+
+/** Si mular laq desición del switch */
  
