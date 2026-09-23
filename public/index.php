@@ -1,11 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/conexion.php';
 
-$ruta = $_GET['ruta'] ?? 'inicio';  /** Si no hay ruta, por defecto es inicio */    
-echo "La ruta solicitada es: " . $ruta;
-?>
-
-
-<?php
 $ruta = $_GET['ruta'] ?? 'inicio';
 
 $partes = explode('/', $ruta);
@@ -13,12 +8,15 @@ $recurso = $partes[0];
 $accion = $partes[1] ?? 'index';
 
 switch ($recurso) {
-    case 'clientes':
-        echo "Controlador elegido: ClienteController, método: " . $accion;
-        break;
-
     case 'productos':
-        echo "Controlador elegido: ProductoController, método: " . $accion;
+        require_once __DIR__ . '/../controllers/ProductoController.php';
+        $controlador = new ProductoController($conexion);
+        
+        if ($accion === 'lista') {
+            $controlador->lista();
+        } else {
+            echo "Acción no reconocida para productos: " . $accion;
+        }
         break;
 
     case 'inicio':
@@ -29,6 +27,3 @@ switch ($recurso) {
         echo "Ruta no reconocida: " . $recurso;
         break;
 }
-
-/** Si mular laq desición del switch */
- 
