@@ -11,9 +11,24 @@ class ProductoController {
     }
 
     public function lista() {
-    $productos = $this->productoModelo->obtenerTodos();
-    
-    require __DIR__ . '/../views/productos/lista.php';
-}
+        $productos = $this->productoModelo->obtenerTodos();
+        
+        require __DIR__ . '/../views/productos/lista.php';
+    }
+
+    public function crear() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $descripcion = $_POST['descripcion'];
+
+            $this->productoModelo->crear($nombre, $precio, $descripcion);
+
+            header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
+            exit;
+        }
+
+        require __DIR__ . '/../views/productos/crear.php';
+    }
 
 }
