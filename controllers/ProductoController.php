@@ -11,11 +11,9 @@ class ProductoController {
     }
 
     public function lista() {
-        $productos = $this->productoModelo->obtenerTodos();
-        
-        foreach ($productos as $producto) {
-            echo $producto['nombre_p'] . " - $" . $producto['precio'] . "<br>";
-        }
-    }
+    $productos = $this->productoModelo->obtenerTodos();
+    
+    require __DIR__ . '/../views/productos/lista.php';
+}
 
 }

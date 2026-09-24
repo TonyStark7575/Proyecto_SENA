@@ -1,0 +1,719 @@
+/* ===========================
+LOGIN
+=========================== */
+
+
+
+
+.login-header{
+    width: 100%;
+    background-color: var(--color-primario);
+    padding: 48px 24px 60px;
+}
+
+
+.login-header__logo{
+    width: 100px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.login-header__brand {
+  color: var(--color-blanco);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.login-card{
+    width: 100%;
+    max-width: 320px;
+    min-height: 150px;
+    background-color: var(--color-blanco);
+    border-radius: 16px;
+    margin-top: -40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+
+/* ========== APP HEADER (reutilizable) ========== */
+
+/* ========== APP HEADER (reutilizable) ========== */
+.app-header {
+  width: 100%;
+  background-color: var(--color-primario);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-blanco);
+}
+
+.app-header__menu,
+.app-header__logout {
+  background: none;
+  border: none;
+  color: var(--color-blanco);
+  font-size: 1.5rem;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-header__avatar {
+  font-size: 1.8rem;
+}
+
+.app-header__name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+.app-header__top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header__title {
+  color: var(--color-blanco);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.app-header__user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+
+/* ========== SEARCH BAR (reutilizable) ========== */
+
+/* ========== SEARCH BAR (reutilizable) ========== */
+
+.search-bar {
+  width: 100%;
+  position: relative;
+  margin-top: 16px;
+}
+
+.search-bar__input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px 10px 40px;
+  color: var(--color-blanco);
+}
+
+.search-bar__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-bar__input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.search-bar__icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ========== STAT CARD (reutilizable) ========== */
+/* ========== STAT CARD (reutilizable) ========== */
+
+
+.stat-card {
+  background-color: var(--color-blanco);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card__label {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 6px;
+}
+
+.stat-card__value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.stat-card__change {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.stat-card__change--positive {
+  color: #28a745;
+}
+
+.stat-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.stat-row .stat-card {
+  flex: 1 0 140px;
+}
+
+
+/* ========== SECTION CARD (reutilizable) ========== */
+
+.section-card {
+  width: 100%;
+  background-color: var(--color-blanco);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 16px;
+}
+
+.section-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 12px;
+}
+
+
+/* ========== ORDER ROW (reutilizable) ========== */
+
+/* ========== ORDER ROW (reutilizable) ========== */
+
+
+.order-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.order-row__id {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+}
+
+.order-row__code {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+.order-row__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.order-row__icon {
+  color: var(--color-texto-suave);
+  cursor: pointer;
+}
+
+.order-row__icon--delete {
+  color: #dc3545;
+}
+
+/* ========== BADGE STATUS (reutilizable) ========== */
+
+/* ========== BADGE STATUS (reutilizable) ========== */
+
+.badge-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: var(--color-blanco);
+  white-space: nowrap;
+}
+
+.badge-status--entregado {
+  background-color: #28a745;
+}
+
+.badge-status--pendiente {
+  background-color: #ffc107;
+  color: var(--color-texto);
+}
+
+.badge-status--en-proceso {
+  background-color: #0d6efd;
+}
+
+.badge-status--admin {
+  background-color: var(--color-primario);
+}
+
+.badge-status--repartidor {
+  background-color: #6c757d;
+}
+
+.badge-status--completo {
+  background-color: #28a745;
+}
+
+.badge-status--parcial {
+  background-color: #fd7e14;
+}
+
+
+
+/* ========== USERS HEADER BAR (específico de esta pantalla) ========== */
+/* ========== USERS HEADER BAR (específico de esta pantalla) ========== */
+
+
+.users-header-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.users-header-bar__title {
+  color: var(--color-blanco);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.search-bar--compact {
+  margin-top: 0;
+}
+
+
+
+
+/* ========== ENTITY CARD (reutilizable: usuarios, clientes, etc.) ========== */
+
+.entity-card {
+  width: 100%;
+  background-color: var(--color-blanco);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 12px;
+}
+
+.entity-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.entity-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 4px;
+}
+
+.entity-card__date {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+  white-space: nowrap;
+}
+
+.entity-card__detail {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+  margin-bottom: 4px;
+}
+
+.entity-card__email {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+}
+
+.entity-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.entity-card__footer--divided {
+  border-top: 1px solid var(--color-borde);
+  padding-top: 12px;
+}
+
+.entity-card__actions {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* ========== BOTÓN PRIMARIO "Nuevo USuario" (reutilizable) ========== */
+/* ========== BOTÓN PRIMARIO "Nuevo USuario" (reutilizable) ========== */
+
+
+.btn-primary-custom {
+  width: 100%;
+  max-width: 320px;
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.btn-primary-custom:hover {
+  background-color: #472a5c;
+}
+
+
+.btn-primary-custom--secondary {
+    background-color: #8a6a9a;
+    color: var(--color-blanco);
+}
+
+.btn-primary-custom--secondary:hover {
+    background-color: var(--color-primario);
+}
+
+
+
+/* ========== FORM CARD (reutilizable) ========== */
+/* ========== FORM CARD (reutilizable) ========== */
+
+
+.form-card {
+  width: 100%;
+  background-color: var(--color-blanco);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+.form-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 20px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-actions .btn-primary-custom {
+  max-width: none;
+}
+
+/* ========== FORM GROUP (reutilizable) ========== */
+
+.form-group-custom {
+  margin-bottom: 20px;
+}
+
+.form-group-custom__label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  margin-bottom: 8px;
+}
+
+.form-group-custom__input {
+  width: 100%;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+}
+
+.form-group-custom__input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+
+.form-actions--center {
+  justify-content: center;
+}
+
+
+/* ========== DETAIL HEADER (específico de esta pantalla) ========== */
+/* ========== DETAIL HEADER (específico de esta pantalla) ========== */
+
+
+.detail-header {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-header__edit-icon {
+  font-size: 1.3rem;
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+
+/* ========== PROFILE AVATAR (reutilizable) ========== */
+/* ========== PROFILE AVATAR (reutilizable) ========== */
+
+
+.profile-avatar {
+  
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid var(--color-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px auto;
+  font-size: 3rem;
+  color: var(--color-texto);
+}
+
+
+/* ========== PROFILE DATA (reutilizable) ========== */
+/* ========== PROFILE DATA (reutilizable) ========== */
+
+
+.profile-data {
+  text-align: center;
+}
+
+.profile-data__row {
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  margin-bottom: 14px;
+}
+
+.profile-data--left {
+  text-align: left;
+}
+
+
+/* ========== PRODUCTS GRID / CARD (reutilizable) ========== */
+/* ========== PRODUCTS GRID / CARD (reutilizable) ========== */
+
+
+.products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.product-card {
+  background-color: var(--color-blanco);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 4px;
+}
+
+.product-card__price {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+  margin-bottom: 8px;
+}
+
+.product-card__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ========== IMAGE UPLOAD (reutilizable) ========== */
+/* ========== IMAGE UPLOAD (reutilizable) ========== */
+
+
+.image-upload {
+  width: 140px;
+  height: 140px;
+  background-color: var(--color-blanco);
+  border: 2px dashed var(--color-borde);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--color-texto-suave);
+  margin: 0 auto 20px;
+  overflow: hidden;
+}
+
+.image-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========== BOTÓN PÍLDORA (modificador) ========== */
+/* ========== BOTÓN PÍLDORA (modificador) ========== */
+
+
+.btn-primary-custom--pill {
+  width: auto;
+  max-width: none;
+  border-radius: 20px;
+  padding: 8px 24px;
+  display: block;
+  margin: 16px auto;
+}
+
+/* ========== TEXTAREA (extiende form-group-custom__input) ========== */
+/* ========== TEXTAREA (extiende form-group-custom__input) ========== */
+
+
+textarea.form-group-custom__input {
+  resize: vertical;
+  min-height: 90px;
+  font-family: var(--fuente-principal);
+}
+
+/* ========== DETAIL ACTIONS ROW (reutilizable) ========== */
+
+.detail-actions-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.detail-actions-row .btn-primary-custom {
+  width: auto;
+  max-width: none;
+  flex: 1;
+  text-align: center;
+}
+
+/* ========== FILTER PILLS (reutilizable) ========== */
+/* ========== FILTER PILLS (reutilizable) ========== */
+
+
+.filter-pills {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.filter-pill {
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-blanco);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filter-pill--en-proceso {
+  background-color: #0d6efd;
+}
+
+.filter-pill--pendiente {
+  background-color: #ffc107;
+  color: var(--color-texto);
+}
+
+.filter-pill--entregado {
+  background-color: #28a745;
+}
+
+/* ========== BOTÓN COMPACTO (modificador de btn-primary-custom) ========== */
+.btn-primary-custom--sm {
+  width: auto;
+  max-width: none;
+  display: block;
+  margin: 12px auto 0;
+  padding: 8px 20px;
+}
+
+/* ========== FILA DE 2 CAMPOS (para Producto + Cantidad) ========== */
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .form-group-custom {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* ========== SUBSECCIÓN DENTRO DE UNA form-card ========== */
+.subsection {
+  margin: 20px 0;
+}
+
+.subsection__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 12px;
+}
+
+/* ========== BADGE "Enviado" (reutiliza color ya existente en la paleta) ========== */
+.badge-status--enviado {
+  background-color: var(--color-primario-claro);
+}
+
+/* ========== ALINEAR BOTONES A LA DERECHA (modificador de form-actions) ========== */
+.form-actions--end {
+  justify-content: flex-end;
+}
