@@ -12,20 +12,21 @@ switch ($recurso) {
         require_once __DIR__ . '/../controllers/ProductoController.php';
         $controlador = new ProductoController($conexion);
         
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } 
-        
-        elseif ($accion === 'crear') {
-            $controlador->crear();
-        }
-        
-        elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } 
-        else {
-            echo "Acción no reconocida para productos: " . $accion;
-        }
+       if ($accion === 'lista') {
+    $controlador->lista();
+} 
+elseif ($accion === 'crear') {
+    $controlador->crear();
+}
+elseif ($accion === 'detalle') {
+    $controlador->detalle();
+} 
+elseif ($accion === 'editar') {
+    $controlador->editar();
+}
+else {
+    echo "Acción no reconocida para productos: " . $accion;
+}
         break;
 
     case 'inicio':

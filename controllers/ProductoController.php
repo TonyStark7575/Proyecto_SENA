@@ -34,8 +34,27 @@ class ProductoController {
     public function detalle() {
         $id = $_GET['id'];
         $producto = $this->productoModelo->obtenerPorId($id);
-        
+
         require __DIR__ . '/../views/productos/detalle.php';
+    }
+
+    public function editar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $descripcion = $_POST['descripcion'];
+
+            $this->productoModelo->actualizar($id, $nombre, $precio, $descripcion);
+
+            header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
+            exit;
+        }
+
+        $id = $_GET['id'];
+        $producto = $this->productoModelo->obtenerPorId($id);
+
+        require __DIR__ . '/../views/productos/editar.php';
     }
 
 }
