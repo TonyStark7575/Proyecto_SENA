@@ -23,25 +23,27 @@ class Producto {
         return $consulta->fetch();
     }
 
-    public function crear($nombre, $precio, $descripcion) {
-        $sql = "INSERT INTO producto (nombre_p, precio, descripcion) 
-                VALUES (:nombre, :precio, :descripcion)";
+    public function crear($nombre, $precio, $descripcion, $imagen) {
+        $sql = "INSERT INTO producto (nombre_p, precio, descripcion, imagen) 
+                VALUES (:nombre, :precio, :descripcion, :imagen)";
         $consulta = $this->conexion->prepare($sql);
         $consulta->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $consulta->bindParam(':precio', $precio);
         $consulta->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
+        $consulta->bindParam(':imagen', $imagen, PDO::PARAM_STR);
         return $consulta->execute();
     }
 
-    public function actualizar($id, $nombre, $precio, $descripcion) {
+    public function actualizar($id, $nombre, $precio, $descripcion, $imagen) {
         $sql = "UPDATE producto 
-                SET nombre_p = :nombre, precio = :precio, descripcion = :descripcion 
+                SET nombre_p = :nombre, precio = :precio, descripcion = :descripcion, imagen = :imagen 
                 WHERE id_pro = :id";
         $consulta = $this->conexion->prepare($sql);
         $consulta->bindParam(':id', $id, PDO::PARAM_INT);
         $consulta->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $consulta->bindParam(':precio', $precio);
         $consulta->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
+        $consulta->bindParam(':imagen', $imagen, PDO::PARAM_STR);
         return $consulta->execute();
     }
 

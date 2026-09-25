@@ -41,7 +41,11 @@
     <div class="form-card">
 
       <div class="image-upload" style="width: 160px; height: 160px;">
-        <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="<?php echo $producto['nombre_p']; ?>">
+        <?php if ($producto['imagen']): ?>
+    <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_p']; ?>">
+<?php else: ?>
+    <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="<?php echo $producto['nombre_p']; ?>">
+<?php endif; ?>
       </div>
 
       <div class="profile-data">

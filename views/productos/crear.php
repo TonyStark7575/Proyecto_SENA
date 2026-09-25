@@ -46,10 +46,15 @@
     <div class="form-card">
       <h3 class="form-card__title">Información del producto</h3>
 
-      <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/crear">
+      <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/crear" enctype="multipart/form-data">
 
         <div class="image-upload">
           <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="Imagen del producto">
+        </div>
+
+        <div class="form-group-custom">
+          <label for="imagen" class="form-group-custom__label">Imagen del producto</label>
+          <input type="file" id="imagen" name="imagen" class="form-group-custom__input" accept="image/*">
         </div>
 
         <div class="form-group-custom">

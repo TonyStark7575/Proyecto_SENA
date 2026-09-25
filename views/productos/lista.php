@@ -51,7 +51,11 @@
       <?php foreach ($productos as $producto): ?>
       <div class="product-card">
         <div class="product-card__image">
-          <img src="/ProyectoSENA/public/img/Logo-no-texto.jpg" alt="<?php echo $producto['nombre_p']; ?>">
+          <?php if ($producto['imagen']): ?>
+    <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_p']; ?>">
+<?php else: ?>
+    <img src="/ProyectoSENA/public/img/Logo-no-texto.jpg" alt="<?php echo $producto['nombre_p']; ?>">
+<?php endif; ?>
         </div>
         <p class="product-card__name"><?php echo $producto['nombre_p']; ?></p>
         <p class="product-card__price">$ <?php echo number_format($producto['precio'], 0, ',', '.'); ?></p>
