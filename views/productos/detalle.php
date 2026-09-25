@@ -54,14 +54,18 @@
         <p class="profile-data__row">Fecha Registro <?php echo $producto['fecha_registro']; ?></p>
       </div>
 
-      <div class="detail-actions-row">
-        <button type="button" class="btn-primary-custom">
-          <i class="bi bi-pencil-square"></i>
+     <div class="detail-actions-row">
+        <a href="/ProyectoSENA/public/index.php?ruta=productos/editar&id=<?php echo $producto['id_pro']; ?>" class="btn-primary-custom">
+        <i class="bi bi-pencil-square"></i>
+        </a>
+        
+        <form method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/eliminar" style="display: inline;">
+        <input type="hidden" name="id" value="<?php echo $producto['id_pro']; ?>">
+        <button type="submit" class="btn-primary-custom" onclick="return confirm('¿Seguro que querés eliminar este producto?');">
+            <i class="bi bi-trash"></i>
         </button>
-        <button type="button" class="btn-primary-custom">
-          <i class="bi bi-trash"></i>
-        </button>
-      </div>
+        </form>
+    </div>
 
     </div>
 

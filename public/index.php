@@ -24,6 +24,9 @@ elseif ($accion === 'detalle') {
 elseif ($accion === 'editar') {
     $controlador->editar();
 }
+elseif ($accion === 'eliminar') {
+    $controlador->eliminar();
+}
 else {
     echo "Acción no reconocida para productos: " . $accion;
 }

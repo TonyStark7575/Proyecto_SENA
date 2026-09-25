@@ -57,4 +57,12 @@ class ProductoController {
         require __DIR__ . '/../views/productos/editar.php';
     }
 
+    public function eliminar() {
+    $id = $_POST['id'];
+    $this->productoModelo->eliminar($id);
+
+    header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
+    exit;
+}
+
 }
