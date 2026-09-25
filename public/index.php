@@ -14,9 +14,16 @@ switch ($recurso) {
         
         if ($accion === 'lista') {
             $controlador->lista();
-        } elseif ($accion === 'crear') {
+        } 
+        
+        elseif ($accion === 'crear') {
             $controlador->crear();
-        } else {
+        }
+        
+        elseif ($accion === 'detalle') {
+            $controlador->detalle();
+        } 
+        else {
             echo "Acción no reconocida para productos: " . $accion;
         }
         break;

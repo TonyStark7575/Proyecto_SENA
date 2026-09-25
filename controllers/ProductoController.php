@@ -31,4 +31,11 @@ class ProductoController {
         require __DIR__ . '/../views/productos/crear.php';
     }
 
+    public function detalle() {
+        $id = $_GET['id'];
+        $producto = $this->productoModelo->obtenerPorId($id);
+        
+        require __DIR__ . '/../views/productos/detalle.php';
+    }
+
 }
