@@ -393,6 +393,12 @@ LOGIN
   background-color: #472a5c;
 }
 
+a.btn-primary-custom {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
 
 .btn-primary-custom--secondary {
     background-color: #8a6a9a;

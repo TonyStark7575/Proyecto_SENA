@@ -66,7 +66,7 @@
 
         <div class="form-actions">
           <button type="submit" class="btn-primary-custom">Guardar cambios</button>
-          <button type="button" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</button>
+          <a href="/ProyectoSENA/public/index.php?ruta=productos/lista" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>
         </div>
 
       </form>
