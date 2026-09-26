@@ -41,12 +41,22 @@
     <div class="form-card">
       <h3 class="form-card__title">Información del producto</h3>
 
-      <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/editar">
+      <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/editar" enctype="multipart/form-data">
 
         <input type="hidden" name="id" value="<?php echo $producto['id_pro']; ?>">
+        <input type="hidden" name="imagen_actual" value="<?php echo $producto['imagen']; ?>">
 
         <div class="image-upload">
-          <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="Imagen del producto">
+          <?php if ($producto['imagen']): ?>
+              <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="Imagen actual">
+          <?php else: ?>
+              <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="Sin imagen">
+          <?php endif; ?>
+        </div>
+
+        <div class="form-group-custom">
+          <label for="imagen" class="form-group-custom__label">Cambiar imagen (opcional)</label>
+          <input type="file" id="imagen" name="imagen" class="form-group-custom__input" accept="image/*">
         </div>
 
         <div class="form-group-custom">

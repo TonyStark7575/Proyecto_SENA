@@ -46,25 +46,32 @@ class ProductoController {
         require __DIR__ . '/../views/productos/detalle.php';
     }
 
-    public function editar() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            $nombre = $_POST['nombre'];
-            $precio = $_POST['precio'];
-            $descripcion = $_POST['descripcion'];
-            $imagen = $_POST['imagen_actual'] ?? null;
+public function editar() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $precio = $_POST['precio'];
+        $descripcion = $_POST['descripcion'];
+        $imagen = $_POST['imagen_actual'] ?? null;
 
-            $this->productoModelo->actualizar($id, $nombre, $precio, $descripcion, $imagen);
-
-            header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
-            exit;
+        if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = time() . '_' . $_FILES['imagen']['name'];
+            $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
+            $imagen = $nombreArchivo;
         }
 
-        $id = $_GET['id'];
-        $producto = $this->productoModelo->obtenerPorId($id);
+        $this->productoModelo->actualizar($id, $nombre, $precio, $descripcion, $imagen);
 
-        require __DIR__ . '/../views/productos/editar.php';
+        header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
+        exit;
     }
+
+    $id = $_GET['id'];
+    $producto = $this->productoModelo->obtenerPorId($id);
+
+    require __DIR__ . '/../views/productos/editar.php';
+}
 
     public function eliminar() {
         $id = $_POST['id'];
