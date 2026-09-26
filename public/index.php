@@ -12,24 +12,48 @@ switch ($recurso) {
         require_once __DIR__ . '/../controllers/ProductoController.php';
         $controlador = new ProductoController($conexion);
         
-       if ($accion === 'lista') {
-    $controlador->lista();
-} 
-elseif ($accion === 'crear') {
-    $controlador->crear();
-}
-elseif ($accion === 'detalle') {
-    $controlador->detalle();
-} 
-elseif ($accion === 'editar') {
-    $controlador->editar();
-}
-elseif ($accion === 'eliminar') {
-    $controlador->eliminar();
-}
-else {
-    echo "Acción no reconocida para productos: " . $accion;
-}
+        if ($accion === 'lista') {
+            $controlador->lista();
+        } 
+        elseif ($accion === 'crear') {
+            $controlador->crear();
+        }
+        elseif ($accion === 'detalle') {
+            $controlador->detalle();
+        } 
+        elseif ($accion === 'editar') {
+            $controlador->editar();
+        }
+        elseif ($accion === 'eliminar') {
+            $controlador->eliminar();
+        }
+        else {
+            echo "Acción no reconocida para productos: " . $accion;
+        }
+        break;
+
+    case 'usuarios':
+        require_once __DIR__ . '/../controllers/UsuarioController.php';
+        $controlador = new UsuarioController($conexion);
+
+        if ($accion === 'lista') {
+            $controlador->lista();
+        }
+        elseif ($accion === 'crear') {
+            $controlador->crear();
+        }
+        elseif ($accion === 'detalle') {
+            $controlador->detalle();
+        }
+        elseif ($accion === 'editar') {
+            $controlador->editar();
+        }
+        elseif ($accion === 'eliminar') {
+            $controlador->eliminar();
+        }
+        else {
+            echo "Acción no reconocida para usuarios: " . $accion;
+        }
         break;
 
     case 'inicio':
