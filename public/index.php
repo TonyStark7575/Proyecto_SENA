@@ -56,7 +56,7 @@ switch ($recurso) {
         }
         break;
 
-        case 'clientes':
+    case 'clientes':
         require_once __DIR__ . '/../controllers/ClienteController.php';
         $controlador = new ClienteController($conexion);
 
@@ -79,6 +79,36 @@ switch ($recurso) {
             echo "Acción no reconocida para clientes: " . $accion;
         }
         break;
+
+    case 'pedidos':
+    require_once __DIR__ . '/../controllers/PedidoController.php';
+    $controlador = new PedidoController($conexion);
+
+    if ($accion === 'lista') {
+        $controlador->lista();
+    }
+    elseif ($accion === 'crear') {
+        $controlador->crear();
+    }
+    elseif ($accion === 'detalle') {
+        $controlador->detalle();
+    }
+    elseif ($accion === 'editar') {
+        $controlador->editar();
+    }
+    elseif ($accion === 'eliminar') {
+        $controlador->eliminar();
+    }
+    elseif ($accion === 'agregarProducto') {
+        $controlador->agregarProducto();
+    }
+    elseif ($accion === 'eliminarLinea') {
+        $controlador->eliminarLinea();
+    }
+    else {
+        echo "Acción no reconocida para pedidos: " . $accion;
+    }
+    break;
 
     case 'inicio':
         echo "Controlador elegido: DashboardController, método: " . $accion;
