@@ -56,6 +56,30 @@ switch ($recurso) {
         }
         break;
 
+        case 'clientes':
+        require_once __DIR__ . '/../controllers/ClienteController.php';
+        $controlador = new ClienteController($conexion);
+
+        if ($accion === 'lista') {
+            $controlador->lista();
+        }
+        elseif ($accion === 'crear') {
+            $controlador->crear();
+        }
+        elseif ($accion === 'detalle') {
+            $controlador->detalle();
+        }
+        elseif ($accion === 'editar') {
+            $controlador->editar();
+        }
+        elseif ($accion === 'eliminar') {
+            $controlador->eliminar();
+        }
+        else {
+            echo "Acción no reconocida para clientes: " . $accion;
+        }
+        break;
+
     case 'inicio':
         echo "Controlador elegido: DashboardController, método: " . $accion;
         break;
