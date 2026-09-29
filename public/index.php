@@ -8,6 +8,11 @@ $recurso = $partes[0];
 $accion = $partes[1] ?? 'index';
 
 switch ($recurso) {
+
+case 'login':
+    require __DIR__ . '/../views/login.php';
+    break;
+    
     case 'productos':
         require_once __DIR__ . '/../controllers/ProductoController.php';
         $controlador = new ProductoController($conexion);
