@@ -1,6 +1,4 @@
-
 <?php
-
 /**
  * Conexión centralizada a la base de datos (PDO).
  *
@@ -8,8 +6,6 @@
  * (que NO está en el repositorio, cada quien tiene el suyo)
  * y devuelve un objeto PDO listo para usar en los Modelos.
  */
-
-
     require_once __DIR__ . '/credenciales.php';  /** Con esta linea ya se tiene acceso a las 4 constantes*/
     
     try {
@@ -25,5 +21,3 @@
         die('Error al conectar con la Base de Datos: ' . $e->getMessage());
 
     }
-
-?>

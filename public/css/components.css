@@ -723,3 +723,49 @@ textarea.form-group-custom__input {
 .form-actions--end {
   justify-content: flex-end;
 }
+
+
+/* ========== SIDEBAR / MENÚ DESPLEGABLE (reutilizable) ========== */
+
+.sidebar-menu {
+  display: none;
+  width: 100%;
+  background-color: var(--color-primario);
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.sidebar-menu--abierto {
+  display: flex;
+}
+
+.sidebar-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  color: var(--color-blanco);
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-menu__item:hover {
+  background-color: var(--color-primario_claro);
+}
+
+.sidebar-menu__item.activo {
+  background-color: var(--color-blanco);
+  color: var(--color-primario);
+  font-weight: 600;
+}
+
+.sidebar-menu__icon {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
