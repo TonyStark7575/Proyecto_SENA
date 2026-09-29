@@ -39,8 +39,10 @@
         <input type="search" class="search-bar__input" placeholder="Buscar..." aria-label="Buscar">
       </div>
     </div>
-
   </header>
+
+    <?php require __DIR__ . '/../layouts/sidebar.php'; ?>
+
 
   <a href="/ProyectoSENA/public/index.php?ruta=productos/crear" class="btn-primary-custom btn-primary-custom--pill">Nuevo Producto</a>
 
@@ -76,6 +78,8 @@
   </section>
 
 </main>
+
+    <script src="/ProyectoSENA/public/js/sidebar.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -44,6 +44,9 @@
 
         </header>
 
+    <?php require __DIR__ . '/../layouts/sidebar.php'; ?>
+
+
         <section class="users-content">
 
             <?php foreach ($clientes as $cliente): ?>
@@ -75,6 +78,8 @@
         <a href="/ProyectoSENA/public/index.php?ruta=clientes/crear" class="btn-primary-custom">Nuevo Cliente</a>
 
     </main>
+
+    <script src="/ProyectoSENA/public/js/sidebar.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

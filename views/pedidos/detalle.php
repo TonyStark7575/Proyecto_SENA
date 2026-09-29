@@ -36,6 +36,9 @@
 
   </header>
 
+    <?php require __DIR__ . '/../layouts/sidebar.php'; ?>
+
+
   <section class="users-content">
 
     <div class="form-card">
@@ -139,6 +142,8 @@
   </section>
 
 </main>
+
+    <script src="/ProyectoSENA/public/js/sidebar.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
