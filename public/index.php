@@ -135,7 +135,9 @@ switch ($recurso) {
     break;
     
     case 'inicio':
-        echo "Controlador elegido: DashboardController, método: " . $accion;
+        require_once __DIR__ . '/../controllers/DashboardController.php';
+        $controlador = new DashboardController($conexion);
+        $controlador->index();
         break;
 
     default:

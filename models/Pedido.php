@@ -56,4 +56,13 @@ class Pedido {
         return $consulta->execute();
     }
 
+    public function contarPorEstado($estado) {
+        $sql = "SELECT COUNT(*) as total FROM pedido WHERE estado = :estado";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':estado', $estado, PDO::PARAM_STR);
+        $consulta->execute();
+        $resultado = $consulta->fetch();
+        return $resultado['total'];
+    }
+
 }
