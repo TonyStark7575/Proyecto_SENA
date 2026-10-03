@@ -32,15 +32,15 @@
         <form class="login-form mb-5" method="POST" action="/ProyectoSENA/public/index.php?ruta=login">
             <div class="login-form__group">
                 <input 
-                    type="text"
-                    id="usuario"
-                    name="usuario"
+                    type="email"
+                    id="email"
+                    name="email"
                     class="login-form__input rounded"
-                    placeholder="USUARIO"
+                    placeholder="CORREO"
                     autocomplete="username"
                     required
                 >
-                <i class="bi bi-person login-form__icon"></i> 
+                <i class="bi bi-envelope login-form__icon"></i> 
 
                 <br><br>
 
@@ -55,6 +55,12 @@
                 >
                 <i class="bi bi-eye-slash-fill login-form__icon"></i>
             </div>
+
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger py-2 mt-3" role="alert">
+                    <?php echo $error; ?>
+                </div>
+            <?php endif; ?>
 
             <button type="submit" class="btn-primary-custom">Iniciar Sesión</button>
         </form>

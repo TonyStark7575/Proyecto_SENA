@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/../config/conexion.php';
 
 $ruta = $_GET['ruta'] ?? 'inicio';
@@ -9,9 +10,11 @@ $accion = $partes[1] ?? 'index';
 
 switch ($recurso) {
 
-case 'login':
-    require __DIR__ . '/../views/login.php';
-    break;
+   case 'login':
+        require_once __DIR__ . '/../controllers/LoginController.php';
+        $controlador = new LoginController($conexion);
+        $controlador->index();
+        break;
     
     case 'productos':
         require_once __DIR__ . '/../controllers/ProductoController.php';
