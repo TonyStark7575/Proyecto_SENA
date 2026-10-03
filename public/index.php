@@ -8,6 +8,20 @@ $partes = explode('/', $ruta);
 $recurso = $partes[0];
 $accion = $partes[1] ?? 'index';
 
+// ===== GUARDIA DE AUTENTICACIÓN =====
+$rutasPublicas = ['login'];
+$haySesion = isset($_SESSION['id_usuario']);
+
+if (!$haySesion && !in_array($recurso, $rutasPublicas)) {
+    header('Location: /ProyectoSENA/public/index.php?ruta=login');
+    exit;
+}
+
+if ($haySesion && $recurso === 'login') {
+    header('Location: /ProyectoSENA/public/index.php?ruta=inicio');
+    exit;
+}
+
 switch ($recurso) {
 
    case 'login':
