@@ -30,4 +30,11 @@
         Pagos
     </a>
 
+    <form id="formLogout" method="POST" action="/ProyectoSENA/public/index.php?ruta=logout">
+        <button type="submit" class="sidebar-menu__item">
+            <i class="bi bi-box-arrow-right sidebar-menu__icon"></i>
+            Cerrar sesión
+        </button>
+    </form>
+
 </nav>
