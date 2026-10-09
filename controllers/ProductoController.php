@@ -58,6 +58,8 @@ public function editar() {
             $nombreArchivo = time() . '_' . $_FILES['imagen']['name'];
             $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
             move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
+            // La imagen anterior ya no la usa nadie: se borra para no dejar huérfanas
+            $this->borrarImagen($_POST['imagen_actual'] ?? null);
             $imagen = $nombreArchivo;
         }
 
@@ -75,9 +77,28 @@ public function editar() {
 
     public function eliminar() {
         $id = $_POST['id'];
+        $producto = $this->productoModelo->obtenerPorId($id);
         $this->productoModelo->eliminar($id);
+
+        if ($producto) {
+            $this->borrarImagen($producto['imagen']);
+        }
+
         header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
         exit;
+    }
+
+    // Solo borra imágenes subidas por el formulario (prefijo timestamp_),
+    // nunca las imágenes fijas del sistema como LOGOTIPO.png
+    private function borrarImagen($nombreArchivo) {
+        if (!$nombreArchivo || !preg_match('/^\d+_/', $nombreArchivo)) {
+            return;
+        }
+
+        $ruta = __DIR__ . '/../public/img/' . basename($nombreArchivo);
+        if (is_file($ruta)) {
+            unlink($ruta);
+        }
     }
 
 }
