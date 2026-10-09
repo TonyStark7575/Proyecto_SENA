@@ -30,7 +30,8 @@ class PedidoController {
       public function crear() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idCliente = $_POST['id_cliente'];
-            $idUsuario = $_POST['id_usuario'];
+            // El pedido queda registrado por el usuario que inició sesión
+            $idUsuario = $_SESSION['id_usuario'];
             $estado = $_POST['estado'];
             $idProducto = $_POST['id_producto'];
             $cantidad = $_POST['cantidad'];
@@ -46,7 +47,6 @@ class PedidoController {
 
         $clientes = $this->clienteModelo->obtenerTodos();
         $productos = $this->productoModelo->obtenerTodos();
-        $usuarios = $this->usuarioModelo->obtenerTodos();
         require __DIR__ . '/../views/pedidos/crear.php';
     }
 

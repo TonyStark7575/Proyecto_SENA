@@ -64,17 +64,6 @@
           <input type="tel" id="telefono" name="telefono" class="form-group-custom__input" value="<?php echo $cliente['telefono_c']; ?>">
         </div>
 
-        <div class="form-group-custom">
-          <label for="id_usuario" class="form-group-custom__label">Registrado por</label>
-          <select id="id_usuario" name="id_usuario" class="form-group-custom__input">
-            <?php foreach ($usuarios as $usuario): ?>
-              <option value="<?php echo $usuario['id_usuario']; ?>" <?php echo $usuario['id_usuario'] == $cliente['id_usuario_c'] ? 'selected' : ''; ?>>
-                <?php echo $usuario['nombre_u']; ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
         <div class="form-actions">
           <button type="submit" class="btn-primary-custom">Guardar cambios</button>
           <a href="/ProyectoSENA/public/index.php?ruta=clientes/lista" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>

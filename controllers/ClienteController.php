@@ -23,7 +23,8 @@ class ClienteController {
             $nombre = $_POST['nombre'];
             $email = $_POST['email'];
             $telefono = $_POST['telefono'];
-            $idUsuario = $_POST['id_usuario'];
+            // El cliente queda registrado por el usuario que inició sesión
+            $idUsuario = $_SESSION['id_usuario'];
 
             $this->clienteModelo->crear($nombre, $email, $telefono, $idUsuario);
 
@@ -31,7 +32,6 @@ class ClienteController {
             exit;
         }
 
-        $usuarios = $this->usuarioModelo->obtenerTodos();
         require __DIR__ . '/../views/clientes/crear.php';
     }
 
@@ -49,9 +49,9 @@ class ClienteController {
             $nombre = $_POST['nombre'];
             $email = $_POST['email'];
             $telefono = $_POST['telefono'];
-            $idUsuario = $_POST['id_usuario'];
-
-            $this->clienteModelo->actualizar($id, $nombre, $email, $telefono, $idUsuario);
+            // "Registrado por" no cambia al editar: se conserva el usuario original
+            $cliente = $this->clienteModelo->obtenerPorId($id);
+            $this->clienteModelo->actualizar($id, $nombre, $email, $telefono, $cliente['id_usuario_c']);
 
             header('Location: /ProyectoSENA/public/index.php?ruta=clientes/lista');
             exit;
@@ -59,7 +59,6 @@ class ClienteController {
 
         $id = $_GET['id'];
         $cliente = $this->clienteModelo->obtenerPorId($id);
-        $usuarios = $this->usuarioModelo->obtenerTodos();
 
         require __DIR__ . '/../views/clientes/editar.php';
     }

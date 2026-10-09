@@ -59,13 +59,8 @@
         </div>
 
         <div class="form-group-custom">
-          <label for="id_usuario" class="form-group-custom__label">Registrado por</label>
-          <select id="id_usuario" name="id_usuario" class="form-group-custom__input">
-            <option value="" disabled selected>Selecciona un usuario</option>
-            <?php foreach ($usuarios as $usuario): ?>
-              <option value="<?php echo $usuario['id_usuario']; ?>"><?php echo $usuario['nombre_u']; ?></option>
-            <?php endforeach; ?>
-          </select>
+          <label class="form-group-custom__label">Registrado por</label>
+          <input type="text" class="form-group-custom__input" value="<?php echo htmlspecialchars($_SESSION['nombre']); ?>" disabled>
         </div>
 
         <div class="subsection">
