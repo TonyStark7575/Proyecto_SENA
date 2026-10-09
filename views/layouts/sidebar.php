@@ -1,34 +1,25 @@
+<?php
+// Módulo actual según la ruta (ej: "clientes/detalle" -> "clientes"), para resaltarlo en el menú
+$moduloActivo = explode('/', $_GET['ruta'] ?? 'inicio')[0];
+
+$itemsMenu = [
+    'inicio'    => ['icono' => 'bi-grid-fill',        'texto' => 'Dashboard', 'ruta' => 'inicio'],
+    'usuarios'  => ['icono' => 'bi-people-fill',      'texto' => 'Usuarios',  'ruta' => 'usuarios/lista'],
+    'clientes'  => ['icono' => 'bi-person-fill',      'texto' => 'Clientes',  'ruta' => 'clientes/lista'],
+    'productos' => ['icono' => 'bi-tag-fill',         'texto' => 'Productos', 'ruta' => 'productos/lista'],
+    'pedidos'   => ['icono' => 'bi-cart-fill',        'texto' => 'Pedidos',   'ruta' => 'pedidos/lista'],
+    'pagos'     => ['icono' => 'bi-credit-card-fill', 'texto' => 'Pagos',     'ruta' => 'pagos/lista'],
+];
+?>
 <nav class="sidebar-menu" id="sidebarMenu">
 
-    <a href="/ProyectoSENA/public/index.php?ruta=inicio" class="sidebar-menu__item">
-        <i class="bi bi-grid-fill sidebar-menu__icon"></i>
-        Dashboard
+    <?php foreach ($itemsMenu as $modulo => $item): ?>
+    <a href="/ProyectoSENA/public/index.php?ruta=<?php echo $item['ruta']; ?>"
+       class="sidebar-menu__item <?php echo $modulo === $moduloActivo ? 'activo' : ''; ?>">
+        <i class="bi <?php echo $item['icono']; ?> sidebar-menu__icon"></i>
+        <?php echo $item['texto']; ?>
     </a>
-
-    <a href="/ProyectoSENA/public/index.php?ruta=usuarios/lista" class="sidebar-menu__item">
-        <i class="bi bi-people-fill sidebar-menu__icon"></i>
-        Usuarios
-    </a>
-
-    <a href="/ProyectoSENA/public/index.php?ruta=clientes/lista" class="sidebar-menu__item">
-        <i class="bi bi-person-fill sidebar-menu__icon"></i>
-        Clientes
-    </a>
-
-    <a href="/ProyectoSENA/public/index.php?ruta=productos/lista" class="sidebar-menu__item">
-        <i class="bi bi-tag-fill sidebar-menu__icon"></i>
-        Productos
-    </a>
-
-    <a href="/ProyectoSENA/public/index.php?ruta=pedidos/lista" class="sidebar-menu__item">
-        <i class="bi bi-cart-fill sidebar-menu__icon"></i>
-        Pedidos
-    </a>
-
-    <a href="/ProyectoSENA/public/index.php?ruta=pagos/lista" class="sidebar-menu__item">
-        <i class="bi bi-credit-card-fill sidebar-menu__icon"></i>
-        Pagos
-    </a>
+    <?php endforeach; ?>
 
     <form id="formLogout" method="POST" action="/ProyectoSENA/public/index.php?ruta=logout">
         <button type="submit" class="sidebar-menu__item">
