@@ -17,15 +17,24 @@ class UsuarioController {
 
     public function crear() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nombre = $_POST['nombre'];
-        $email = $_POST['email'];
-        $telefono = $_POST['telefono'];
+        $nombre = trim($_POST['nombre']);
+        $email = trim($_POST['email']);
+        $telefono = trim($_POST['telefono']);
         $password = $_POST['password'];
         $confirmarPassword = $_POST['confirmar-password'];
         $rol = $_POST['rol'];
 
-        if ($password !== $confirmarPassword) {
+        $error = $this->validar($nombre, $email);
+
+        if (!$error && $password === '') {
+            $error = "La contraseña es obligatoria.";
+        }
+
+        if (!$error && $password !== $confirmarPassword) {
             $error = "Las contraseñas no coinciden.";
+        }
+
+        if ($error) {
             require __DIR__ . '/../views/usuarios/crear.php';
             return;
         }
@@ -48,16 +57,25 @@ class UsuarioController {
    public function editar() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $email = $_POST['email'];
-        $telefono = $_POST['telefono'];
+        $nombre = trim($_POST['nombre']);
+        $email = trim($_POST['email']);
+        $telefono = trim($_POST['telefono']);
         $rol = $_POST['rol'];
         $password = $_POST['password'];
         $confirmarPassword = $_POST['confirmar-password'];
 
-        if ($password !== $confirmarPassword) {
+        $usuario = $this->usuarioModelo->obtenerPorId($id);
+        $error = $this->validar($nombre, $email);
+
+        if (!$error && $password !== $confirmarPassword) {
             $error = "Las contraseñas no coinciden.";
-            $usuario = $this->usuarioModelo->obtenerPorId($id);
+        }
+
+        if ($error) {
+            // Se devuelve el formulario con lo que el usuario escribió
+            $usuario['nombre_u'] = $nombre;
+            $usuario['email_u'] = $email;
+            $usuario['telefono_u'] = $telefono;
             require __DIR__ . '/../views/usuarios/editar.php';
             return;
         }
@@ -78,6 +96,16 @@ class UsuarioController {
         $this->usuarioModelo->eliminar($id);
         header('Location: /ProyectoSENA/public/index.php?ruta=usuarios/lista');
         exit;
+    }
+
+    private function validar($nombre, $email) {
+        if ($nombre === '') {
+            return 'El nombre es obligatorio.';
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return 'El correo no tiene un formato válido (ejemplo: nombre@correo.com).';
+        }
+        return null;
     }
 
 }

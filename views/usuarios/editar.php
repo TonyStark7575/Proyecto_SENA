@@ -55,12 +55,12 @@
 
   <div class="form-group-custom">
     <label for="nombre" class="form-group-custom__label">Nombre</label>
-    <input type="text" id="nombre" name="nombre" class="form-group-custom__input" value="<?php echo $usuario['nombre_u']; ?>">
+    <input type="text" id="nombre" name="nombre" class="form-group-custom__input" value="<?php echo htmlspecialchars($usuario['nombre_u']); ?>" required>
   </div>
 
   <div class="form-group-custom">
     <label for="email" class="form-group-custom__label">Correo</label>
-    <input type="email" id="email" name="email" class="form-group-custom__input" value="<?php echo $usuario['email_u']; ?>">
+    <input type="email" id="email" name="email" class="form-group-custom__input" value="<?php echo htmlspecialchars($usuario['email_u']); ?>" required>
   </div>
 
   <div class="form-group-custom">

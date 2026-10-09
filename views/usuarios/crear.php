@@ -53,17 +53,17 @@
 
                     <div class="form-group-custom">
                         <label for="nombre" class="form-group-custom__label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-group-custom__input">
+                        <input type="text" id="nombre" name="nombre" class="form-group-custom__input" value="<?php echo htmlspecialchars($_POST['nombre'] ?? ''); ?>" required>
                     </div>
 
                     <div class="form-group-custom">
                         <label for="email" class="form-group-custom__label">Correo</label>
-                        <input type="email" id="email" name="email" class="form-group-custom__input">
+                        <input type="email" id="email" name="email" class="form-group-custom__input" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required>
                     </div>
 
                     <div class="form-group-custom">
     <label for="telefono" class="form-group-custom__label">Teléfono</label>
-    <input type="text" id="telefono" name="telefono" class="form-group-custom__input">
+    <input type="text" id="telefono" name="telefono" class="form-group-custom__input" value="<?php echo htmlspecialchars($_POST['telefono'] ?? ''); ?>">
 </div>
                     <div class="form-group-custom">
                         <label for="password" class="form-group-custom__label">Contraseña</label>
