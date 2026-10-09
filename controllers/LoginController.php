@@ -20,6 +20,12 @@ class LoginController
 
             $usuario = $this->usuarioModelo->obtenerPorEmail($email);
 
+            if ($usuario && password_verify($password, $usuario['password']) && !$usuario['activo']) {
+                $error = 'Este usuario está desactivado. Habla con la administradora.';
+                require __DIR__ . '/../views/login.php';
+                return;
+            }
+
             if ($usuario && password_verify($password, $usuario['password'])) {
                 session_regenerate_id(true);
 

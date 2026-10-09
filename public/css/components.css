@@ -275,6 +275,10 @@ LOGIN
   background-color: #6c757d;
 }
 
+.badge-status--inactivo {
+  background-color: #dc3545;
+}
+
 .badge-status--completo {
   background-color: #28a745;
 }
@@ -322,6 +326,10 @@ LOGIN
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 12px;
+}
+
+.entity-card--inactivo {
+  opacity: 0.6;
 }
 
 .entity-card__top {

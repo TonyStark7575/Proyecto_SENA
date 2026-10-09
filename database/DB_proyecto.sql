@@ -17,8 +17,10 @@ CREATE TABLE IF NOT EXISTS `los_hilos_maya`.`usuario` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT,
   `nombre_u` VARCHAR(50) NOT NULL,
   `email_u` VARCHAR(255) NOT NULL,
+  `telefono_u` VARCHAR(50) NULL DEFAULT NULL,
   `password` VARCHAR(255) NOT NULL,
   `rol` ENUM('ADMINISTRADORA', 'REPARTIDOR') NOT NULL,
+  `activo` TINYINT(1) NOT NULL DEFAULT 1,
   `fecha_registro` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_usuario`),
   UNIQUE INDEX `email_u` (`email_u` ASC))

@@ -49,8 +49,12 @@
 
         <section class="users-content">
 
+            <?php if ($mensaje): ?>
+                <div class="alert alert-<?php echo $mensaje['tipo']; ?>"><?php echo htmlspecialchars($mensaje['texto']); ?></div>
+            <?php endif; ?>
+
             <?php foreach ($usuarios as $usuario): ?>
-            <div class="entity-card">
+            <div class="entity-card <?php echo $usuario['activo'] ? '' : 'entity-card--inactivo'; ?>">
               <div class="entity-card__top">
                 <div>
                   <h3 class="entity-card__name"><?php echo $usuario['nombre_u']; ?></h3>
@@ -64,6 +68,9 @@
                     <span class="badge-status badge-status--admin">Administradora</span>
                 <?php else: ?>
                     <span class="badge-status badge-status--repartidor">Repartidor</span>
+                <?php endif; ?>
+                <?php if (!$usuario['activo']): ?>
+                    <span class="badge-status badge-status--inactivo">Inactivo</span>
                 <?php endif; ?>
                 <div class="entity-card__actions">
                   <a href="/ProyectoSENA/public/index.php?ruta=usuarios/detalle&id=<?php echo $usuario['id_usuario']; ?>">

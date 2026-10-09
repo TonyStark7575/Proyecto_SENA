@@ -84,6 +84,29 @@ class Usuario
         return $consulta->execute();
     }
 
+    // Cuántos clientes y pedidos registró el usuario (las llaves foráneas
+    // con RESTRICT impiden borrarlo si alguno de los dos es mayor a 0)
+    public function contarRegistros($id)
+    {
+        $sql = "SELECT
+                    (SELECT COUNT(*) FROM cliente WHERE id_usuario_c = :id1) AS clientes,
+                    (SELECT COUNT(*) FROM pedido WHERE id_usuario_p = :id2) AS pedidos";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':id1', $id, PDO::PARAM_INT);
+        $consulta->bindParam(':id2', $id, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetch();
+    }
+
+    public function cambiarActivo($id, $activo)
+    {
+        $sql = "UPDATE usuario SET activo = :activo WHERE id_usuario = :id";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':activo', $activo, PDO::PARAM_INT);
+        $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+        return $consulta->execute();
+    }
+
     public function buscarPorNombre($texto)
     {
         $sql = "SELECT * FROM usuario WHERE nombre_u LIKE :texto ORDER BY nombre_u ASC";

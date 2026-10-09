@@ -69,6 +69,8 @@ switch ($recurso) {
             $controlador->editar();
         } elseif ($accion === 'eliminar') {
             $controlador->eliminar();
+        } elseif ($accion === 'activar') {
+            $controlador->activar();
         } else {
             echo "Acción no reconocida para usuarios: " . $accion;
         }

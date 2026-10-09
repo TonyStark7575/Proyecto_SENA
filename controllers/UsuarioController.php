@@ -12,6 +12,10 @@ class UsuarioController {
 
     public function lista() {
         $usuarios = $this->usuarioModelo->obtenerTodos();
+
+        $mensaje = $_SESSION['mensaje'] ?? null;
+        unset($_SESSION['mensaje']);
+
         require __DIR__ . '/../views/usuarios/lista.php';
     }
 
@@ -108,9 +112,57 @@ class UsuarioController {
     require __DIR__ . '/../views/usuarios/editar.php';
 }
 
+    // Si el usuario no tiene registros asociados se borra de verdad.
+    // Si registró clientes o pedidos, la BD no deja borrarlo (RESTRICT),
+    // así que se desactiva para conservar el historial.
     public function eliminar() {
         $id = $_POST['id'];
-        $this->usuarioModelo->eliminar($id);
+        $usuario = $this->usuarioModelo->obtenerPorId($id);
+
+        if (!$usuario) {
+            $this->noEncontrado();
+            return;
+        }
+
+        if ($usuario['id_usuario'] == $_SESSION['id_usuario']) {
+            $this->volverALista('danger', 'No puedes eliminar ni desactivar tu propio usuario mientras tienes la sesión iniciada.');
+        }
+
+        $registros = $this->usuarioModelo->contarRegistros($id);
+        $tieneRegistros = $registros['clientes'] > 0 || $registros['pedidos'] > 0;
+
+        if (!$tieneRegistros) {
+            try {
+                $this->usuarioModelo->eliminar($id);
+                $this->volverALista('success', 'Usuario "' . $usuario['nombre_u'] . '" eliminado.');
+            } catch (PDOException $e) {
+                // Otra llave foránea lo bloqueó: se trata igual que si tuviera registros
+            }
+        }
+
+        $this->usuarioModelo->cambiarActivo($id, 0);
+        $this->volverALista('warning',
+            'El usuario "' . $usuario['nombre_u'] . '" tiene ' . $registros['clientes'] . ' cliente(s) y '
+            . $registros['pedidos'] . ' pedido(s) registrados, por eso no se puede eliminar. '
+            . 'Se desactivó: ya no podrá iniciar sesión, pero su historial se conserva.');
+    }
+
+    public function activar() {
+        $id = $_POST['id'];
+        $usuario = $this->usuarioModelo->obtenerPorId($id);
+
+        if (!$usuario) {
+            $this->noEncontrado();
+            return;
+        }
+
+        $this->usuarioModelo->cambiarActivo($id, 1);
+        $this->volverALista('success', 'Usuario "' . $usuario['nombre_u'] . '" reactivado.');
+    }
+
+    // Guarda un mensaje en la sesión para mostrarlo una sola vez en la lista
+    private function volverALista($tipo, $mensaje) {
+        $_SESSION['mensaje'] = ['tipo' => $tipo, 'texto' => $mensaje];
         header('Location: /ProyectoSENA/public/index.php?ruta=usuarios/lista');
         exit;
     }
