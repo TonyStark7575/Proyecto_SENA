@@ -49,9 +49,9 @@
         <div class="form-group-custom">
           <label for="id_pedido" class="form-group-custom__label">Pedido</label>
           <select id="id_pedido" name="id_pedido" class="form-group-custom__input">
-            <option value="" disabled selected>Selecciona un pedido</option>
+            <option value="" disabled <?php echo $idPedidoSeleccionado ? '' : 'selected'; ?>>Selecciona un pedido</option>
             <?php foreach ($pedidos as $pedido): ?>
-              <option value="<?php echo $pedido['id_pedido']; ?>">
+              <option value="<?php echo $pedido['id_pedido']; ?>" <?php echo $pedido['id_pedido'] == $idPedidoSeleccionado ? 'selected' : ''; ?>>
                 #<?php echo $pedido['id_pedido']; ?> - <?php echo $pedido['nombre_c']; ?> (Saldo: $<?php echo number_format($pedido['saldo'], 0, ',', '.'); ?>)
               </option>
             <?php endforeach; ?>

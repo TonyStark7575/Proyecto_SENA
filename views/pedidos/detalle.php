@@ -133,7 +133,7 @@
 
       <div class="form-actions form-actions--end">
         <a href="/ProyectoSENA/public/index.php?ruta=pedidos/editar&id=<?php echo $pedido['id_pedido']; ?>" class="btn-primary-custom">Editar</a>
-        <a href="/ProyectoSENA/public/index.php?ruta=pagos/crear" class="btn-primary-custom btn-primary-custom--secondary">Registrar pago</a>
+        <a href="/ProyectoSENA/public/index.php?ruta=pagos/crear&id_pedido=<?php echo $pedido['id_pedido']; ?>" class="btn-primary-custom btn-primary-custom--secondary">Registrar pago</a>
         <a href="/ProyectoSENA/public/index.php?ruta=pedidos/lista" class="btn-primary-custom btn-primary-custom--secondary">Volver</a>
       </div>
 

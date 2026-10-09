@@ -31,6 +31,8 @@ class PagoController {
         }
 
         $pedidos = $this->pedidoModelo->obtenerTodos();
+        // Si se llega desde el Detalle de un Pedido, ese pedido aparece pre-seleccionado
+        $idPedidoSeleccionado = $_GET['id_pedido'] ?? null;
         require __DIR__ . '/../views/pagos/crear.php';
     }
 
