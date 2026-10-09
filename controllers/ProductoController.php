@@ -40,8 +40,13 @@ class ProductoController {
     }
 
     public function detalle() {
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $producto = $this->productoModelo->obtenerPorId($id);
+
+        if (!$producto) {
+            $this->noEncontrado();
+            return;
+        }
 
         require __DIR__ . '/../views/productos/detalle.php';
     }
@@ -69,8 +74,13 @@ public function editar() {
         exit;
     }
 
-    $id = $_GET['id'];
+    $id = $_GET['id'] ?? null;
     $producto = $this->productoModelo->obtenerPorId($id);
+
+    if (!$producto) {
+        $this->noEncontrado();
+        return;
+    }
 
     require __DIR__ . '/../views/productos/editar.php';
 }
@@ -99,6 +109,13 @@ public function editar() {
         if (is_file($ruta)) {
             unlink($ruta);
         }
+    }
+
+    private function noEncontrado() {
+        http_response_code(404);
+        $mensaje = 'El producto que buscas no existe o fue eliminado.';
+        $volver = '/ProyectoSENA/public/index.php?ruta=productos/lista';
+        require __DIR__ . '/../views/layouts/no_encontrado.php';
     }
 
 }

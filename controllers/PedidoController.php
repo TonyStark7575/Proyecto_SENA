@@ -51,8 +51,14 @@ class PedidoController {
     }
 
     public function detalle() {
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $pedido = $this->pedidoModelo->obtenerPorId($id);
+
+        if (!$pedido) {
+            $this->noEncontrado();
+            return;
+        }
+
         $lineas = $this->detalleModelo->obtenerPorPedido($id);
         $productos = $this->productoModelo->obtenerTodos();
 
@@ -93,8 +99,14 @@ class PedidoController {
             exit;
         }
 
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $pedido = $this->pedidoModelo->obtenerPorId($id);
+
+        if (!$pedido) {
+            $this->noEncontrado();
+            return;
+        }
+
         $clientes = $this->clienteModelo->obtenerTodos();
 
         require __DIR__ . '/../views/pedidos/editar.php';
@@ -105,6 +117,13 @@ class PedidoController {
         $this->pedidoModelo->eliminar($id);
         header('Location: /ProyectoSENA/public/index.php?ruta=pedidos/lista');
         exit;
+    }
+
+    private function noEncontrado() {
+        http_response_code(404);
+        $mensaje = 'El pedido que buscas no existe o fue eliminado.';
+        $volver = '/ProyectoSENA/public/index.php?ruta=pedidos/lista';
+        require __DIR__ . '/../views/layouts/no_encontrado.php';
     }
 
 }

@@ -42,8 +42,14 @@ class ClienteController {
     }
 
     public function detalle() {
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $cliente = $this->clienteModelo->obtenerPorId($id);
+
+        if (!$cliente) {
+            $this->noEncontrado();
+            return;
+        }
+
         $usuarioRegistro = $this->usuarioModelo->obtenerPorId($cliente['id_usuario_c']);
 
         require __DIR__ . '/../views/clientes/detalle.php';
@@ -57,6 +63,11 @@ class ClienteController {
             $telefono = trim($_POST['telefono']);
 
             $cliente = $this->clienteModelo->obtenerPorId($id);
+            if (!$cliente) {
+                $this->noEncontrado();
+                return;
+            }
+
             $error = $this->validar($nombre, $email);
             if ($error) {
                 // Se devuelve el formulario con lo que el usuario escribió
@@ -74,8 +85,13 @@ class ClienteController {
             exit;
         }
 
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $cliente = $this->clienteModelo->obtenerPorId($id);
+
+        if (!$cliente) {
+            $this->noEncontrado();
+            return;
+        }
 
         require __DIR__ . '/../views/clientes/editar.php';
     }
@@ -95,6 +111,13 @@ class ClienteController {
             return 'El correo no tiene un formato válido (ejemplo: nombre@correo.com).';
         }
         return null;
+    }
+
+    private function noEncontrado() {
+        http_response_code(404);
+        $mensaje = 'El cliente que buscas no existe o fue eliminado.';
+        $volver = '/ProyectoSENA/public/index.php?ruta=clientes/lista';
+        require __DIR__ . '/../views/layouts/no_encontrado.php';
     }
 
 }

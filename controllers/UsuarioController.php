@@ -49,8 +49,14 @@ class UsuarioController {
 }
 
     public function detalle() {
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $usuario = $this->usuarioModelo->obtenerPorId($id);
+
+        if (!$usuario) {
+            $this->noEncontrado();
+            return;
+        }
+
         require __DIR__ . '/../views/usuarios/detalle.php';
     }
 
@@ -65,6 +71,11 @@ class UsuarioController {
         $confirmarPassword = $_POST['confirmar-password'];
 
         $usuario = $this->usuarioModelo->obtenerPorId($id);
+        if (!$usuario) {
+            $this->noEncontrado();
+            return;
+        }
+
         $error = $this->validar($nombre, $email);
 
         if (!$error && $password !== $confirmarPassword) {
@@ -86,8 +97,14 @@ class UsuarioController {
         exit;
     }
 
-    $id = $_GET['id'];
+    $id = $_GET['id'] ?? null;
     $usuario = $this->usuarioModelo->obtenerPorId($id);
+
+    if (!$usuario) {
+        $this->noEncontrado();
+        return;
+    }
+
     require __DIR__ . '/../views/usuarios/editar.php';
 }
 
@@ -106,6 +123,13 @@ class UsuarioController {
             return 'El correo no tiene un formato válido (ejemplo: nombre@correo.com).';
         }
         return null;
+    }
+
+    private function noEncontrado() {
+        http_response_code(404);
+        $mensaje = 'El usuario que buscas no existe o fue eliminado.';
+        $volver = '/ProyectoSENA/public/index.php?ruta=usuarios/lista';
+        require __DIR__ . '/../views/layouts/no_encontrado.php';
     }
 
 }

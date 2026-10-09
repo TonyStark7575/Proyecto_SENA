@@ -37,8 +37,14 @@ class PagoController {
     }
 
     public function detalle() {
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $pago = $this->pagoModelo->obtenerPorId($id);
+
+        if (!$pago) {
+            $this->noEncontrado();
+            return;
+        }
+
         require __DIR__ . '/../views/pagos/detalle.php';
     }
 
@@ -54,8 +60,14 @@ class PagoController {
             exit;
         }
 
-        $id = $_GET['id'];
+        $id = $_GET['id'] ?? null;
         $pago = $this->pagoModelo->obtenerPorId($id);
+
+        if (!$pago) {
+            $this->noEncontrado();
+            return;
+        }
+
         require __DIR__ . '/../views/pagos/editar.php';
     }
 
@@ -64,6 +76,13 @@ class PagoController {
         $this->pagoModelo->eliminar($id);
         header('Location: /ProyectoSENA/public/index.php?ruta=pagos/lista');
         exit;
+    }
+
+    private function noEncontrado() {
+        http_response_code(404);
+        $mensaje = 'El pago que buscas no existe o fue eliminado.';
+        $volver = '/ProyectoSENA/public/index.php?ruta=pagos/lista';
+        require __DIR__ . '/../views/layouts/no_encontrado.php';
     }
 
 }
