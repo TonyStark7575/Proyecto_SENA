@@ -13,6 +13,16 @@ $rutasPublicas = ['login'];
 $haySesion = isset($_SESSION['id_usuario']);
 
 if (!$haySesion && !in_array($recurso, $rutasPublicas)) {
+
+    // Peticiones a la API: responder JSON, nunca redirigir
+    if ($recurso === 'api') {
+        http_response_code(401);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'No autenticado']);
+        exit;
+    }
+
+    // Pantallas HTML: redirigir al login, como hasta ahora
     header('Location: /ProyectoSENA/public/index.php?ruta=login');
     exit;
 }
