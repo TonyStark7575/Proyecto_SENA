@@ -151,7 +151,12 @@ switch ($recurso) {
         if ($accion === 'productos') {
             require_once __DIR__ . '/../controllers/api/ProductoApiController.php';
             $api = new ProductoApiController($conexion);
-            $api->lista();
+
+            if (isset($_GET['id'])) {
+                $api->detalle();
+            } else {
+                $api->lista();
+            }
         } else {
             http_response_code(404);
             header('Content-Type: application/json; charset=utf-8');
