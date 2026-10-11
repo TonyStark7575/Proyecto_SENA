@@ -12,7 +12,10 @@ class ProductoController {
 
     public function lista() {
         $productos = $this->productoModelo->obtenerTodos();
-        
+
+        $mensaje = $_SESSION['mensaje'] ?? null;
+        unset($_SESSION['mensaje']);
+
         require __DIR__ . '/../views/productos/lista.php';
     }
     
@@ -88,12 +91,28 @@ public function editar() {
     public function eliminar() {
         $id = $_POST['id'];
         $producto = $this->productoModelo->obtenerPorId($id);
-        $this->productoModelo->eliminar($id);
+
+        // Un producto que aparece en algún pedido no se puede borrar:
+        // la llave foránea de detalle_pedido lo impide (error 1451 de MySQL)
+        try {
+            $this->productoModelo->eliminar($id);
+        } catch (PDOException $e) {
+            if (($e->errorInfo[1] ?? null) === 1451) {
+                $this->volverALista('danger', 'No se puede eliminar el producto porque está en uno o más pedidos.');
+            }
+            throw $e;
+        }
 
         if ($producto) {
             $this->borrarImagen($producto['imagen']);
         }
 
+        $this->volverALista('success', 'Producto eliminado correctamente.');
+    }
+
+    // Guarda un mensaje en la sesión para mostrarlo una sola vez en la lista
+    private function volverALista($tipo, $mensaje) {
+        $_SESSION['mensaje'] = ['tipo' => $tipo, 'texto' => $mensaje];
         header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
         exit;
     }

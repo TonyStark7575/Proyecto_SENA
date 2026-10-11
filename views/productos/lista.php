@@ -48,6 +48,10 @@
 
   <section class="users-content">
 
+    <?php if ($mensaje): ?>
+      <div class="alert alert-<?php echo $mensaje['tipo']; ?>"><?php echo htmlspecialchars($mensaje['texto']); ?></div>
+    <?php endif; ?>
+
     <div class="products-grid">
 
       <?php foreach ($productos as $producto): ?>
