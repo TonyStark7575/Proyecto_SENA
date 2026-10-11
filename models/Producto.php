@@ -31,7 +31,8 @@ class Producto {
         $consulta->bindParam(':precio', $precio);
         $consulta->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
         $consulta->bindParam(':imagen', $imagen, PDO::PARAM_STR);
-        return $consulta->execute();
+        $consulta->execute();
+        return $this->conexion->lastInsertId();
     }
 
     public function actualizar($id, $nombre, $precio, $descripcion, $imagen) {

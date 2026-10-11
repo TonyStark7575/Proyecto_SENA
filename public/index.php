@@ -151,11 +151,18 @@ switch ($recurso) {
         if ($accion === 'productos') {
             require_once __DIR__ . '/../controllers/api/ProductoApiController.php';
             $api = new ProductoApiController($conexion);
+            $metodo = $_SERVER['REQUEST_METHOD'];
 
-            if (isset($_GET['id'])) {
+            if ($metodo === 'GET' && isset($_GET['id'])) {
                 $api->detalle();
-            } else {
+            } elseif ($metodo === 'GET') {
                 $api->lista();
+            } elseif ($metodo === 'POST') {
+                $api->crear();
+            } else {
+                http_response_code(405);
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['error' => 'Método no permitido'], JSON_UNESCAPED_UNICODE);
             }
         } else {
             http_response_code(404);
