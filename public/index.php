@@ -159,6 +159,10 @@ switch ($recurso) {
                 $api->lista();
             } elseif ($metodo === 'POST') {
                 $api->crear();
+            } elseif ($metodo === 'PUT') {
+                $api->actualizar();
+            } elseif ($metodo === 'DELETE') {
+                $api->eliminar();
             } else {
                 http_response_code(405);
                 header('Content-Type: application/json; charset=utf-8');
