@@ -8,3 +8,9 @@ Thumbs.db
 # Carpeta de dependencias (por si en el futuro usamos Composer/npm)
 vendor/
 node_modules/
+
+# Imágenes subidas desde el sistema (llevan un timestamp delante del nombre)
+public/img/[0-9]*_*
+
+# Respaldos de datos de la BD (pueden contener datos personales)
+database/respaldo_*.sql
