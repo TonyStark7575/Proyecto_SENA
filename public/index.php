@@ -12,9 +12,28 @@ $accion = $partes[1] ?? 'index';
 $rutasPublicas = ['login'];
 // De la API solo es pública la ruta completa api/login; el resto de api exige sesión
 $rutasApiPublicas = ['api/login'];
+$esRutaPublica = in_array($recurso, $rutasPublicas) || in_array($ruta, $rutasApiPublicas);
 $haySesion = isset($_SESSION['id_usuario']);
 
-if (!$haySesion && !in_array($recurso, $rutasPublicas) && !in_array($ruta, $rutasApiPublicas)) {
+// La sesión puede haber quedado abierta después de que el usuario fue desactivado o eliminado:
+// en cada petición protegida se vuelve a consultar en la BD
+if ($haySesion && !$esRutaPublica) {
+    require_once __DIR__ . '/../models/Usuario.php';
+    $usuarioModelo = new Usuario($conexion);
+    $usuarioSesion = $usuarioModelo->obtenerPorId($_SESSION['id_usuario']);
+
+    if (!$usuarioSesion || !$usuarioSesion['activo']) {
+        $_SESSION = [];
+        session_destroy();
+        $haySesion = false;
+    } else {
+        // Por si la administradora cambió el nombre o el rol mientras la sesión estaba abierta
+        $_SESSION['nombre'] = $usuarioSesion['nombre_u'];
+        $_SESSION['rol'] = $usuarioSesion['rol'];
+    }
+}
+
+if (!$haySesion && !$esRutaPublica) {
 
     // Peticiones a la API: responder JSON, nunca redirigir
     if ($recurso === 'api') {
