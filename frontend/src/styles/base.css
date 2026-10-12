@@ -1,0 +1,46 @@
+/* ===========================
+    Base!
+    Variables globales, reset y estilos base del proyecto
+   =========================== */
+
+
+
+
+:root{
+    
+    /*Colores de la Marca*/
+    /* Morado - header, botones principales */
+
+    --color-primario: #5B3673;
+    --color-primario_claro: #694681;
+
+    --color-secundario: #FFE4C3;
+
+     /* Colores neutros */
+
+    --color-blanco: #FFFFFF;
+    --color-texto: #292124;         /* Gris oscuro para texto principal */
+    --color-texto-suave: #6C757D;   /* Gris para labels, placeholders */
+    --color-borde: #DEE2E6;         /* Gris claro para bordes de inputs */
+
+    /* Tipografía */
+  --fuente-principal: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fuente-marca: 'Caveat', cursive;
+}
+
+
+/* Reset básico 
+No puede faltar, ya que los nagedadores
+vienen con estilos por defecto*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: var(--fuente-principal);
+  color: var(--color-texto);
+  background-color: var(--color-secundario);
+}
