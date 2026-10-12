@@ -30,3 +30,13 @@ export function claseEstadoPedido(estado) {
 }
 
 export const ESTADOS_PEDIDO = ['Pendiente', 'En proceso', 'Entregado', 'Cancelado']
+
+// Para los buscadores: true si alguno de los textos contiene la búsqueda
+// (sin distinguir mayúsculas ni espacios a los lados)
+export function coincide(busqueda, ...textos) {
+  const buscado = busqueda.trim().toLowerCase()
+  return textos.some((texto) => String(texto ?? '').toLowerCase().includes(buscado))
+}
+
+// Las imágenes de productos las sirve Apache; llegan por el proxy de Vite, igual que la API
+export const URL_IMAGENES = '/ProyectoSENA/public/img/'

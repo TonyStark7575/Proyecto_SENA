@@ -9,6 +9,10 @@ import ListaProductos from './paginas/productos/ListaProductos'
 import DetalleProducto from './paginas/productos/DetalleProducto'
 import FormularioProducto from './paginas/productos/FormularioProducto'
 import EditarProducto from './paginas/productos/EditarProducto'
+import ListaClientes from './paginas/clientes/ListaClientes'
+import DetalleCliente from './paginas/clientes/DetalleCliente'
+import FormularioCliente from './paginas/clientes/FormularioCliente'
+import EditarCliente from './paginas/clientes/EditarCliente'
 
 function App() {
   const [usuario, setUsuario] = useState(null)       // null = sin sesión
@@ -57,7 +61,10 @@ function App() {
         <Route path="productos/:id" element={<DetalleProducto />} />
         <Route path="productos/:id/editar" element={<EditarProducto />} />
         <Route path="usuarios" element={<EnConstruccion titulo="USUARIOS" />} />
-        <Route path="clientes" element={<EnConstruccion titulo="CLIENTES" />} />
+        <Route path="clientes" element={<ListaClientes />} />
+        <Route path="clientes/nuevo" element={<FormularioCliente cliente={null} />} />
+        <Route path="clientes/:id" element={<DetalleCliente />} />
+        <Route path="clientes/:id/editar" element={<EditarCliente />} />
         <Route path="pedidos" element={<EnConstruccion titulo="PEDIDOS" />} />
         <Route path="pagos" element={<EnConstruccion titulo="PAGOS" />} />
         {/* "*" atrapa cualquier URL que no coincida con las de arriba */}

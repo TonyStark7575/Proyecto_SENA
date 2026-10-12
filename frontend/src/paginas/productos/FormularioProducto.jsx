@@ -4,7 +4,7 @@ import { mensajeDeError, pedirApi } from '../../api'
 import Alerta from '../../components/Alerta'
 import CampoFormulario from '../../components/CampoFormulario'
 import Encabezado from '../../components/Encabezado'
-import { URL_IMAGENES } from '../../components/TarjetaProducto'
+import { URL_IMAGENES } from '../../formato'
 import { useMensajeFlash } from '../../hooks/useMensajeFlash'
 
 // Sirve para crear (producto = null) y para editar (producto = el que llegó de la API)

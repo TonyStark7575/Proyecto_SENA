@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import Alerta from '../../components/Alerta'
+import Buscador from '../../components/Buscador'
+import { coincide } from '../../formato'
 import Encabezado from '../../components/Encabezado'
 import EstadoCarga from '../../components/EstadoCarga'
 import TarjetaProducto from '../../components/TarjetaProducto'
@@ -13,10 +15,7 @@ function ListaProductos() {
   const [busqueda, setBusqueda] = useState('')
 
   // Dato derivado: se recalcula en cada redibujo, no necesita su propio estado
-  const texto = busqueda.trim().toLowerCase()
-  const productosFiltrados = (productos ?? []).filter((producto) =>
-    producto.nombre_p.toLowerCase().includes(texto)
-  )
+  const productosFiltrados = (productos ?? []).filter((producto) => coincide(busqueda, producto.nombre_p))
 
   let contenido
   if (cargando || error) {
@@ -42,17 +41,7 @@ function ListaProductos() {
   return (
     <>
       <Encabezado titulo="PRODUCTOS">
-        <div className="search-bar search-bar--compact">
-          <i className="bi bi-search search-bar__icon"></i>
-          <input
-            type="search"
-            className="search-bar__input"
-            placeholder="Buscar..."
-            aria-label="Buscar"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-          />
-        </div>
+        <Buscador valor={busqueda} onCambio={setBusqueda} />
       </Encabezado>
 
       <Link to="/productos/nuevo" className="btn-primary-custom btn-primary-custom--pill">Nuevo Producto</Link>

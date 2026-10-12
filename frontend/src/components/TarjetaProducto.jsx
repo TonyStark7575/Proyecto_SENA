@@ -1,8 +1,5 @@
 import { Link } from 'react-router'
-import { formatearPrecio } from '../formato'
-
-// Las imágenes llegan por el proxy de Vite, igual que la API
-export const URL_IMAGENES = '/ProyectoSENA/public/img/'
+import { URL_IMAGENES, formatearPrecio } from '../formato'
 
 function TarjetaProducto({ producto }) {
   // Igual que el if/else de lista.php: si no tiene imagen, se usa el logo
