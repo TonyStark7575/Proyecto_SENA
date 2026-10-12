@@ -144,7 +144,7 @@ class PagoApiController extends ApiController {
         } elseif ($maximo !== null && $this->centavos($monto) > $maximo) {
             $errores['monto'] = $maximo === 0
                 ? 'Este pedido no tiene saldo pendiente'
-                : 'El monto no puede superar el saldo pendiente ($' . number_format($maximo / 100, 2, ',', '.') . ')';
+                : 'El monto máximo para este pago es $' . number_format($maximo / 100, 2, ',', '.') . ' (lo que falta por pagar del pedido)';
         }
 
         $metodo = $datos['metodo'] ?? null;
