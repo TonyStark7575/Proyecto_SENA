@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router'
 import { URL_IMAGENES } from '../formato'
 
-// Mismo menú que views/layouts/sidebar.php, pero con rutas de React
+// Opciones del menú lateral: ruta de React, ícono de Bootstrap Icons y texto
 const ITEMS_MENU = [
   { ruta: '/', icono: 'bi-grid-fill', texto: 'Dashboard' },
   { ruta: '/usuarios', icono: 'bi-people-fill', texto: 'Usuarios' },

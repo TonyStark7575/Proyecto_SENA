@@ -1,4 +1,4 @@
-// "Completo" si el pedido ya no debe nada; "Parcial" si todavía tiene saldo (igual que en PHP)
+// "Completo" si el pedido ya no debe nada; "Parcial" si todavía tiene saldo
 function BadgePago({ saldo }) {
   return Number(saldo) === 0
     ? <span className="badge-status badge-status--completo">Completo</span>

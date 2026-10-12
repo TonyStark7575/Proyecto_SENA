@@ -62,7 +62,7 @@ class PagoApiController extends ApiController {
         $this->responderJson($this->pagoModelo->obtenerPorId($id), 201);
     }
 
-    // JSON: { monto, metodo }. El pedido de un pago no se cambia (igual que en PHP)
+    // JSON: { monto, metodo }. El pedido de un pago no se cambia: si se equivocaron, se borra y se registra de nuevo
     public function actualizar() {
         $pago = $this->buscarPago();
         if (!$pago) {

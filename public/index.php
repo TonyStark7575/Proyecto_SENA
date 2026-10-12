@@ -1,39 +1,42 @@
 <?php
+/**
+ * Punto de entrada del servidor: atiende solo la API (index.php?ruta=api/...).
+ * La interfaz es la app React compilada en public/app/.
+ */
 
 // ===== RUTA =====
-// Se calcula primero porque el manejador de errores necesita saber si la petición es de la API
-$ruta = $_GET['ruta'] ?? 'inicio';
+$ruta = $_GET['ruta'] ?? '';
 
 $partes = explode('/', $ruta);
 $recurso = $partes[0];
-$accion = $partes[1] ?? 'index';
-$esApi = ($recurso === 'api');
+$accion = $partes[1] ?? '';
+
+// Cualquier ruta que no sea de la API (por ejemplo un enlace viejo como ?ruta=clientes/lista)
+// lleva a la pantalla equivalente de la app React
+if ($recurso !== 'api') {
+    $modulosApp = ['productos', 'clientes', 'pedidos', 'pagos', 'usuarios'];
+    header('Location: app/' . (in_array($recurso, $modulosApp) ? $recurso : ''));
+    exit;
+}
 
 // ===== MANEJO DE ERRORES =====
 // Toda excepción no atrapada termina aquí, incluida la de conexión a la BD.
-// El detalle real va al log de Apache; al usuario solo le llega un mensaje genérico.
-set_exception_handler(function ($e) use ($esApi) {
+// El detalle real va al log de Apache; al cliente solo le llega un mensaje genérico.
+set_exception_handler(function ($e) {
     // Mensaje, archivo y línea, sin la traza: la traza puede incluir argumentos como la contraseña de la BD
     error_log(get_class($e) . ': ' . $e->getMessage() . ' en ' . $e->getFile() . ':' . $e->getLine());
 
-    // Descarta lo que se hubiera alcanzado a generar (por ejemplo, media vista HTML)
+    // Descarta lo que se hubiera alcanzado a generar antes del error
     while (ob_get_level() > 0) {
         ob_end_clean();
     }
 
     http_response_code(500);
-
-    if ($esApi) {
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['error' => 'Error interno del servidor']);
-    } else {
-        header('Content-Type: text/html; charset=utf-8');
-        echo '<!doctype html><html lang="es"><meta charset="utf-8"><title>Error</title>'
-            . '<p>Ocurrió un error inesperado. Intenta de nuevo en unos minutos.</p></html>';
-    }
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'Error interno del servidor']);
 });
 
-// ===== CONTENT-TYPE DE LA API =====
+// ===== CONTENT-TYPE =====
 // Va antes de la sesión y de la guardia para cubrir también api/login (ruta pública).
 // Un formulario HTML de otra página no puede enviar application/json, así que esto frena el CSRF.
 // Sin cuerpo (por ejemplo api/logout) no se exige.
@@ -41,7 +44,7 @@ set_exception_handler(function ($e) use ($esApi) {
 // X-Requested-With, que un formulario de otra página tampoco puede enviar.
 $rutasConArchivos = ['api/productos/imagen'];
 
-if ($esApi && in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT'])) {
+if (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT'])) {
     // Con multipart, PHP no deja el cuerpo en php://input: por eso también se mira el Content-Length
     $hayCuerpo = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0 || file_get_contents('php://input') !== '';
     $tipoCuerpo = strtolower(trim($_SERVER['CONTENT_TYPE'] ?? ''));
@@ -63,10 +66,8 @@ session_start();
 require_once __DIR__ . '/../config/conexion.php';
 
 // ===== GUARDIA DE AUTENTICACIÓN =====
-$rutasPublicas = ['login'];
-// De la API solo es pública la ruta completa api/login; el resto de api exige sesión
-$rutasApiPublicas = ['api/login'];
-$esRutaPublica = in_array($recurso, $rutasPublicas) || in_array($ruta, $rutasApiPublicas);
+// Solo api/login (la ruta completa) se puede usar sin sesión
+$esRutaPublica = ($ruta === 'api/login');
 $haySesion = isset($_SESSION['id_usuario']);
 
 // La sesión puede haber quedado abierta después de que el usuario fue desactivado o eliminado:
@@ -88,187 +89,47 @@ if ($haySesion && !$esRutaPublica) {
 }
 
 if (!$haySesion && !$esRutaPublica) {
+    http_response_code(401);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'No autenticado']);
+    exit;
+}
 
-    // Peticiones a la API: responder JSON, nunca redirigir
-    if ($recurso === 'api') {
-        http_response_code(401);
+// ===== RUTAS DE LA API =====
+// Recurso => controlador que lo atiende. Cada controlador decide, según la
+// sub-ruta (api/productos/imagen) y el método HTTP, cuál de sus métodos ejecutar
+$recursosApi = [
+    'productos' => 'ProductoApiController',
+    'clientes'  => 'ClienteApiController',
+    'pedidos'   => 'PedidoApiController',
+    'pagos'     => 'PagoApiController',
+    'usuarios'  => 'UsuarioApiController',
+    'dashboard' => 'DashboardApiController',
+];
+
+if (isset($recursosApi[$accion])) {
+    $clase = $recursosApi[$accion];
+    require_once __DIR__ . '/../controllers/api/' . $clase . '.php';
+    $api = new $clase($conexion);
+    $api->atender($partes[2] ?? '', $_SERVER['REQUEST_METHOD']);
+} elseif (in_array($accion, ['login', 'logout', 'sesion'])) {
+    require_once __DIR__ . '/../controllers/api/AuthApiController.php';
+    $api = new AuthApiController($conexion);
+    $metodo = $_SERVER['REQUEST_METHOD'];
+
+    if ($accion === 'login' && $metodo === 'POST') {
+        $api->login();
+    } elseif ($accion === 'logout' && $metodo === 'POST') {
+        $api->logout();
+    } elseif ($accion === 'sesion' && $metodo === 'GET') {
+        $api->sesion();
+    } else {
+        http_response_code(405);
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['error' => 'No autenticado']);
-        exit;
+        echo json_encode(['error' => 'Método no permitido'], JSON_UNESCAPED_UNICODE);
     }
-
-    // Pantallas HTML: redirigir al login, como hasta ahora
-    header('Location: /ProyectoSENA/public/index.php?ruta=login');
-    exit;
-}
-
-if ($haySesion && $recurso === 'login') {
-    header('Location: /ProyectoSENA/public/index.php?ruta=inicio');
-    exit;
-}
-
-switch ($recurso) {
-
-    case 'login':
-        require_once __DIR__ . '/../controllers/LoginController.php';
-        $controlador = new LoginController($conexion);
-        $controlador->index();
-        break;
-
-    case 'logout':
-        require_once __DIR__ . '/../controllers/LoginController.php';
-        $controlador = new LoginController($conexion);
-        $controlador->logout();
-        break;
-
-    case 'productos':
-        require_once __DIR__ . '/../controllers/ProductoController.php';
-        $controlador = new ProductoController($conexion);
-
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } elseif ($accion === 'crear') {
-            $controlador->crear();
-        } elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } elseif ($accion === 'editar') {
-            $controlador->editar();
-        } elseif ($accion === 'eliminar') {
-            $controlador->eliminar();
-        } else {
-            echo "Acción no reconocida para productos: " . $accion;
-        }
-        break;
-
-    case 'usuarios':
-        require_once __DIR__ . '/../controllers/UsuarioController.php';
-        $controlador = new UsuarioController($conexion);
-
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } elseif ($accion === 'crear') {
-            $controlador->crear();
-        } elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } elseif ($accion === 'editar') {
-            $controlador->editar();
-        } elseif ($accion === 'eliminar') {
-            $controlador->eliminar();
-        } elseif ($accion === 'activar') {
-            $controlador->activar();
-        } else {
-            echo "Acción no reconocida para usuarios: " . $accion;
-        }
-        break;
-
-    case 'clientes':
-        require_once __DIR__ . '/../controllers/ClienteController.php';
-        $controlador = new ClienteController($conexion);
-
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } elseif ($accion === 'crear') {
-            $controlador->crear();
-        } elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } elseif ($accion === 'editar') {
-            $controlador->editar();
-        } elseif ($accion === 'eliminar') {
-            $controlador->eliminar();
-        } else {
-            echo "Acción no reconocida para clientes: " . $accion;
-        }
-        break;
-
-    case 'pedidos':
-        require_once __DIR__ . '/../controllers/PedidoController.php';
-        $controlador = new PedidoController($conexion);
-
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } elseif ($accion === 'crear') {
-            $controlador->crear();
-        } elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } elseif ($accion === 'editar') {
-            $controlador->editar();
-        } elseif ($accion === 'eliminar') {
-            $controlador->eliminar();
-        } elseif ($accion === 'agregarProducto') {
-            $controlador->agregarProducto();
-        } elseif ($accion === 'eliminarLinea') {
-            $controlador->eliminarLinea();
-        } else {
-            echo "Acción no reconocida para pedidos: " . $accion;
-        }
-        break;
-
-    case 'pagos':
-        require_once __DIR__ . '/../controllers/PagoController.php';
-        $controlador = new PagoController($conexion);
-
-        if ($accion === 'lista') {
-            $controlador->lista();
-        } elseif ($accion === 'crear') {
-            $controlador->crear();
-        } elseif ($accion === 'detalle') {
-            $controlador->detalle();
-        } elseif ($accion === 'editar') {
-            $controlador->editar();
-        } elseif ($accion === 'eliminar') {
-            $controlador->eliminar();
-        } else {
-            echo "Acción no reconocida para pagos: " . $accion;
-        }
-        break;
-
-            case 'api':
-        // Recurso de la API => controlador que lo atiende. Cada controlador decide, según la
-        // sub-ruta (api/productos/imagen) y el método HTTP, cuál de sus métodos ejecutar
-        $recursosApi = [
-            'productos' => 'ProductoApiController',
-            'clientes'  => 'ClienteApiController',
-            'pedidos'   => 'PedidoApiController',
-            'pagos'     => 'PagoApiController',
-            'usuarios'  => 'UsuarioApiController',
-            'dashboard' => 'DashboardApiController',
-        ];
-
-        if (isset($recursosApi[$accion])) {
-            $clase = $recursosApi[$accion];
-            require_once __DIR__ . '/../controllers/api/' . $clase . '.php';
-            $api = new $clase($conexion);
-            $api->atender($partes[2] ?? '', $_SERVER['REQUEST_METHOD']);
-        } elseif (in_array($accion, ['login', 'logout', 'sesion'])) {
-            require_once __DIR__ . '/../controllers/api/AuthApiController.php';
-            $api = new AuthApiController($conexion);
-            $metodo = $_SERVER['REQUEST_METHOD'];
-
-            if ($accion === 'login' && $metodo === 'POST') {
-                $api->login();
-            } elseif ($accion === 'logout' && $metodo === 'POST') {
-                $api->logout();
-            } elseif ($accion === 'sesion' && $metodo === 'GET') {
-                $api->sesion();
-            } else {
-                http_response_code(405);
-                header('Content-Type: application/json; charset=utf-8');
-                echo json_encode(['error' => 'Método no permitido'], JSON_UNESCAPED_UNICODE);
-            }
-        } else {
-            http_response_code(404);
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['error' => 'Endpoint no encontrado']);
-        }
-        break;
-
-    case 'inicio':
-        require_once __DIR__ . '/../controllers/DashboardController.php';
-        $controlador = new DashboardController($conexion);
-        $controlador->index();
-        break;
-
-    default:
-        echo "Ruta no reconocida: " . $recurso;
-        break;
+} else {
+    http_response_code(404);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'Endpoint no encontrado']);
 }

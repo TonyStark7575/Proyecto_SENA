@@ -1,2 +1,0 @@
-# Bloquea el acceso directo desde el navegador. PHP puede seguir usando estos archivos con require.
-Require all denied

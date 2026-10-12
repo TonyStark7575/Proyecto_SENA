@@ -59,13 +59,4 @@ class Producto {
         return $consulta->execute();
     }
 
-    public function buscarPorNombre($texto) {
-        $sql = "SELECT * FROM producto WHERE nombre_p LIKE :texto ORDER BY nombre_p ASC";
-        $consulta = $this->conexion->prepare($sql);
-        $busqueda = '%' . $texto . '%';
-        $consulta->bindParam(':texto', $busqueda, PDO::PARAM_STR);
-        $consulta->execute();
-        return $consulta->fetchAll();
-    }
-
 }

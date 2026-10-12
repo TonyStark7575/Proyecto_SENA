@@ -17,7 +17,7 @@ function EditarPago() {
   )
 }
 
-// Igual que en PHP: se cambian el monto y el método, no el pedido
+// Se cambian el monto y el método, no el pedido
 function FormularioEditarPago({ pago }) {
   const navigate = useNavigate()
   const codigo = codigoPago(pago.id_pago)

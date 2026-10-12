@@ -106,7 +106,7 @@ class UsuarioApiController extends ApiController {
     }
 
     /**
-     * Misma regla que UsuarioController::eliminar():
+     * Eliminar un usuario:
      * - sin clientes ni pedidos registrados → se borra de verdad (204)
      * - con registros → se desactiva para conservar el historial (200, resultado "desactivado")
      */

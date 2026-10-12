@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useOutletContext } from 'react-router'
 import Sidebar from './Sidebar'
 
-// Encabezado morado + menú lateral, igual que en las vistas PHP. Dos variantes:
+// Encabezado morado + menú lateral, compartido por todas las páginas. Dos variantes:
 // - titulo: la barra "PRODUCTOS", "CLIENTES / DETALLES"... con lo que llegue como children al lado (buscador)
 // - tituloApp: el nombre grande entre los botones (solo el dashboard) y children debajo, a lo ancho
 function Encabezado({ titulo, tituloApp, children }) {
-  // Reemplaza a sidebar.js: el botón ☰ solo cambia este estado
+  // El botón ☰ solo cambia este estado; Sidebar se muestra u oculta según él
   const [menuAbierto, setMenuAbierto] = useState(false)
   const { onLogout } = useOutletContext()
 

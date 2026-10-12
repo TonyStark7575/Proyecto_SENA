@@ -36,7 +36,7 @@ function NuevoPago() {
     setGuardando(false)
 
     if (respuesta.ok) {
-      // Igual que en PHP: después de pagar se vuelve al pedido, que ya muestra el saldo nuevo
+      // Después de pagar se vuelve al pedido, que ya muestra el saldo nuevo
       navigate(`/pedidos/${respuesta.datos.id_pedido}`, {
         state: { mensaje: { tipo: 'success', texto: `Pago de $${formatearPrecio(respuesta.datos.monto)} registrado.` } },
       })

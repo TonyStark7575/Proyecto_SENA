@@ -1,4 +1,4 @@
-/* Estilos que solo usa la versión React (no existen en las vistas PHP).
+/* Estilos propios de la app que no están en base, components ni pages.
    Se carga después de base, components y pages para poder complementarlos. */
 
 /* ========== FILTROS DE PEDIDOS: cuál está activo ========== */

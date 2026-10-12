@@ -19,7 +19,7 @@ function Dashboard() {
   return (
     <>
       <Encabezado tituloApp="Los Hilos de Maya">
-        {/* Mismo HTML que dashboard.php: el buscador grande, sin la clase --compact */}
+        {/* En el dashboard el buscador es el ancho, sin la clase --compact */}
         <div className="search-bar">
           <i className="bi bi-search search-bar__icon"></i>
           <input

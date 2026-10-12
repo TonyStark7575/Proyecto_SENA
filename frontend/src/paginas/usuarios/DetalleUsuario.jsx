@@ -93,7 +93,7 @@ function PerfilUsuario({ usuarioInicial }) {
               <i className="bi bi-pencil-square"></i>
             </Link>
 
-            {/* Igual que en PHP: inactivo → reactivar; activo y no soy yo → eliminar */}
+            {/* Inactivo → reactivar; activo y no soy yo → eliminar */}
             {!usuario.activo && (
               <button type="button" className="btn-primary-custom" title="Reactivar usuario" aria-label="Reactivar usuario" onClick={reactivar}>
                 <i className="bi bi-person-check"></i>

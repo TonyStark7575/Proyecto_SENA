@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import Encabezado from './Encabezado'
 
-// Equivale a views/layouts/no_encontrado.php, para URLs que no existen
+// Página para las URLs que no existen dentro de la app
 function NoEncontrado() {
   return (
     <>

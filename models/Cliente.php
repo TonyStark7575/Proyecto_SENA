@@ -59,13 +59,4 @@ class Cliente {
         return $consulta->execute();
     }
 
-    public function buscarPorNombre($texto) {
-        $sql = "SELECT * FROM cliente WHERE nombre_c LIKE :texto ORDER BY nombre_c ASC";
-        $consulta = $this->conexion->prepare($sql);
-        $busqueda = '%' . $texto . '%';
-        $consulta->bindParam(':texto', $busqueda, PDO::PARAM_STR);
-        $consulta->execute();
-        return $consulta->fetchAll();
-    }
-
 }

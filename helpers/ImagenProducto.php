@@ -2,7 +2,7 @@
 
 /**
  * Guardado y borrado de imágenes de productos en public/img/.
- * La usan el controlador HTML y la API, para que las dos apliquen las mismas reglas.
+ * La usa la API de productos (subir, reemplazar y quitar la imagen).
  */
 class ImagenProducto {
 

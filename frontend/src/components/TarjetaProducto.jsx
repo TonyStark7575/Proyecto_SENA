@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import { URL_IMAGENES, formatearPrecio } from '../formato'
 
 function TarjetaProducto({ producto }) {
-  // Igual que el if/else de lista.php: si no tiene imagen, se usa el logo
+  // Si el producto no tiene imagen, se usa el logo
   const imagen = producto.imagen
     ? URL_IMAGENES + producto.imagen
     : URL_IMAGENES + 'Logo-no-texto.jpg'

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router'
 
 // Mensaje que una página deja a la siguiente al redirigir, por ejemplo:
 //   navigate('/productos', { state: { mensaje: { tipo: 'success', texto: 'Producto creado.' } } })
-// Igual que $_SESSION['mensaje'] en PHP: se muestra una sola vez (no reaparece al recargar)
+// Se muestra una sola vez: no reaparece al recargar la página
 export function useMensajeFlash() {
   const location = useLocation()
   const navigate = useNavigate()

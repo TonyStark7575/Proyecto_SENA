@@ -1,4 +1,4 @@
-// Barra de búsqueda del encabezado de las listas (mismo HTML que las vistas PHP)
+// Barra de búsqueda del encabezado de las listas
 function Buscador({ valor, onCambio }) {
   return (
     <div className="search-bar search-bar--compact">

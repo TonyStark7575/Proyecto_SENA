@@ -18,7 +18,7 @@ function EditarPedido() {
   )
 }
 
-// Igual que en PHP, aquí solo se cambian el cliente y el estado; los productos se manejan en el detalle
+// Aquí solo se cambian el cliente y el estado; los productos se manejan en el detalle
 function FormularioEditarPedido({ pedido }) {
   const navigate = useNavigate()
   const { datos: clientes } = useDatosApi('clientes')

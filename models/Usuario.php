@@ -107,14 +107,4 @@ class Usuario
         $consulta->bindParam(':id', $id, PDO::PARAM_INT);
         return $consulta->execute();
     }
-
-    public function buscarPorNombre($texto)
-    {
-        $sql = "SELECT * FROM usuario WHERE nombre_u LIKE :texto ORDER BY nombre_u ASC";
-        $consulta = $this->conexion->prepare($sql);
-        $busqueda = '%' . $texto . '%';
-        $consulta->bindParam(':texto', $busqueda, PDO::PARAM_STR);
-        $consulta->execute();
-        return $consulta->fetchAll();
-    }
 }

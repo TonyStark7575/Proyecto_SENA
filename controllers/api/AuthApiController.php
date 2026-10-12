@@ -45,7 +45,7 @@ class AuthApiController extends ApiController {
             return;
         }
 
-        // Misma regla que LoginController: solo se avisa del bloqueo si la contraseña es correcta
+        // Solo se avisa del bloqueo si la contraseña es correcta: así nadie averigua qué cuentas están desactivadas
         if (!$usuario['activo']) {
             $this->responderJson(['error' => 'Este usuario está desactivado. Habla con la administradora.'], 403);
             return;

@@ -1,4 +1,4 @@
-// Funciones para mostrar datos igual que las vistas PHP
+// Funciones para mostrar los datos de la API en pantalla
 
 // Equivale a number_format($valor, 0, ',', '.') → "45.000".
 // Number() porque la API entrega los DECIMAL como texto ("45000.00")
@@ -19,7 +19,7 @@ export function codigoPago(idPago) {
   return 'P' + String(idPago).padStart(3, '0')
 }
 
-// Mismo match() de las vistas PHP para el color del estado de un pedido
+// Clase CSS del color de cada estado de pedido
 export function claseEstadoPedido(estado) {
   const clases = {
     Entregado: 'badge-status--entregado',

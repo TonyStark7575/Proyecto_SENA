@@ -49,7 +49,7 @@ class ClienteApiController extends ApiController {
             return;
         }
 
-        // El cliente queda registrado por el usuario que inició sesión, igual que en PHP
+        // El cliente queda registrado por el usuario que inició sesión
         try {
             $id = $this->clienteModelo->crear($campos['nombre_c'], $campos['email_c'], $campos['telefono_c'], $_SESSION['id_usuario']);
         } catch (PDOException $e) {
@@ -145,7 +145,7 @@ class ClienteApiController extends ApiController {
         return $cliente;
     }
 
-    // Mismas reglas que ClienteController::validar(), más los largos de las columnas
+    // Nombre obligatorio, correo con formato válido y largos que caben en las columnas
     private function validar($datos) {
         $nombre = $this->texto($datos, 'nombre_c');
         $email = $this->texto($datos, 'email_c');
