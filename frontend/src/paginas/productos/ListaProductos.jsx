@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
+import Alerta from '../../components/Alerta'
 import Encabezado from '../../components/Encabezado'
 import EstadoCarga from '../../components/EstadoCarga'
 import TarjetaProducto from '../../components/TarjetaProducto'
 import { useDatosApi } from '../../hooks/useDatosApi'
+import { useMensajeFlash } from '../../hooks/useMensajeFlash'
 
 function ListaProductos() {
   const { datos: productos, cargando, error, status } = useDatosApi('productos')
+  const flash = useMensajeFlash()
   const [busqueda, setBusqueda] = useState('')
 
   // Dato derivado: se recalcula en cada redibujo, no necesita su propio estado
@@ -51,7 +55,12 @@ function ListaProductos() {
         </div>
       </Encabezado>
 
-      <section className="users-content">{contenido}</section>
+      <Link to="/productos/nuevo" className="btn-primary-custom btn-primary-custom--pill">Nuevo Producto</Link>
+
+      <section className="users-content">
+        <Alerta mensaje={flash} />
+        {contenido}
+      </section>
     </>
   )
 }

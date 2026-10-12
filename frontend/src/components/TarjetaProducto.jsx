@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { formatearPrecio } from '../formato'
 
 // Las imágenes llegan por el proxy de Vite, igual que la API
@@ -19,13 +20,12 @@ function TarjetaProducto({ producto }) {
       <p className="product-card__name">{producto.nombre_p}</p>
       <p className="product-card__price">$ {precio}</p>
       <div className="product-card__actions">
-        {/* Los enlaces se conectan en la Etapa 5, con la navegación */}
-        <a href="#">
+        <Link to={`/productos/${producto.id_pro}`} aria-label={`Ver ${producto.nombre_p}`}>
           <i className="bi bi-eye order-row__icon"></i>
-        </a>
-        <a href="#">
+        </Link>
+        <Link to={`/productos/${producto.id_pro}/editar`} aria-label={`Editar ${producto.nombre_p}`}>
           <i className="bi bi-pencil-square order-row__icon"></i>
-        </a>
+        </Link>
       </div>
     </div>
   )

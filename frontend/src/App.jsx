@@ -6,6 +6,9 @@ import Layout from './components/Layout'
 import EnConstruccion from './components/EnConstruccion'
 import NoEncontrado from './components/NoEncontrado'
 import ListaProductos from './paginas/productos/ListaProductos'
+import DetalleProducto from './paginas/productos/DetalleProducto'
+import FormularioProducto from './paginas/productos/FormularioProducto'
+import EditarProducto from './paginas/productos/EditarProducto'
 
 function App() {
   const [usuario, setUsuario] = useState(null)       // null = sin sesión
@@ -49,6 +52,10 @@ function App() {
       <Route element={<Layout usuario={usuario} onLogout={cerrarSesion} />}>
         <Route index element={<EnConstruccion titulo="DASHBOARD" />} />
         <Route path="productos" element={<ListaProductos />} />
+        {/* /productos/nuevo no se confunde con :id: React Router prefiere la ruta fija sobre la variable */}
+        <Route path="productos/nuevo" element={<FormularioProducto producto={null} />} />
+        <Route path="productos/:id" element={<DetalleProducto />} />
+        <Route path="productos/:id/editar" element={<EditarProducto />} />
         <Route path="usuarios" element={<EnConstruccion titulo="USUARIOS" />} />
         <Route path="clientes" element={<EnConstruccion titulo="CLIENTES" />} />
         <Route path="pedidos" element={<EnConstruccion titulo="PEDIDOS" />} />
