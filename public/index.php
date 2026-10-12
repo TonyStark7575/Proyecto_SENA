@@ -1,12 +1,53 @@
 <?php
-session_start();
-require_once __DIR__ . '/../config/conexion.php';
 
+// ===== RUTA =====
+// Se calcula primero porque el manejador de errores necesita saber si la petición es de la API
 $ruta = $_GET['ruta'] ?? 'inicio';
 
 $partes = explode('/', $ruta);
 $recurso = $partes[0];
 $accion = $partes[1] ?? 'index';
+$esApi = ($recurso === 'api');
+
+// ===== MANEJO DE ERRORES =====
+// Toda excepción no atrapada termina aquí, incluida la de conexión a la BD.
+// El detalle real va al log de Apache; al usuario solo le llega un mensaje genérico.
+set_exception_handler(function ($e) use ($esApi) {
+    // Mensaje, archivo y línea, sin la traza: la traza puede incluir argumentos como la contraseña de la BD
+    error_log(get_class($e) . ': ' . $e->getMessage() . ' en ' . $e->getFile() . ':' . $e->getLine());
+
+    // Descarta lo que se hubiera alcanzado a generar (por ejemplo, media vista HTML)
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+
+    http_response_code(500);
+
+    if ($esApi) {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'Error interno del servidor']);
+    } else {
+        header('Content-Type: text/html; charset=utf-8');
+        echo '<!doctype html><html lang="es"><meta charset="utf-8"><title>Error</title>'
+            . '<p>Ocurrió un error inesperado. Intenta de nuevo en unos minutos.</p></html>';
+    }
+});
+
+// ===== CONTENT-TYPE DE LA API =====
+// Va antes de la sesión y de la guardia para cubrir también api/login (ruta pública).
+// Un formulario HTML de otra página no puede enviar application/json, así que esto frena el CSRF.
+// Sin cuerpo (por ejemplo api/logout) no se exige.
+if ($esApi && in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT'])
+    && file_get_contents('php://input') !== ''
+    && !str_starts_with(strtolower(trim($_SERVER['CONTENT_TYPE'] ?? '')), 'application/json')) {
+    http_response_code(415);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'El cuerpo debe enviarse como application/json'], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+session_start();
+require_once __DIR__ . '/../config/conexion.php';
 
 // ===== GUARDIA DE AUTENTICACIÓN =====
 $rutasPublicas = ['login'];

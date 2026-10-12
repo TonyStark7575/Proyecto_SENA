@@ -7,17 +7,13 @@
  * y devuelve un objeto PDO listo para usar en los Modelos.
  */
     require_once __DIR__ . '/credenciales.php';  /** Con esta linea ya se tiene acceso a las 4 constantes*/
-    
-    try {
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
 
-        $conexion = new PDO ($dsn, DB_USER, DB_PASS, [
-            PDO::ATTR_ERRMODE => PDO:: ERRMODE_EXCEPTION,       /**array asociativo de opciones de configuración. */
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]);
-    } 
+    // Si la conexión falla, PDO lanza una PDOException. No se atrapa aquí:
+    // la recibe el manejador de errores de public/index.php, que la registra en el log
+    // y responde un mensaje genérico (sin mostrar detalles de la conexión al usuario)
+    $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
 
-    catch (PDOException $e){
-        die('Error al conectar con la Base de Datos: ' . $e->getMessage());
-
-    }
+    $conexion = new PDO ($dsn, DB_USER, DB_PASS, [
+        PDO::ATTR_ERRMODE => PDO:: ERRMODE_EXCEPTION,       /**array asociativo de opciones de configuración. */
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);

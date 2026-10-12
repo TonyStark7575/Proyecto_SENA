@@ -1,8 +1,9 @@
 <?php
 
+require_once __DIR__ . '/ApiController.php';
 require_once __DIR__ . '/../../models/Producto.php';
 
-class ProductoApiController {
+class ProductoApiController extends ApiController {
 
     private $productoModelo;
 
@@ -16,7 +17,7 @@ class ProductoApiController {
     }
 
     public function detalle() {
-        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        $id = $this->obtenerId();
 
         if ($id === false) {
             $this->responderJson(['error' => 'El id debe ser un número entero'], 400);
@@ -34,9 +35,9 @@ class ProductoApiController {
     }
 
     public function crear() {
-        $datos = json_decode(file_get_contents('php://input'), true);
+        $datos = $this->leerJson();
 
-        if (!is_array($datos)) {
+        if ($datos === null) {
             $this->responderJson(['error' => 'El cuerpo de la petición debe ser JSON válido'], 400);
             return;
         }
@@ -55,7 +56,7 @@ class ProductoApiController {
     }
 
     public function actualizar() {
-        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        $id = $this->obtenerId();
 
         if ($id === false) {
             $this->responderJson(['error' => 'El id debe ser un número entero'], 400);
@@ -69,9 +70,9 @@ class ProductoApiController {
             return;
         }
 
-        $datos = json_decode(file_get_contents('php://input'), true);
+        $datos = $this->leerJson();
 
-        if (!is_array($datos)) {
+        if ($datos === null) {
             $this->responderJson(['error' => 'El cuerpo de la petición debe ser JSON válido'], 400);
             return;
         }
@@ -91,7 +92,7 @@ class ProductoApiController {
     }
 
     public function eliminar() {
-        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        $id = $this->obtenerId();
 
         if ($id === false) {
             $this->responderJson(['error' => 'El id debe ser un número entero'], 400);
@@ -164,12 +165,6 @@ class ProductoApiController {
         if (is_file($ruta)) {
             unlink($ruta);
         }
-    }
-
-    private function responderJson($datos, $codigo = 200) {
-        http_response_code($codigo);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     }
 
 }

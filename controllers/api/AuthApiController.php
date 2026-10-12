@@ -1,8 +1,9 @@
 <?php
 
+require_once __DIR__ . '/ApiController.php';
 require_once __DIR__ . '/../../models/Usuario.php';
 
-class AuthApiController {
+class AuthApiController extends ApiController {
 
     private $usuarioModelo;
 
@@ -11,9 +12,9 @@ class AuthApiController {
     }
 
     public function login() {
-        $datos = json_decode(file_get_contents('php://input'), true);
+        $datos = $this->leerJson();
 
-        if (!is_array($datos)) {
+        if ($datos === null) {
             $this->responderJson(['error' => 'El cuerpo de la petición debe ser JSON válido'], 400);
             return;
         }
@@ -77,12 +78,6 @@ class AuthApiController {
             'nombre' => $_SESSION['nombre'],
             'rol' => $_SESSION['rol'],
         ]);
-    }
-
-    private function responderJson($datos, $codigo = 200) {
-        http_response_code($codigo);
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     }
 
 }
