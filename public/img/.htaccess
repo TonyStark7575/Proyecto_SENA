@@ -1,0 +1,8 @@
+# Esta carpeta solo guarda imágenes: nunca se ejecuta código aunque alguien logre subir un archivo .php
+<FilesMatch "\.(php\d?|phtml|phar)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule php_module>
+    php_flag engine off
+</IfModule>

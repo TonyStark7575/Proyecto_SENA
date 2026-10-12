@@ -37,13 +37,26 @@ set_exception_handler(function ($e) use ($esApi) {
 // Va antes de la sesión y de la guardia para cubrir también api/login (ruta pública).
 // Un formulario HTML de otra página no puede enviar application/json, así que esto frena el CSRF.
 // Sin cuerpo (por ejemplo api/logout) no se exige.
-if ($esApi && in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT'])
-    && file_get_contents('php://input') !== ''
-    && !str_starts_with(strtolower(trim($_SERVER['CONTENT_TYPE'] ?? '')), 'application/json')) {
-    http_response_code(415);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(['error' => 'El cuerpo debe enviarse como application/json'], JSON_UNESCAPED_SLASHES);
-    exit;
+// Excepción: las rutas que reciben archivos aceptan multipart/form-data, pero solo con la cabecera
+// X-Requested-With, que un formulario de otra página tampoco puede enviar.
+$rutasConArchivos = ['api/productos/imagen'];
+
+if ($esApi && in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT'])) {
+    // Con multipart, PHP no deja el cuerpo en php://input: por eso también se mira el Content-Length
+    $hayCuerpo = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0 || file_get_contents('php://input') !== '';
+    $tipoCuerpo = strtolower(trim($_SERVER['CONTENT_TYPE'] ?? ''));
+
+    $esJson = str_starts_with($tipoCuerpo, 'application/json');
+    $esArchivoPermitido = in_array($ruta, $rutasConArchivos)
+        && str_starts_with($tipoCuerpo, 'multipart/form-data')
+        && isset($_SERVER['HTTP_X_REQUESTED_WITH']);
+
+    if ($hayCuerpo && !$esJson && !$esArchivoPermitido) {
+        http_response_code(415);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'El cuerpo debe enviarse como application/json'], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
 }
 
 session_start();
@@ -210,26 +223,17 @@ switch ($recurso) {
         break;
 
             case 'api':
-        if ($accion === 'productos') {
-            require_once __DIR__ . '/../controllers/api/ProductoApiController.php';
-            $api = new ProductoApiController($conexion);
-            $metodo = $_SERVER['REQUEST_METHOD'];
+        // Recurso de la API => controlador que lo atiende. Cada controlador decide, según la
+        // sub-ruta (api/productos/imagen) y el método HTTP, cuál de sus métodos ejecutar
+        $recursosApi = [
+            'productos' => 'ProductoApiController',
+        ];
 
-            if ($metodo === 'GET' && isset($_GET['id'])) {
-                $api->detalle();
-            } elseif ($metodo === 'GET') {
-                $api->lista();
-            } elseif ($metodo === 'POST') {
-                $api->crear();
-            } elseif ($metodo === 'PUT') {
-                $api->actualizar();
-            } elseif ($metodo === 'DELETE') {
-                $api->eliminar();
-            } else {
-                http_response_code(405);
-                header('Content-Type: application/json; charset=utf-8');
-                echo json_encode(['error' => 'Método no permitido'], JSON_UNESCAPED_UNICODE);
-            }
+        if (isset($recursosApi[$accion])) {
+            $clase = $recursosApi[$accion];
+            require_once __DIR__ . '/../controllers/api/' . $clase . '.php';
+            $api = new $clase($conexion);
+            $api->atender($partes[2] ?? '', $_SERVER['REQUEST_METHOD']);
         } elseif (in_array($accion, ['login', 'logout', 'sesion'])) {
             require_once __DIR__ . '/../controllers/api/AuthApiController.php';
             $api = new AuthApiController($conexion);

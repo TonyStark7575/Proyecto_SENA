@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../models/Producto.php';
+require_once __DIR__ . '/../helpers/ImagenProducto.php';
 
 class ProductoController {
 
@@ -26,11 +27,13 @@ class ProductoController {
             $descripcion = $_POST['descripcion'];
             $imagen = null;
 
-            if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                $nombreArchivo = time() . '_' . $_FILES['imagen']['name'];
-                $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
-                move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
-                $imagen = $nombreArchivo;
+            // Si se eligió un archivo, se valida que sea una imagen real antes de guardarlo
+            if (($_FILES['imagen']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+                $subida = ImagenProducto::guardar($_FILES['imagen']);
+                if ($subida['error']) {
+                    $this->volverALista('danger', 'No se creó el producto: ' . $subida['error']);
+                }
+                $imagen = $subida['nombre'];
             }
 
             $this->productoModelo->crear($nombre, $precio, $descripcion, $imagen);
@@ -60,15 +63,22 @@ public function editar() {
         $nombre = $_POST['nombre'];
         $precio = $_POST['precio'];
         $descripcion = $_POST['descripcion'];
-        $imagen = $_POST['imagen_actual'] ?? null;
+        // La imagen actual se lee de la BD, no del campo oculto del formulario (el navegador podría alterarlo)
+        $productoActual = $this->productoModelo->obtenerPorId($id);
+        if (!$productoActual) {
+            $this->noEncontrado();
+            return;
+        }
+        $imagen = $productoActual['imagen'];
 
-        if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-            $nombreArchivo = time() . '_' . $_FILES['imagen']['name'];
-            $rutaDestino = __DIR__ . '/../public/img/' . $nombreArchivo;
-            move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
+        if (($_FILES['imagen']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $subida = ImagenProducto::guardar($_FILES['imagen']);
+            if ($subida['error']) {
+                $this->volverALista('danger', 'No se guardaron los cambios: ' . $subida['error']);
+            }
             // La imagen anterior ya no la usa nadie: se borra para no dejar huérfanas
-            $this->borrarImagen($_POST['imagen_actual'] ?? null);
-            $imagen = $nombreArchivo;
+            ImagenProducto::borrar($imagen);
+            $imagen = $subida['nombre'];
         }
 
         $this->productoModelo->actualizar($id, $nombre, $precio, $descripcion, $imagen);
@@ -104,7 +114,7 @@ public function editar() {
         }
 
         if ($producto) {
-            $this->borrarImagen($producto['imagen']);
+            ImagenProducto::borrar($producto['imagen']);
         }
 
         $this->volverALista('success', 'Producto eliminado correctamente.');
@@ -115,19 +125,6 @@ public function editar() {
         $_SESSION['mensaje'] = ['tipo' => $tipo, 'texto' => $mensaje];
         header('Location: /ProyectoSENA/public/index.php?ruta=productos/lista');
         exit;
-    }
-
-    // Solo borra imágenes subidas por el formulario (prefijo timestamp_),
-    // nunca las imágenes fijas del sistema como LOGOTIPO.png
-    private function borrarImagen($nombreArchivo) {
-        if (!$nombreArchivo || !preg_match('/^\d+_/', $nombreArchivo)) {
-            return;
-        }
-
-        $ruta = __DIR__ . '/../public/img/' . basename($nombreArchivo);
-        if (is_file($ruta)) {
-            unlink($ruta);
-        }
     }
 
     private function noEncontrado() {
