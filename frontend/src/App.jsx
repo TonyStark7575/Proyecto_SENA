@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router'
 import { alExpirarSesion, pedirApi } from './api'
 import Login from './components/Login'
 import Layout from './components/Layout'
-import EnConstruccion from './components/EnConstruccion'
+import Dashboard from './paginas/Dashboard'
 import NoEncontrado from './components/NoEncontrado'
 import ListaProductos from './paginas/productos/ListaProductos'
 import DetalleProducto from './paginas/productos/DetalleProducto'
@@ -74,7 +74,7 @@ function App() {
     <Routes>
       {/* Ruta padre sin path: Layout envuelve a todas las páginas de adentro */}
       <Route element={<Layout usuario={usuario} onLogout={cerrarSesion} onRecargarSesion={recargarSesion} />}>
-        <Route index element={<EnConstruccion titulo="DASHBOARD" />} />
+        <Route index element={<Dashboard />} />
         <Route path="productos" element={<ListaProductos />} />
         {/* /productos/nuevo no se confunde con :id: React Router prefiere la ruta fija sobre la variable */}
         <Route path="productos/nuevo" element={<FormularioProducto producto={null} />} />

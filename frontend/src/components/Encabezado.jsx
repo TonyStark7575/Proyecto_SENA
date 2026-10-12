@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useOutletContext } from 'react-router'
 import Sidebar from './Sidebar'
 
-// Encabezado morado + menú lateral, igual que en las vistas PHP.
-// Cada página le pasa su título; lo que va dentro (por ejemplo el buscador) llega como children
-function Encabezado({ titulo, children }) {
+// Encabezado morado + menú lateral, igual que en las vistas PHP. Dos variantes:
+// - titulo: la barra "PRODUCTOS", "CLIENTES / DETALLES"... con lo que llegue como children al lado (buscador)
+// - tituloApp: el nombre grande entre los botones (solo el dashboard) y children debajo, a lo ancho
+function Encabezado({ titulo, tituloApp, children }) {
   // Reemplaza a sidebar.js: el botón ☰ solo cambia este estado
   const [menuAbierto, setMenuAbierto] = useState(false)
   const { onLogout } = useOutletContext()
@@ -22,6 +23,9 @@ function Encabezado({ titulo, children }) {
           >
             <i className="bi bi-list"></i>
           </button>
+
+          {tituloApp && <h1 className="app-header__title">{tituloApp}</h1>}
+
           <button
             className="app-header__logout"
             type="button"
@@ -32,10 +36,14 @@ function Encabezado({ titulo, children }) {
           </button>
         </div>
 
-        <div className="users-header-bar">
-          <span className="users-header-bar__title">{titulo}</span>
-          {children}
-        </div>
+        {titulo ? (
+          <div className="users-header-bar">
+            <span className="users-header-bar__title">{titulo}</span>
+            {children}
+          </div>
+        ) : (
+          children
+        )}
       </header>
 
       {/* Al cambiar de página se monta un Encabezado nuevo, así que el menú vuelve a estar cerrado */}
