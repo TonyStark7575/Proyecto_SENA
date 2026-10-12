@@ -33,6 +33,14 @@ class DetallePedido {
         return $consulta->fetchAll();
     }
 
+    public function obtenerPorId($idDetalle) {
+        $sql = "SELECT * FROM detalle_pedido WHERE id_detalle = :id";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':id', $idDetalle, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetch();
+    }
+
     public function eliminar($idDetalle) {
         $sql = "DELETE FROM detalle_pedido WHERE id_detalle = :id";
         $consulta = $this->conexion->prepare($sql);
