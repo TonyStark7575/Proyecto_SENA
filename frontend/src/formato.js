@@ -31,6 +31,8 @@ export function claseEstadoPedido(estado) {
 
 export const ESTADOS_PEDIDO = ['Pendiente', 'En proceso', 'Entregado', 'Cancelado']
 
+export const METODOS_PAGO = ['Efectivo', 'Transferencia']
+
 // Para los buscadores: true si alguno de los textos contiene la búsqueda
 // (sin distinguir mayúsculas ni espacios a los lados)
 export function coincide(busqueda, ...textos) {

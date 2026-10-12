@@ -17,6 +17,10 @@ import ListaPedidos from './paginas/pedidos/ListaPedidos'
 import DetallePedido from './paginas/pedidos/DetallePedido'
 import NuevoPedido from './paginas/pedidos/NuevoPedido'
 import EditarPedido from './paginas/pedidos/EditarPedido'
+import ListaPagos from './paginas/pagos/ListaPagos'
+import DetallePago from './paginas/pagos/DetallePago'
+import NuevoPago from './paginas/pagos/NuevoPago'
+import EditarPago from './paginas/pagos/EditarPago'
 
 function App() {
   const [usuario, setUsuario] = useState(null)       // null = sin sesión
@@ -73,7 +77,10 @@ function App() {
         <Route path="pedidos/nuevo" element={<NuevoPedido />} />
         <Route path="pedidos/:id" element={<DetallePedido />} />
         <Route path="pedidos/:id/editar" element={<EditarPedido />} />
-        <Route path="pagos" element={<EnConstruccion titulo="PAGOS" />} />
+        <Route path="pagos" element={<ListaPagos />} />
+        <Route path="pagos/nuevo" element={<NuevoPago />} />
+        <Route path="pagos/:id" element={<DetallePago />} />
+        <Route path="pagos/:id/editar" element={<EditarPago />} />
         {/* "*" atrapa cualquier URL que no coincida con las de arriba */}
         <Route path="*" element={<NoEncontrado />} />
       </Route>
