@@ -1,46 +1,38 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router'
+import { alExpirarSesion, pedirApi } from './api'
 import Login from './components/Login'
 import Layout from './components/Layout'
-import ListaProductos from './components/ListaProductos'
 import EnConstruccion from './components/EnConstruccion'
 import NoEncontrado from './components/NoEncontrado'
-
-const URL_SESION = '/ProyectoSENA/public/index.php?ruta=api/sesion'
-const URL_LOGOUT = '/ProyectoSENA/public/index.php?ruta=api/logout'
+import ListaProductos from './paginas/productos/ListaProductos'
 
 function App() {
   const [usuario, setUsuario] = useState(null)       // null = sin sesión
   const [verificando, setVerificando] = useState(true)
 
+  // useCallback: la misma función en cada redibujo
+  const sesionExpirada = useCallback(() => setUsuario(null), [])
+
+  // Cualquier 401 de la API (sesión vencida, usuario desactivado) vuelve al login
+  useEffect(() => {
+    alExpirarSesion(sesionExpirada)
+  }, [sesionExpirada])
+
   // Al arrancar (o al recargar): ¿la cookie tiene una sesión válida?
   useEffect(() => {
-    async function verificarSesion() {
-      try {
-        const respuesta = await fetch(URL_SESION)
-        if (respuesta.ok) {
-          setUsuario(await respuesta.json())
-        }
-      } catch {
-        // Sin conexión: se muestra el login, que informará el error al intentar entrar
-      } finally {
-        setVerificando(false)
+    pedirApi('sesion').then((respuesta) => {
+      if (respuesta.ok) {
+        setUsuario(respuesta.datos)
       }
-    }
-    verificarSesion()
+      setVerificando(false)
+    })
   }, [])
 
   async function cerrarSesion() {
-    try {
-      await fetch(URL_LOGOUT, { method: 'POST' })
-    } finally {
-      setUsuario(null) // pase lo que pase, React vuelve al login
-    }
+    await pedirApi('logout', { metodo: 'POST' })
+    setUsuario(null) // pase lo que pase, React vuelve al login
   }
-
-  // useCallback: la misma función en cada redibujo, para que el useEffect
-  // de ListaProductos no se vuelva a ejecutar sin necesidad
-  const sesionExpirada = useCallback(() => setUsuario(null), [])
 
   if (verificando) {
     return <p className="text-center text-muted mt-5">Cargando…</p>
@@ -54,11 +46,7 @@ function App() {
   return (
     <Routes>
       {/* Ruta padre sin path: Layout envuelve a todas las páginas de adentro */}
-      <Route
-        element={
-          <Layout usuario={usuario} onLogout={cerrarSesion} onSesionExpirada={sesionExpirada} />
-        }
-      >
+      <Route element={<Layout usuario={usuario} onLogout={cerrarSesion} />}>
         <Route index element={<EnConstruccion titulo="DASHBOARD" />} />
         <Route path="productos" element={<ListaProductos />} />
         <Route path="usuarios" element={<EnConstruccion titulo="USUARIOS" />} />

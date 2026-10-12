@@ -1,5 +1,7 @@
+import { formatearPrecio } from '../formato'
+
 // Las imágenes llegan por el proxy de Vite, igual que la API
-const URL_IMAGENES = '/ProyectoSENA/public/img/'
+export const URL_IMAGENES = '/ProyectoSENA/public/img/'
 
 function TarjetaProducto({ producto }) {
   // Igual que el if/else de lista.php: si no tiene imagen, se usa el logo
@@ -7,11 +9,7 @@ function TarjetaProducto({ producto }) {
     ? URL_IMAGENES + producto.imagen
     : URL_IMAGENES + 'Logo-no-texto.jpg'
 
-  // Equivale a number_format($precio, 0, ',', '.') → "45.000"
-  // Number() porque la API entrega el precio como texto ("45000.00")
-  const precio = Number(producto.precio).toLocaleString('es-CO', {
-    maximumFractionDigits: 0,
-  })
+  const precio = formatearPrecio(producto.precio)
 
   return (
     <div className="product-card">

@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-const URL_LOGIN = '/ProyectoSENA/public/index.php?ruta=api/login'
+import { mensajeDeError, pedirApi } from '../api'
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('')
@@ -13,26 +12,16 @@ function Login({ onLogin }) {
     setError(null)
     setEnviando(true)
 
-    try {
-      const respuesta = await fetch(URL_LOGIN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-      const datos = await respuesta.json()
+    const respuesta = await pedirApi('login', { metodo: 'POST', datos: { email, password } })
+    setEnviando(false)
 
-      if (respuesta.ok) {
-        onLogin(datos) // avisa a App: { id_usuario, nombre, rol }
-      } else if (respuesta.status === 422) {
-        setError('Escribe tu correo y tu contraseña.')
-      } else {
-        // 401 (credenciales) o 403 (desactivado): el mensaje viene de la API
-        setError(datos.error ?? 'No se pudo iniciar sesión.')
-      }
-    } catch {
-      setError('No se pudo conectar con el servidor.')
-    } finally {
-      setEnviando(false)
+    if (respuesta.ok) {
+      onLogin(respuesta.datos) // avisa a App: { id_usuario, nombre, rol }
+    } else if (respuesta.status === 422) {
+      setError('Escribe tu correo y tu contraseña.')
+    } else {
+      // 401 (credenciales), 403 (desactivado) o sin conexión: el mensaje viene de la API o de pedirApi
+      setError(mensajeDeError(respuesta))
     }
   }
 
