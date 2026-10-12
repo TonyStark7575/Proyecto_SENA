@@ -49,7 +49,8 @@ class Usuario
         $consulta->bindParam(':telefono', $telefono, PDO::PARAM_STR);
         $consulta->bindParam(':password', $passwordHasheado, PDO::PARAM_STR);
         $consulta->bindParam(':rol', $rol, PDO::PARAM_STR);
-        return $consulta->execute();
+        $consulta->execute();
+        return $this->conexion->lastInsertId();
     }
 
     public function actualizar($id, $nombre, $email, $telefono, $rol, $password = null)

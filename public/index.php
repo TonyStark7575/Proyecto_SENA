@@ -230,6 +230,7 @@ switch ($recurso) {
             'clientes'  => 'ClienteApiController',
             'pedidos'   => 'PedidoApiController',
             'pagos'     => 'PagoApiController',
+            'usuarios'  => 'UsuarioApiController',
         ];
 
         if (isset($recursosApi[$accion])) {
