@@ -1,0 +1,39 @@
+/* Estilos que solo usa la versión React (no existen en las vistas PHP).
+   Se carga después de base, components y pages para poder complementarlos. */
+
+/* ========== FILTROS DE PEDIDOS: cuál está activo ========== */
+.filter-pill {
+  cursor: pointer;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Cuando hay un filtro elegido, los demás se ven apagados */
+.filter-pills--con-filtro .filter-pill {
+  opacity: 0.45;
+}
+
+.filter-pills--con-filtro .filter-pill--activo {
+  opacity: 1;
+  box-shadow: 0 0 0 3px var(--color-primario);
+}
+
+/* ========== CARRITO DEL PEDIDO ========== */
+.carrito__vacio {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin: 8px 0;
+}
+
+.carrito__total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  padding-top: 8px;
+}
+
+.boton-icono {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
