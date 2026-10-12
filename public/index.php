@@ -10,9 +10,11 @@ $accion = $partes[1] ?? 'index';
 
 // ===== GUARDIA DE AUTENTICACIÓN =====
 $rutasPublicas = ['login'];
+// De la API solo es pública la ruta completa api/login; el resto de api exige sesión
+$rutasApiPublicas = ['api/login'];
 $haySesion = isset($_SESSION['id_usuario']);
 
-if (!$haySesion && !in_array($recurso, $rutasPublicas)) {
+if (!$haySesion && !in_array($recurso, $rutasPublicas) && !in_array($ruta, $rutasApiPublicas)) {
 
     // Peticiones a la API: responder JSON, nunca redirigir
     if ($recurso === 'api') {
@@ -163,6 +165,22 @@ switch ($recurso) {
                 $api->actualizar();
             } elseif ($metodo === 'DELETE') {
                 $api->eliminar();
+            } else {
+                http_response_code(405);
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['error' => 'Método no permitido'], JSON_UNESCAPED_UNICODE);
+            }
+        } elseif (in_array($accion, ['login', 'logout', 'sesion'])) {
+            require_once __DIR__ . '/../controllers/api/AuthApiController.php';
+            $api = new AuthApiController($conexion);
+            $metodo = $_SERVER['REQUEST_METHOD'];
+
+            if ($accion === 'login' && $metodo === 'POST') {
+                $api->login();
+            } elseif ($accion === 'logout' && $metodo === 'POST') {
+                $api->logout();
+            } elseif ($accion === 'sesion' && $metodo === 'GET') {
+                $api->sesion();
             } else {
                 http_response_code(405);
                 header('Content-Type: application/json; charset=utf-8');
