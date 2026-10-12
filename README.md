@@ -116,7 +116,7 @@ Todas las rutas son `public/index.php?ruta=api/...`, responden JSON y, salvo `lo
 | `api/login` | POST | `{ email, password }` → `{ id_usuario, nombre, rol }` |
 | `api/logout` | POST | 204 |
 | `api/sesion` | GET | Usuario de la sesión actual |
-| `api/dashboard` | GET | Totales, ventas de hoy y pedidos recientes |
+| `api/dashboard` | GET | Totales, ventas y cobrado de hoy, y pedidos recientes |
 | `api/productos` | GET, POST, PUT, DELETE | `&id=N` para uno |
 | `api/productos/imagen` | POST, DELETE | Subir (multipart, campo `imagen`, cabecera `X-Requested-With`) o quitar la imagen |
 | `api/clientes` | GET, POST, PUT, DELETE | El detalle incluye su historial de pedidos y pagos |
@@ -137,7 +137,8 @@ Todas las rutas son `public/index.php?ruta=api/...`, responden JSON y, salvo `lo
 - Un pedido con pagos no se elimina (se cancela); un producto o cliente que está en pedidos tampoco.
 - Un usuario con clientes o pedidos registrados se desactiva en vez de borrarse. Nadie puede eliminarse, desactivarse ni cambiarse el rol a sí mismo.
 - Un usuario desactivado pierde la sesión en su siguiente petición.
-- *Ventas Hoy* = suma de los pedidos registrados hoy, sin contar los cancelados.
+- *Ventas Hoy* = suma de los pedidos registrados hoy, sin contar los cancelados (lo vendido).
+- *Cobrado Hoy* = suma de los pagos registrados hoy, de pedidos de cualquier fecha (el dinero que entró).
 
 ---
 

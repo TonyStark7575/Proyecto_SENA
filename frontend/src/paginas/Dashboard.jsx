@@ -60,6 +60,11 @@ function Dashboard() {
                 <p className="stat-card__label">Pedidos Pendientes</p>
                 <p className="stat-card__value">{resumen.pedidos_pendientes}</p>
               </Link>
+              {/* Ventas = lo vendido hoy; Cobrado = el dinero que entró hoy (pagos), sea de pedidos de hoy o anteriores */}
+              <Link to="/pagos" className="stat-card text-decoration-none" title={`${resumen.pagos_hoy} pago(s) registrados hoy`}>
+                <p className="stat-card__label">Cobrado Hoy</p>
+                <p className="stat-card__value">${formatearPrecio(resumen.cobrado_hoy)}</p>
+              </Link>
             </div>
 
             <div className="section-card">

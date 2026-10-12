@@ -51,6 +51,16 @@ class Pago {
         return $consulta->fetchAll();
     }
 
+    // Cobrado hoy: dinero que entró hoy, sumando todos los pagos registrados hoy
+    public function cobradoDeHoy() {
+        $sql = "SELECT COALESCE(SUM(monto), 0) AS total, COUNT(*) AS cantidad
+                FROM pago
+                WHERE DATE(fecha_p) = CURDATE()";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
+        return $consulta->fetch();
+    }
+
     public function crear($idPedido, $monto, $metodo) {
         $sql = "INSERT INTO pago (id_pedido_p, monto, metodo) VALUES (:idPedido, :monto, :metodo)";
         $consulta = $this->conexion->prepare($sql);
