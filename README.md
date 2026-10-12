@@ -7,6 +7,18 @@ Proyecto formativo SENA.
 - **Backend:** API REST en PHP 8 (MVC sin framework, PDO) + MySQL/MariaDB.
 - **Frontend:** React 19 + React Router + Vite, con Bootstrap 5 y Bootstrap Icons.
 
+## Acceso rápido (datos de demostración)
+
+Con XAMPP encendido: **http://localhost/ProyectoSENA/** · contraseña de todos: **`Demo-2026!`**
+
+| Correo | Rol |
+|---|---|
+| admin.demo@ejemplo.com | Administradora |
+| carlos.repartidor@ejemplo.com | Repartidor |
+| diana.repartidora@ejemplo.com | Repartidor inactivo (muestra el bloqueo de acceso) |
+
+Son cuentas solo para pruebas: antes de usar el sistema con datos reales hay que cambiar sus contraseñas o desactivarlas.
+
 ---
 
 ## Estructura
