@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
+import { useOutletContext } from 'react-router'
+import Encabezado from './Encabezado'
 import TarjetaProducto from './TarjetaProducto'
 
 const URL_API = '/ProyectoSENA/public/index.php?ruta=api/productos'
 
-function ListaProductos({ onLogout, onSesionExpirada }) {
+function ListaProductos() {
+  // Llega del <Outlet context> de Layout
+  const { onSesionExpirada } = useOutletContext()
+
   const [productos, setProductos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
@@ -64,41 +69,23 @@ function ListaProductos({ onLogout, onSesionExpirada }) {
   }
 
   return (
-    <main className="users-page">
-      <header className="app-header">
-        <div className="app-header__top">
-          {/* El menú se conecta en la Etapa 5 */}
-          <button className="app-header__menu" type="button" aria-label="Abrir menú">
-            <i className="bi bi-list"></i>
-          </button>
-          <button
-            className="app-header__logout"
-            type="button"
-            aria-label="Cerrar sesión"
-            onClick={onLogout}
-          >
-            <i className="bi bi-box-arrow-right"></i>
-          </button>
+    <>
+      <Encabezado titulo="PRODUCTOS">
+        <div className="search-bar search-bar--compact">
+          <i className="bi bi-search search-bar__icon"></i>
+          <input
+            type="search"
+            className="search-bar__input"
+            placeholder="Buscar..."
+            aria-label="Buscar"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+          />
         </div>
-
-        <div className="users-header-bar">
-          <span className="users-header-bar__title">PRODUCTOS</span>
-          <div className="search-bar search-bar--compact">
-            <i className="bi bi-search search-bar__icon"></i>
-            <input
-              type="search"
-              className="search-bar__input"
-              placeholder="Buscar..."
-              aria-label="Buscar"
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-            />
-          </div>
-        </div>
-      </header>
+      </Encabezado>
 
       <section className="users-content">{contenido}</section>
-    </main>
+    </>
   )
 }
 
