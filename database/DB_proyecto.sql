@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `los_hilos_maya`.`producto` (
   `nombre_p` VARCHAR(50) NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL,
   `descripcion` TEXT NULL DEFAULT NULL,
+  `imagen` VARCHAR(255) NULL DEFAULT NULL,
   `fecha_registro` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pro`))
 ENGINE = InnoDB
