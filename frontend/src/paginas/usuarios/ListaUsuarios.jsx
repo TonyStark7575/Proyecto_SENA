@@ -56,7 +56,7 @@ function ListaUsuarios() {
         <Buscador valor={busqueda} onCambio={setBusqueda} />
       </Encabezado>
 
-      <section className="users-content">
+      <section className="users-content users-content--lista">
         <Alerta mensaje={flash} />
         {contenido}
       </section>

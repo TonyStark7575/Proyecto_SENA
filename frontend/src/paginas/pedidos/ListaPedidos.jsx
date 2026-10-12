@@ -72,7 +72,7 @@ function ListaPedidos() {
         <Buscador valor={busqueda} onCambio={setBusqueda} />
       </Encabezado>
 
-      <section className="users-content">
+      <section className="users-content users-content--lista">
         <Alerta mensaje={flash} />
 
         <div className={'filter-pills' + (filtro ? ' filter-pills--con-filtro' : '')}>

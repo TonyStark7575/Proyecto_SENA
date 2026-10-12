@@ -37,3 +37,32 @@
   padding: 0;
   cursor: pointer;
 }
+
+/* ========== LOGIN: botón para mostrar u ocultar la contraseña ========== */
+.campo-password {
+  position: relative;
+  display: inline-block;
+}
+
+/* Espacio a la derecha para que el texto no quede debajo del ojo */
+.campo-password .login-form__input {
+  padding-right: 40px;
+}
+
+.campo-password__boton {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.campo-password__boton:hover,
+.campo-password__boton:focus-visible {
+  color: var(--color-primario);
+}

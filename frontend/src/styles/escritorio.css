@@ -1,0 +1,111 @@
+/* ===========================
+   ESCRITORIO Y TABLET (solo React)
+   El diseño base (base, components, pages) es para celular.
+   Aquí se adapta a pantallas más anchas, sin cambiar nada en celular.
+=========================== */
+
+/* La marca del menú lateral solo se ve cuando el menú queda fijo (escritorio) */
+.sidebar-menu__marca {
+  display: none;
+}
+
+/* ========== TABLET (desde 768px) ========== */
+@media (min-width: 768px) {
+  .users-content,
+  .dashboard-content {
+    max-width: 1100px;
+    padding: 24px 32px;
+  }
+
+  /* Listas: las tarjetas se acomodan en columnas.
+     Lo que no es tarjeta (alertas, filtros, mensajes) ocupa la fila completa */
+  .users-content--lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    column-gap: 16px;
+    align-items: start;
+  }
+
+  .users-content--lista > :not(.entity-card) {
+    grid-column: 1 / -1;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  /* Formularios y detalles: centrados, con un ancho cómodo de lectura */
+  .users-content > .form-card,
+  .users-content > .alert {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* La barra del título y el buscador no se estiran de punta a punta */
+  .users-header-bar,
+  .app-header > .search-bar {
+    max-width: 1100px;
+  }
+
+  .search-bar--compact {
+    max-width: 360px;
+  }
+
+  /* Tarjetas del dashboard: repartidas en partes iguales, como máximo un tercio de la fila
+     (así la tarjeta que queda sola en su fila no se estira de punta a punta) */
+  .stat-row .stat-card {
+    flex: 1 1 0;
+    max-width: calc((100% - 20px) / 3);
+  }
+}
+
+/* ========== ESCRITORIO (desde 992px): menú lateral fijo ========== */
+@media (min-width: 992px) {
+  .users-page {
+    padding-left: 240px;
+  }
+
+  /* El menú siempre visible a la izquierda, sin importar el botón ☰ */
+  .sidebar-menu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    padding-top: 0;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  /* Ya no hace falta el botón para abrir el menú (se oculta sin mover el botón de salir) */
+  .app-header__menu {
+    visibility: hidden;
+  }
+
+  .sidebar-menu__marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    margin-bottom: 8px;
+    color: var(--color-blanco);
+    font-family: var(--fuente-marca);
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .sidebar-menu__marca img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* El login se ve un poco más amplio */
+  .login-card {
+    max-width: 380px;
+  }
+}

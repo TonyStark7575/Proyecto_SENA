@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router'
+import { URL_IMAGENES } from '../formato'
 
 // Mismo menú que views/layouts/sidebar.php, pero con rutas de React
 const ITEMS_MENU = [
@@ -13,6 +14,12 @@ const ITEMS_MENU = [
 function Sidebar({ abierto, onLogout }) {
   return (
     <nav className={'sidebar-menu' + (abierto ? ' sidebar-menu--abierto' : '')}>
+      {/* Solo se ve en escritorio, cuando el menú queda fijo a la izquierda (escritorio.css) */}
+      <div className="sidebar-menu__marca">
+        <img src={URL_IMAGENES + 'Logo-no-texto.jpg'} alt="" />
+        Los Hilos de Maya
+      </div>
+
       {ITEMS_MENU.map((item) => (
         // NavLink sabe si su ruta es la actual: reemplaza el $moduloActivo de PHP.
         // "end" en "/" evita que Dashboard quede activo en todas las páginas

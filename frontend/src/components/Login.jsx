@@ -6,6 +6,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [enviando, setEnviando] = useState(false)
+  const [verPassword, setVerPassword] = useState(false)
 
   async function manejarEnvio(e) {
     e.preventDefault() // evita que el formulario recargue la página
@@ -56,17 +57,28 @@ function Login({ onLogin }) {
             <br />
             <br />
 
-            <input
-              type="password"
-              id="password"
-              className="login-form__input rounded"
-              placeholder="CONTRASEÑA"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <i className="bi bi-eye-slash-fill login-form__icon"></i>
+            {/* El ojo cambia el tipo del campo: "password" (puntos) o "text" (se lee) */}
+            <span className="campo-password">
+              <input
+                type={verPassword ? 'text' : 'password'}
+                id="password"
+                className="login-form__input rounded"
+                placeholder="CONTRASEÑA"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="campo-password__boton"
+                aria-label={verPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                aria-pressed={verPassword}
+                onClick={() => setVerPassword(!verPassword)}
+              >
+                <i className={verPassword ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'}></i>
+              </button>
+            </span>
           </div>
 
           {error && (
