@@ -1,5 +1,5 @@
-// Punto único para hablar con la API PHP (llega a Apache a través del proxy de Vite)
-const URL_BASE = '/ProyectoSENA/public/index.php?ruta=api/'
+// Punto único para hablar con la API PHP (en desarrollo llega a Apache a través del proxy de Vite)
+import { URL_API } from './config'
 
 // App registra aquí qué hacer cuando la API responde 401 (sesión vencida o usuario desactivado)
 let manejarSesionExpirada = () => {}
@@ -29,7 +29,7 @@ export async function pedirApi(ruta, { metodo = 'GET', datos, formulario } = {})
 
   let respuesta
   try {
-    respuesta = await fetch(URL_BASE + ruta, opciones)
+    respuesta = await fetch(URL_API + ruta, opciones)
   } catch {
     return { ok: false, status: 0, datos: { error: 'No se pudo conectar con el servidor.' } }
   }

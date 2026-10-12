@@ -14,3 +14,6 @@ public/img/[0-9]*_*
 
 # Respaldos de datos de la BD (pueden contener datos personales)
 database/respaldo_*.sql
+
+# App React compilada: se genera con "npm run build" (no se guarda en Git)
+public/app/

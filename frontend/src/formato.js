@@ -40,5 +40,5 @@ export function coincide(busqueda, ...textos) {
   return textos.some((texto) => String(texto ?? '').toLowerCase().includes(buscado))
 }
 
-// Las imágenes de productos las sirve Apache; llegan por el proxy de Vite, igual que la API
-export const URL_IMAGENES = '/ProyectoSENA/public/img/'
+// Las imágenes de productos las sirve Apache (la ruta sale de config.js)
+export { URL_IMAGENES } from './config'

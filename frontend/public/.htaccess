@@ -1,0 +1,9 @@
+# Vite copia este archivo a public/app/ al compilar (npm run build).
+# Las rutas de React (/clientes, /pedidos/7, ...) no son archivos reales:
+# si lo pedido no existe como archivo, Apache responde con index.html y React Router muestra la página.
+# Así una URL se puede recargar (F5) o compartir sin que Apache dé 404.
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+# Un archivo de assets/ (js, css, fuentes) que no existe debe dar 404, no la página
+RewriteCond %{REQUEST_URI} !/assets/
+RewriteRule ^ index.html [L]

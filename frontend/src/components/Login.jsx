@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { mensajeDeError, pedirApi } from '../api'
+import { URL_IMAGENES } from '../formato'
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('')
@@ -30,7 +31,7 @@ function Login({ onLogin }) {
     <main className="login-page">
       <header className="login-header text-center">
         <img
-          src="/ProyectoSENA/public/img/Logo-no-texto.jpg"
+          src={URL_IMAGENES + 'Logo-no-texto.jpg'}
           alt="Logo Los Hilos de Maya"
           className="login-header__logo"
         />

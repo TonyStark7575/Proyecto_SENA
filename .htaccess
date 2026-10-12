@@ -1,0 +1,19 @@
+# ===========================================================
+# Raíz del proyecto: desde el navegador SOLO se puede entrar a public/
+# (ahí viven la API, la app React compilada y las imágenes).
+# Todo lo demás (.git, config, database, models, helpers, frontend...)
+# es código o datos internos: responde 403 aunque la carpeta no tenga su propio .htaccess.
+# En la nube se hace lo mismo apuntando el "document root" a public/.
+# ===========================================================
+
+# No mostrar listados de carpetas
+Options -Indexes
+
+RewriteEngine On
+
+# La raíz lleva directo a la aplicación. Se arma con la URL pedida (por ejemplo /ProyectoSENA/)
+# para no escribir el nombre de la carpeta: así funciona igual en cualquier servidor
+RewriteRule ^$ %{REQUEST_URI}public/app/ [R=302,L]
+
+# Cualquier ruta que no empiece por public/ queda prohibida
+RewriteRule ^(?!public(/|$)) - [F]
