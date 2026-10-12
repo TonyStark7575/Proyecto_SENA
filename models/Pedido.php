@@ -29,6 +29,14 @@ class Pedido {
         return $consulta->fetch();
     }
 
+    public function obtenerPorCliente($idCliente) {
+        $sql = "SELECT * FROM pedido WHERE id_cliente_p = :idCliente ORDER BY fecha_registro DESC";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':idCliente', $idCliente, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetchAll();
+    }
+
     public function crear($idCliente, $idUsuario, $estado) {
         $sql = "INSERT INTO pedido (id_cliente_p, id_usuario_p, estado, total, saldo) 
                 VALUES (:idCliente, :idUsuario, :estado, 0, 0)";

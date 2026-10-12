@@ -31,6 +31,26 @@ class Pago {
         return $consulta->fetch();
     }
 
+    public function obtenerPorCliente($idCliente) {
+        $sql = "SELECT pago.*
+                FROM pago
+                JOIN pedido ON pago.id_pedido_p = pedido.id_pedido
+                WHERE pedido.id_cliente_p = :idCliente
+                ORDER BY pago.fecha_p DESC";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':idCliente', $idCliente, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetchAll();
+    }
+
+    public function obtenerPorPedido($idPedido) {
+        $sql = "SELECT * FROM pago WHERE id_pedido_p = :idPedido ORDER BY fecha_p DESC";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':idPedido', $idPedido, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetchAll();
+    }
+
     public function crear($idPedido, $monto, $metodo) {
         $sql = "INSERT INTO pago (id_pedido_p, monto, metodo) VALUES (:idPedido, :monto, :metodo)";
         $consulta = $this->conexion->prepare($sql);

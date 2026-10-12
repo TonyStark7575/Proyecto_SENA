@@ -31,7 +31,8 @@ class Cliente {
         $consulta->bindParam(':email', $email, PDO::PARAM_STR);
         $consulta->bindParam(':telefono', $telefono, PDO::PARAM_STR);
         $consulta->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
-        return $consulta->execute();
+        $consulta->execute();
+        return $this->conexion->lastInsertId();
     }
 
     public function actualizar($id, $nombre, $email, $telefono, $idUsuario) {

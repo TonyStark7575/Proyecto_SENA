@@ -227,6 +227,7 @@ switch ($recurso) {
         // sub-ruta (api/productos/imagen) y el método HTTP, cuál de sus métodos ejecutar
         $recursosApi = [
             'productos' => 'ProductoApiController',
+            'clientes'  => 'ClienteApiController',
         ];
 
         if (isset($recursosApi[$accion])) {
