@@ -21,6 +21,10 @@ import ListaPagos from './paginas/pagos/ListaPagos'
 import DetallePago from './paginas/pagos/DetallePago'
 import NuevoPago from './paginas/pagos/NuevoPago'
 import EditarPago from './paginas/pagos/EditarPago'
+import ListaUsuarios from './paginas/usuarios/ListaUsuarios'
+import DetalleUsuario from './paginas/usuarios/DetalleUsuario'
+import FormularioUsuario from './paginas/usuarios/FormularioUsuario'
+import EditarUsuario from './paginas/usuarios/EditarUsuario'
 
 function App() {
   const [usuario, setUsuario] = useState(null)       // null = sin sesión
@@ -44,6 +48,14 @@ function App() {
     })
   }, [])
 
+  // Vuelve a leer la sesión (por ejemplo, después de que el usuario edite su propio nombre)
+  async function recargarSesion() {
+    const respuesta = await pedirApi('sesion')
+    if (respuesta.ok) {
+      setUsuario(respuesta.datos)
+    }
+  }
+
   async function cerrarSesion() {
     await pedirApi('logout', { metodo: 'POST' })
     setUsuario(null) // pase lo que pase, React vuelve al login
@@ -61,14 +73,17 @@ function App() {
   return (
     <Routes>
       {/* Ruta padre sin path: Layout envuelve a todas las páginas de adentro */}
-      <Route element={<Layout usuario={usuario} onLogout={cerrarSesion} />}>
+      <Route element={<Layout usuario={usuario} onLogout={cerrarSesion} onRecargarSesion={recargarSesion} />}>
         <Route index element={<EnConstruccion titulo="DASHBOARD" />} />
         <Route path="productos" element={<ListaProductos />} />
         {/* /productos/nuevo no se confunde con :id: React Router prefiere la ruta fija sobre la variable */}
         <Route path="productos/nuevo" element={<FormularioProducto producto={null} />} />
         <Route path="productos/:id" element={<DetalleProducto />} />
         <Route path="productos/:id/editar" element={<EditarProducto />} />
-        <Route path="usuarios" element={<EnConstruccion titulo="USUARIOS" />} />
+        <Route path="usuarios" element={<ListaUsuarios />} />
+        <Route path="usuarios/nuevo" element={<FormularioUsuario usuarioEditado={null} />} />
+        <Route path="usuarios/:id" element={<DetalleUsuario />} />
+        <Route path="usuarios/:id/editar" element={<EditarUsuario />} />
         <Route path="clientes" element={<ListaClientes />} />
         <Route path="clientes/nuevo" element={<FormularioCliente cliente={null} />} />
         <Route path="clientes/:id" element={<DetalleCliente />} />
