@@ -57,7 +57,8 @@ class Pago {
         $consulta->bindParam(':idPedido', $idPedido, PDO::PARAM_INT);
         $consulta->bindParam(':monto', $monto);
         $consulta->bindParam(':metodo', $metodo, PDO::PARAM_STR);
-        return $consulta->execute();
+        $consulta->execute();
+        return $this->conexion->lastInsertId();
     }
 
     public function actualizar($id, $monto, $metodo) {

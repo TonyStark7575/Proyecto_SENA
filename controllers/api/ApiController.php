@@ -78,6 +78,12 @@ class ApiController {
         $this->responderJson(['errores' => $errores], 422);
     }
 
+    // Los montos se comparan en centavos enteros para evitar errores de redondeo con decimales
+    // (por ejemplo 0.1 + 0.2 no da exactamente 0.3 con decimales de punto flotante)
+    protected function centavos($valor) {
+        return (int) round(((float) $valor) * 100);
+    }
+
     // true si la excepción es de una llave foránea que impide borrar (error 1451 de MySQL)
     protected function esBloqueoPorLlaveForanea(PDOException $e) {
         return ($e->errorInfo[1] ?? null) === 1451;

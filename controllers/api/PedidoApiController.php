@@ -322,9 +322,4 @@ class PedidoApiController extends ApiController {
         return array_values($porProducto);
     }
 
-    // Los montos se comparan en centavos enteros para evitar errores de redondeo con decimales
-    private function centavos($valor) {
-        return (int) round(((float) $valor) * 100);
-    }
-
 }
