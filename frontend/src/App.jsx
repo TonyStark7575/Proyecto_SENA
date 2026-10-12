@@ -1,105 +1,52 @@
-import { useEffect, useState } from 'react'
-import TarjetaProducto from './components/TarjetaProducto'
+import { useCallback, useEffect, useState } from 'react'
+import Login from './components/Login'
+import ListaProductos from './components/ListaProductos'
 
-const URL_API = '/ProyectoSENA/public/index.php?ruta=api/productos'
+const URL_SESION = '/ProyectoSENA/public/index.php?ruta=api/sesion'
+const URL_LOGOUT = '/ProyectoSENA/public/index.php?ruta=api/logout'
 
 function App() {
-  const [productos, setProductos] = useState([])   // llegan de la API
-  const [cargando, setCargando] = useState(true)   // ¿todavía esperando?
-  const [error, setError] = useState(null)         // mensaje si algo falla
-  const [busqueda, setBusqueda] = useState('')
+  const [usuario, setUsuario] = useState(null)       // null = sin sesión
+  const [verificando, setVerificando] = useState(true)
 
-  // Se ejecuta UNA vez, después del primer dibujo ([] = no depende de nada)
+  // Al arrancar (o al recargar): ¿la cookie tiene una sesión válida?
   useEffect(() => {
-    async function cargarProductos() {
+    async function verificarSesion() {
       try {
-        const respuesta = await fetch(URL_API)
-
-        if (respuesta.status === 401) {
-          setError('No hay sesión iniciada. Inicia sesión en la aplicación y recarga esta página.')
-          return
+        const respuesta = await fetch(URL_SESION)
+        if (respuesta.ok) {
+          setUsuario(await respuesta.json())
         }
-        if (!respuesta.ok) {
-          setError(`Error del servidor (${respuesta.status}).`)
-          return
-        }
-
-        const datos = await respuesta.json()
-        setProductos(datos)
       } catch {
-        // Sin conexión, o la respuesta no era JSON (el famoso "Unexpected token '<'")
-        setError('No se pudo conectar con el servidor o la respuesta no es válida.')
+        // Sin conexión: se muestra el login, que informará el error al intentar entrar
       } finally {
-        // Se ejecuta siempre: con éxito, con error y también después de un return
-        setCargando(false)
+        setVerificando(false)
       }
     }
-
-    cargarProductos()
+    verificarSesion()
   }, [])
 
-  // Dato derivado, igual que antes
-  const texto = busqueda.trim().toLowerCase()
-  const productosFiltrados = productos.filter((producto) =>
-    producto.nombre_p.toLowerCase().includes(texto)
-  )
-
-  // Qué mostrar según el estado: cargando, error o la lista
-  let contenido
-  if (cargando) {
-    contenido = <p className="text-center text-muted">Cargando productos…</p>
-  } else if (error) {
-    contenido = <div className="alert alert-danger">{error}</div>
-  } else if (productosFiltrados.length === 0) {
-    contenido = (
-      <p className="text-center text-muted">
-        {busqueda
-          ? `No hay productos que coincidan con "${busqueda}".`
-          : 'Todavía no hay productos registrados.'}
-      </p>
-    )
-  } else {
-    contenido = (
-      <div className="products-grid">
-        {productosFiltrados.map((producto) => (
-          <TarjetaProducto key={producto.id_pro} producto={producto} />
-        ))}
-      </div>
-    )
+  async function cerrarSesion() {
+    try {
+      await fetch(URL_LOGOUT, { method: 'POST' })
+    } finally {
+      setUsuario(null) // pase lo que pase, React vuelve al login
+    }
   }
 
-  return (
-    <main className="users-page">
-      <header className="app-header">
-        <div className="app-header__top">
-          {/* Menú y logout se conectan más adelante */}
-          <button className="app-header__menu" type="button" aria-label="Abrir menú">
-            <i className="bi bi-list"></i>
-          </button>
-          <button className="app-header__logout" type="button" aria-label="Cerrar sesión">
-            <i className="bi bi-box-arrow-right"></i>
-          </button>
-        </div>
+  // useCallback: la misma función en cada redibujo, para que el useEffect
+  // de ListaProductos no se vuelva a ejecutar sin necesidad
+  const sesionExpirada = useCallback(() => setUsuario(null), [])
 
-        <div className="users-header-bar">
-          <span className="users-header-bar__title">PRODUCTOS</span>
-          <div className="search-bar search-bar--compact">
-            <i className="bi bi-search search-bar__icon"></i>
-            <input
-              type="search"
-              className="search-bar__input"
-              placeholder="Buscar..."
-              aria-label="Buscar"
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-            />
-          </div>
-        </div>
-      </header>
+  if (verificando) {
+    return <p className="text-center text-muted mt-5">Cargando…</p>
+  }
 
-      <section className="users-content">{contenido}</section>
-    </main>
-  )
+  if (!usuario) {
+    return <Login onLogin={setUsuario} />
+  }
+
+  return <ListaProductos onLogout={cerrarSesion} onSesionExpirada={sesionExpirada} />
 }
 
 export default App
