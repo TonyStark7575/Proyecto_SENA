@@ -58,7 +58,7 @@
 
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger py-2 mt-3" role="alert">
-                    <?php echo $error; ?>
+                    <?php echo htmlspecialchars($error); ?>
                 </div>
             <?php endif; ?>
 

@@ -31,7 +31,7 @@
       </button>
     </div>
 
-    <span class="users-header-bar__title">PAGOS/ DETALLE #P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></span>
+    <span class="users-header-bar__title">PAGOS/ DETALLE #P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></span>
 
   </header>
 
@@ -41,22 +41,22 @@
   <section class="users-content">
 
     <div class="form-card">
-      <h3 class="form-card__title">Detalle del Pago #P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></h3>
+      <h3 class="form-card__title">Detalle del Pago #P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></h3>
 
       <div class="profile-data profile-data--left">
-        <p class="profile-data__row">ID de pago: #P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></p>
-        <p class="profile-data__row">Pedido asociado: #<?php echo $pago['id_pedido']; ?></p>
+        <p class="profile-data__row">ID de pago: #P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></p>
+        <p class="profile-data__row">Pedido asociado: #<?php echo htmlspecialchars($pago['id_pedido']); ?></p>
       </div>
 
-      <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo $pago['id_pedido']; ?>" class="btn-primary-custom btn-primary-custom--secondary btn-primary-custom--sm">
+      <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo htmlspecialchars($pago['id_pedido']); ?>" class="btn-primary-custom btn-primary-custom--secondary btn-primary-custom--sm">
         <i class="bi bi-eye"></i> Ver pedido completo
       </a>
 
       <div class="profile-data profile-data--left" style="margin-top: 16px;">
-        <p class="profile-data__row">Cliente: <?php echo $pago['nombre_c']; ?></p>
-        <p class="profile-data__row">Monto: $<?php echo number_format($pago['monto'], 0, ',', '.'); ?></p>
-        <p class="profile-data__row">Método: <?php echo $pago['metodo']; ?></p>
-        <p class="profile-data__row">Fecha: <?php echo date('d/m/Y', strtotime($pago['fecha_p'])); ?></p>
+        <p class="profile-data__row">Cliente: <?php echo htmlspecialchars($pago['nombre_c']); ?></p>
+        <p class="profile-data__row">Monto: $<?php echo htmlspecialchars(number_format($pago['monto'], 0, ',', '.')); ?></p>
+        <p class="profile-data__row">Método: <?php echo htmlspecialchars($pago['metodo']); ?></p>
+        <p class="profile-data__row">Fecha: <?php echo htmlspecialchars(date('d/m/Y', strtotime($pago['fecha_p']))); ?></p>
         <p class="profile-data__row">
           Estado del pedido:
           <?php if ($pago['saldo'] == 0): ?>
@@ -68,10 +68,10 @@
       </div>
 
       <div class="form-actions form-actions--end">
-        <a href="/ProyectoSENA/public/index.php?ruta=pagos/editar&id=<?php echo $pago['id_pago']; ?>" class="btn-primary-custom">Editar</a>
+        <a href="/ProyectoSENA/public/index.php?ruta=pagos/editar&id=<?php echo htmlspecialchars($pago['id_pago']); ?>" class="btn-primary-custom">Editar</a>
 
         <form method="POST" action="/ProyectoSENA/public/index.php?ruta=pagos/eliminar" style="display: inline;">
-          <input type="hidden" name="id" value="<?php echo $pago['id_pago']; ?>">
+          <input type="hidden" name="id" value="<?php echo htmlspecialchars($pago['id_pago']); ?>">
           <button type="submit" class="btn-primary-custom btn-primary-custom--secondary" onclick="return confirm('¿Eliminar este pago? El saldo del pedido se recalculará.');">
             Eliminar
           </button>

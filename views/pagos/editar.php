@@ -32,7 +32,7 @@
       </button>
     </div>
 
-    <span class="users-header-bar__title">PAGOS/ EDITAR PAGO #P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></span>
+    <span class="users-header-bar__title">PAGOS/ EDITAR PAGO #P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></span>
 
   </header>
 
@@ -42,21 +42,21 @@
   <section class="users-content">
 
     <div class="form-card">
-      <h3 class="form-card__title">Editar Pago #P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></h3>
+      <h3 class="form-card__title">Editar Pago #P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></h3>
 
       <div class="profile-data profile-data--left">
-        <p class="profile-data__row">Pedido: #<?php echo $pago['id_pedido']; ?></p>
-        <p class="profile-data__row">Cliente: <?php echo $pago['nombre_c']; ?></p>
+        <p class="profile-data__row">Pedido: #<?php echo htmlspecialchars($pago['id_pedido']); ?></p>
+        <p class="profile-data__row">Cliente: <?php echo htmlspecialchars($pago['nombre_c']); ?></p>
       </div>
 
       <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=pagos/editar">
 
-        <input type="hidden" name="id" value="<?php echo $pago['id_pago']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($pago['id_pago']); ?>">
 
         <div class="form-row">
           <div class="form-group-custom">
             <label for="monto" class="form-group-custom__label">Monto</label>
-            <input type="number" id="monto" name="monto" class="form-group-custom__input" value="<?php echo $pago['monto']; ?>" step="0.01">
+            <input type="number" id="monto" name="monto" class="form-group-custom__input" value="<?php echo htmlspecialchars($pago['monto']); ?>" step="0.01">
           </div>
 
           <div class="form-group-custom">
@@ -70,7 +70,7 @@
 
         <div class="form-actions">
           <button type="submit" class="btn-primary-custom">Guardar cambios</button>
-          <a href="/ProyectoSENA/public/index.php?ruta=pagos/detalle&id=<?php echo $pago['id_pago']; ?>" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>
+          <a href="/ProyectoSENA/public/index.php?ruta=pagos/detalle&id=<?php echo htmlspecialchars($pago['id_pago']); ?>" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>
         </div>
 
       </form>

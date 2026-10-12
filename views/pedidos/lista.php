@@ -56,7 +56,7 @@
     <?php foreach ($pedidos as $pedido): ?>
     <div class="entity-card">
       <div class="entity-card__top">
-        <p class="entity-card__detail">ID: <?php echo $pedido['id_pedido']; ?></p>
+        <p class="entity-card__detail">ID: <?php echo htmlspecialchars($pedido['id_pedido']); ?></p>
         <?php
           $claseBadge = match($pedido['estado']) {
               'Entregado' => 'badge-status--entregado',
@@ -65,18 +65,18 @@
               default => 'badge-status--repartidor',
           };
         ?>
-        <span class="badge-status <?php echo $claseBadge; ?>"><?php echo $pedido['estado']; ?></span>
+        <span class="badge-status <?php echo $claseBadge; ?>"><?php echo htmlspecialchars($pedido['estado']); ?></span>
       </div>
-      <p class="entity-card__detail">Cliente: <?php echo $pedido['nombre_c']; ?></p>
-      <p class="entity-card__detail">Tel: <?php echo $pedido['telefono_c']; ?></p>
+      <p class="entity-card__detail">Cliente: <?php echo htmlspecialchars($pedido['nombre_c']); ?></p>
+      <p class="entity-card__detail">Tel: <?php echo htmlspecialchars($pedido['telefono_c']); ?></p>
 
       <div class="entity-card__footer">
         <div></div>
         <div class="entity-card__actions">
-          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo $pedido['id_pedido']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
             <i class="bi bi-eye order-row__icon"></i>
           </a>
-          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/editar&id=<?php echo $pedido['id_pedido']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/editar&id=<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
             <i class="bi bi-pencil-square order-row__icon"></i>
           </a>
         </div>

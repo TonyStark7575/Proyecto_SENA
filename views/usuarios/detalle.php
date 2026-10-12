@@ -52,16 +52,16 @@
                 </div>
 
                 <div class="profile-data ">
-                    <p class="profile-data__row"><strong>Nombre:</strong> <?php echo $usuario['nombre_u']; ?></p>
-                    <p class="profile-data__row"><strong>Correo:</strong> <?php echo $usuario['email_u']; ?></p>
-                    <p class="profile-data__row"><strong>Teléfono:</strong> <?php echo $usuario['telefono_u']; ?></p>
+                    <p class="profile-data__row"><strong>Nombre:</strong> <?php echo htmlspecialchars($usuario['nombre_u']); ?></p>
+                    <p class="profile-data__row"><strong>Correo:</strong> <?php echo htmlspecialchars($usuario['email_u']); ?></p>
+                    <p class="profile-data__row"><strong>Teléfono:</strong> <?php echo htmlspecialchars($usuario['telefono_u'] ?? ''); ?></p>
                     <p class="profile-data__row">
                         <strong>Rol:</strong>
                         <?php echo $usuario['rol'] === 'ADMINISTRADORA' ? 'Administradora' : 'Repartidor'; ?>
                     </p>
                     <p class="profile-data__row">
                         <strong>Fecha de registro:</strong>
-                        <?php echo date('d/m/Y', strtotime($usuario['fecha_registro'])); ?>
+                        <?php echo htmlspecialchars(date('d/m/Y', strtotime($usuario['fecha_registro']))); ?>
                     </p>
                     <p class="profile-data__row">
                         <strong>Estado:</strong>
@@ -70,20 +70,20 @@
                 </div>
 
                 <div class="detail-actions-row">
-                    <a href="/ProyectoSENA/public/index.php?ruta=usuarios/editar&id=<?php echo $usuario['id_usuario']; ?>" class="btn-primary-custom">
+                    <a href="/ProyectoSENA/public/index.php?ruta=usuarios/editar&id=<?php echo htmlspecialchars($usuario['id_usuario']); ?>" class="btn-primary-custom">
                         <i class="bi bi-pencil-square"></i>
                     </a>
 
                     <?php if (!$usuario['activo']): ?>
                     <form method="POST" action="/ProyectoSENA/public/index.php?ruta=usuarios/activar" style="display: inline;">
-                        <input type="hidden" name="id" value="<?php echo $usuario['id_usuario']; ?>">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($usuario['id_usuario']); ?>">
                         <button type="submit" class="btn-primary-custom" title="Reactivar usuario">
                             <i class="bi bi-person-check"></i>
                         </button>
                     </form>
                     <?php elseif ($usuario['id_usuario'] != $_SESSION['id_usuario']): ?>
                     <form method="POST" action="/ProyectoSENA/public/index.php?ruta=usuarios/eliminar" style="display: inline;">
-                        <input type="hidden" name="id" value="<?php echo $usuario['id_usuario']; ?>">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($usuario['id_usuario']); ?>">
                         <button type="submit" class="btn-primary-custom" title="Eliminar usuario" onclick="return confirm('¿Seguro que querés eliminar este usuario? Si tiene clientes o pedidos registrados se desactivará en lugar de eliminarse.');">
                             <i class="bi bi-trash"></i>
                         </button>

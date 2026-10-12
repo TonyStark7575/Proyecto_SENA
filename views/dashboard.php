@@ -52,7 +52,7 @@
 
         <div class="stat-card">
           <p class="stat-card__label">Total Clientes</p>
-          <p class="stat-card__value"><?php echo $totalClientes; ?></p>
+          <p class="stat-card__value"><?php echo htmlspecialchars($totalClientes); ?></p>
         </div>
 
         <div class="stat-card">
@@ -62,7 +62,7 @@
 
         <div class="stat-card">
           <p class="stat-card__label">Total Productos</p>
-          <p class="stat-card__value"><?php echo $totalProductos; ?></p>
+          <p class="stat-card__value"><?php echo htmlspecialchars($totalProductos); ?></p>
         </div>
 
       </div>
@@ -70,7 +70,7 @@
       <div class="stat-row">
         <div class="stat-card">
           <p class="stat-card__label">Pedidos Pendientes</p>
-          <p class="stat-card__value"><?php echo $pedidosPendientes; ?></p>
+          <p class="stat-card__value"><?php echo htmlspecialchars($pedidosPendientes); ?></p>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
         <?php foreach ($pedidosRecientes as $pedido): ?>
         <div class="order-row">
           <div class="order-row__info">
-            <span class="order-row__id">ID: <?php echo $pedido['id_pedido']; ?> | <?php echo $pedido['nombre_c']; ?></span>
+            <span class="order-row__id">ID: <?php echo htmlspecialchars($pedido['id_pedido']); ?> | <?php echo htmlspecialchars($pedido['nombre_c']); ?></span>
           </div>
 
           <?php
@@ -91,10 +91,10 @@
                 default => 'badge-status--repartidor',
             };
           ?>
-          <span class="badge-status <?php echo $claseBadge; ?>"><?php echo $pedido['estado']; ?></span>
-          <span class="order-row__code">$<?php echo number_format($pedido['total'], 0, ',', '.'); ?></span>
+          <span class="badge-status <?php echo $claseBadge; ?>"><?php echo htmlspecialchars($pedido['estado']); ?></span>
+          <span class="order-row__code">$<?php echo htmlspecialchars(number_format($pedido['total'], 0, ',', '.')); ?></span>
           <div class="order-row__actions">
-            <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo $pedido['id_pedido']; ?>">
+            <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
               <i class="bi bi-eye-fill order-row__icon"></i>
             </a>
           </div>

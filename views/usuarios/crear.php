@@ -46,7 +46,7 @@
                 <h3 class="form-card__title">Información del usuario</h3>
 
                 <?php if (isset($error)): ?>
-    <div class="alert alert-danger"><?php echo $error; ?></div>
+    <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
 <?php endif; ?>
 
                 <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=usuarios/crear">

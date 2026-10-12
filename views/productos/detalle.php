@@ -32,7 +32,7 @@
       </button>
     </div>
 
-    <span class="users-header-bar__title">DETALLES / <?php echo $producto['nombre_p']; ?></span>
+    <span class="users-header-bar__title">DETALLES / <?php echo htmlspecialchars($producto['nombre_p']); ?></span>
 
   </header>
 
@@ -45,29 +45,29 @@
 
       <div class="image-upload" style="width: 160px; height: 160px;">
         <?php if ($producto['imagen']): ?>
-    <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_p']; ?>">
+    <img src="/ProyectoSENA/public/img/<?php echo htmlspecialchars($producto['imagen'] ?? ''); ?>" alt="<?php echo htmlspecialchars($producto['nombre_p']); ?>">
 <?php else: ?>
-    <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="<?php echo $producto['nombre_p']; ?>">
+    <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="<?php echo htmlspecialchars($producto['nombre_p']); ?>">
 <?php endif; ?>
       </div>
 
       <div class="profile-data">
-        <p class="profile-data__row"><strong><?php echo $producto['nombre_p']; ?></strong></p>
-        <p class="profile-data__row">Precio: $ <?php echo number_format($producto['precio'], 0, ',', '.'); ?></p>
+        <p class="profile-data__row"><strong><?php echo htmlspecialchars($producto['nombre_p']); ?></strong></p>
+        <p class="profile-data__row">Precio: $ <?php echo htmlspecialchars(number_format($producto['precio'], 0, ',', '.')); ?></p>
         <p class="profile-data__row"><strong>Descripción</strong></p>
         <p class="profile-data__row">
-          <?php echo $producto['descripcion']; ?>
+          <?php echo htmlspecialchars($producto['descripcion'] ?? ''); ?>
         </p>
-        <p class="profile-data__row">Fecha Registro <?php echo $producto['fecha_registro']; ?></p>
+        <p class="profile-data__row">Fecha Registro <?php echo htmlspecialchars($producto['fecha_registro'] ?? ''); ?></p>
       </div>
 
      <div class="detail-actions-row">
-        <a href="/ProyectoSENA/public/index.php?ruta=productos/editar&id=<?php echo $producto['id_pro']; ?>" class="btn-primary-custom">
+        <a href="/ProyectoSENA/public/index.php?ruta=productos/editar&id=<?php echo htmlspecialchars($producto['id_pro']); ?>" class="btn-primary-custom">
         <i class="bi bi-pencil-square"></i>
         </a>
         
         <form method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/eliminar" style="display: inline;">
-        <input type="hidden" name="id" value="<?php echo $producto['id_pro']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($producto['id_pro']); ?>">
         <button type="submit" class="btn-primary-custom" onclick="return confirm('¿Seguro que querés eliminar este producto?');">
             <i class="bi bi-trash"></i>
         </button>

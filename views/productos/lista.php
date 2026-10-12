@@ -58,19 +58,19 @@
       <div class="product-card">
         <div class="product-card__image">
           <?php if ($producto['imagen']): ?>
-    <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_p']; ?>">
+    <img src="/ProyectoSENA/public/img/<?php echo htmlspecialchars($producto['imagen'] ?? ''); ?>" alt="<?php echo htmlspecialchars($producto['nombre_p']); ?>">
 <?php else: ?>
-    <img src="/ProyectoSENA/public/img/Logo-no-texto.jpg" alt="<?php echo $producto['nombre_p']; ?>">
+    <img src="/ProyectoSENA/public/img/Logo-no-texto.jpg" alt="<?php echo htmlspecialchars($producto['nombre_p']); ?>">
 <?php endif; ?>
         </div>
-        <p class="product-card__name"><?php echo $producto['nombre_p']; ?></p>
-        <p class="product-card__price">$ <?php echo number_format($producto['precio'], 0, ',', '.'); ?></p>
+        <p class="product-card__name"><?php echo htmlspecialchars($producto['nombre_p']); ?></p>
+        <p class="product-card__price">$ <?php echo htmlspecialchars(number_format($producto['precio'], 0, ',', '.')); ?></p>
         <div class="product-card__actions">
-          <a href="/ProyectoSENA/public/index.php?ruta=productos/detalle&id=<?php echo $producto['id_pro']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=productos/detalle&id=<?php echo htmlspecialchars($producto['id_pro']); ?>">
             <i class="bi bi-eye order-row__icon"></i>
           </a>
 
-          <a href="/ProyectoSENA/public/index.php?ruta=productos/editar&id=<?php echo $producto['id_pro']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=productos/editar&id=<?php echo htmlspecialchars($producto['id_pro']); ?>">
             <i class="bi bi-pencil-square order-row__icon"></i>
           </a>
         </div>

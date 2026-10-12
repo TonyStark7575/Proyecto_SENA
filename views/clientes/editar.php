@@ -46,12 +46,12 @@
       <h3 class="form-card__title">Información del cliente</h3>
 
       <?php if (isset($error)): ?>
-        <div class="alert alert-danger"><?php echo $error; ?></div>
+        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
       <?php endif; ?>
 
       <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=clientes/editar">
 
-        <input type="hidden" name="id" value="<?php echo $cliente['id_cliente']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($cliente['id_cliente']); ?>">
 
         <div class="form-group-custom">
           <label for="nombre" class="form-group-custom__label">Nombre</label>
@@ -65,7 +65,7 @@
 
         <div class="form-group-custom">
           <label for="telefono" class="form-group-custom__label">Telefono</label>
-          <input type="tel" id="telefono" name="telefono" class="form-group-custom__input" value="<?php echo $cliente['telefono_c']; ?>">
+          <input type="tel" id="telefono" name="telefono" class="form-group-custom__input" value="<?php echo htmlspecialchars($cliente['telefono_c']); ?>">
         </div>
 
         <div class="form-actions">

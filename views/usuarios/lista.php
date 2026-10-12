@@ -57,10 +57,10 @@
             <div class="entity-card <?php echo $usuario['activo'] ? '' : 'entity-card--inactivo'; ?>">
               <div class="entity-card__top">
                 <div>
-                  <h3 class="entity-card__name"><?php echo $usuario['nombre_u']; ?></h3>
-                  <a href="mailto:<?php echo $usuario['email_u']; ?>" class="entity-card__email"><?php echo $usuario['email_u']; ?></a>
+                  <h3 class="entity-card__name"><?php echo htmlspecialchars($usuario['nombre_u']); ?></h3>
+                  <a href="mailto:<?php echo htmlspecialchars($usuario['email_u']); ?>" class="entity-card__email"><?php echo htmlspecialchars($usuario['email_u']); ?></a>
                 </div>
-                <span class="entity-card__date"><?php echo date('d/m/Y', strtotime($usuario['fecha_registro'])); ?></span>
+                <span class="entity-card__date"><?php echo htmlspecialchars(date('d/m/Y', strtotime($usuario['fecha_registro']))); ?></span>
               </div>
 
               <div class="entity-card__footer">
@@ -73,10 +73,10 @@
                     <span class="badge-status badge-status--inactivo">Inactivo</span>
                 <?php endif; ?>
                 <div class="entity-card__actions">
-                  <a href="/ProyectoSENA/public/index.php?ruta=usuarios/detalle&id=<?php echo $usuario['id_usuario']; ?>">
+                  <a href="/ProyectoSENA/public/index.php?ruta=usuarios/detalle&id=<?php echo htmlspecialchars($usuario['id_usuario']); ?>">
                     <i class="bi bi-eye order-row__icon"></i>
                   </a>
-                  <a href="/ProyectoSENA/public/index.php?ruta=usuarios/editar&id=<?php echo $usuario['id_usuario']; ?>">
+                  <a href="/ProyectoSENA/public/index.php?ruta=usuarios/editar&id=<?php echo htmlspecialchars($usuario['id_usuario']); ?>">
                     <i class="bi bi-pencil-square order-row__icon"></i>
                   </a>
                 </div>

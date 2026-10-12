@@ -52,20 +52,20 @@
             <?php foreach ($clientes as $cliente): ?>
             <div class="entity-card">
                 <div class="entity-card__top">
-                    <h3 class="entity-card__name"><?php echo $cliente['nombre_c']; ?></h3>
-                    <span class="entity-card__date"><?php echo date('d/m/Y', strtotime($cliente['fecha_registro'])); ?></span>
+                    <h3 class="entity-card__name"><?php echo htmlspecialchars($cliente['nombre_c']); ?></h3>
+                    <span class="entity-card__date"><?php echo htmlspecialchars(date('d/m/Y', strtotime($cliente['fecha_registro']))); ?></span>
                 </div>
 
-                <p class="entity-card__detail"><?php echo $cliente['telefono_c']; ?></p>
-                <a href="mailto:<?php echo $cliente['email_c']; ?>" class="entity-card__email"><?php echo $cliente['email_c']; ?></a>
+                <p class="entity-card__detail"><?php echo htmlspecialchars($cliente['telefono_c']); ?></p>
+                <a href="mailto:<?php echo htmlspecialchars($cliente['email_c']); ?>" class="entity-card__email"><?php echo htmlspecialchars($cliente['email_c']); ?></a>
 
                 <div class="entity-card__footer entity-card__footer--divided">
                     <div></div>
                     <div class="entity-card__actions">
-                        <a href="/ProyectoSENA/public/index.php?ruta=clientes/detalle&id=<?php echo $cliente['id_cliente']; ?>">
+                        <a href="/ProyectoSENA/public/index.php?ruta=clientes/detalle&id=<?php echo htmlspecialchars($cliente['id_cliente']); ?>">
                             <i class="bi bi-eye order-row__icon"></i>
                         </a>
-                        <a href="/ProyectoSENA/public/index.php?ruta=clientes/editar&id=<?php echo $cliente['id_cliente']; ?>">
+                        <a href="/ProyectoSENA/public/index.php?ruta=clientes/editar&id=<?php echo htmlspecialchars($cliente['id_cliente']); ?>">
                             <i class="bi bi-pencil-square order-row__icon"></i>
                         </a>
                     </div>

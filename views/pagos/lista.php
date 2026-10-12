@@ -43,13 +43,13 @@
     <?php foreach ($pagos as $pago): ?>
     <div class="entity-card">
       <div class="entity-card__top">
-        <h3 class="entity-card__name">P<?php echo str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT); ?></h3>
-        <span class="entity-card__date">Pedido #<?php echo $pago['id_pedido']; ?></span>
+        <h3 class="entity-card__name">P<?php echo htmlspecialchars(str_pad($pago['id_pago'], 3, '0', STR_PAD_LEFT)); ?></h3>
+        <span class="entity-card__date">Pedido #<?php echo htmlspecialchars($pago['id_pedido']); ?></span>
       </div>
-      <p class="entity-card__detail">Cliente: <?php echo $pago['nombre_c']; ?></p>
-      <p class="entity-card__detail">Método: <?php echo $pago['metodo']; ?></p>
+      <p class="entity-card__detail">Cliente: <?php echo htmlspecialchars($pago['nombre_c']); ?></p>
+      <p class="entity-card__detail">Método: <?php echo htmlspecialchars($pago['metodo']); ?></p>
       <p class="entity-card__detail">
-        Monto: $<?php echo number_format($pago['monto'], 0, ',', '.'); ?> &nbsp;·&nbsp;
+        Monto: $<?php echo htmlspecialchars(number_format($pago['monto'], 0, ',', '.')); ?> &nbsp;·&nbsp;
         <?php if ($pago['saldo'] == 0): ?>
           <span class="badge-status badge-status--completo">Completo</span>
         <?php else: ?>
@@ -60,10 +60,10 @@
       <div class="entity-card__footer entity-card__footer--divided">
         <div></div>
         <div class="entity-card__actions">
-          <a href="/ProyectoSENA/public/index.php?ruta=pagos/detalle&id=<?php echo $pago['id_pago']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=pagos/detalle&id=<?php echo htmlspecialchars($pago['id_pago']); ?>">
             <i class="bi bi-eye order-row__icon"></i>
           </a>
-          <a href="/ProyectoSENA/public/index.php?ruta=pagos/editar&id=<?php echo $pago['id_pago']; ?>">
+          <a href="/ProyectoSENA/public/index.php?ruta=pagos/editar&id=<?php echo htmlspecialchars($pago['id_pago']); ?>">
             <i class="bi bi-pencil-square order-row__icon"></i>
           </a>
         </div>

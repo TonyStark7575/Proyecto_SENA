@@ -32,7 +32,7 @@
       </button>
     </div>
 
-    <span class="users-header-bar__title">PEDIDOS/ EDITAR PEDIDO #<?php echo $pedido['id_pedido']; ?></span>
+    <span class="users-header-bar__title">PEDIDOS/ EDITAR PEDIDO #<?php echo htmlspecialchars($pedido['id_pedido']); ?></span>
 
   </header>
 
@@ -42,18 +42,18 @@
   <section class="users-content">
 
     <div class="form-card">
-      <h3 class="form-card__title">Editar Pedido #<?php echo $pedido['id_pedido']; ?></h3>
+      <h3 class="form-card__title">Editar Pedido #<?php echo htmlspecialchars($pedido['id_pedido']); ?></h3>
 
       <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=pedidos/editar">
 
-        <input type="hidden" name="id" value="<?php echo $pedido['id_pedido']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
 
         <div class="form-group-custom">
           <label for="id_cliente" class="form-group-custom__label">Cliente</label>
           <select id="id_cliente" name="id_cliente" class="form-group-custom__input">
             <?php foreach ($clientes as $cliente): ?>
-              <option value="<?php echo $cliente['id_cliente']; ?>" <?php echo $cliente['id_cliente'] == $pedido['id_cliente_p'] ? 'selected' : ''; ?>>
-                <?php echo $cliente['nombre_c']; ?>
+              <option value="<?php echo htmlspecialchars($cliente['id_cliente']); ?>" <?php echo $cliente['id_cliente'] == $pedido['id_cliente_p'] ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($cliente['nombre_c']); ?>
               </option>
             <?php endforeach; ?>
           </select>
@@ -71,7 +71,7 @@
 
         <div class="form-actions">
           <button type="submit" class="btn-primary-custom">Guardar cambios</button>
-          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo $pedido['id_pedido']; ?>" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>
+          <a href="/ProyectoSENA/public/index.php?ruta=pedidos/detalle&id=<?php echo htmlspecialchars($pedido['id_pedido']); ?>" class="btn-primary-custom btn-primary-custom--secondary">Cancelar</a>
         </div>
 
       </form>

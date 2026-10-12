@@ -46,12 +46,12 @@
 
       <form class="form-fields" method="POST" action="/ProyectoSENA/public/index.php?ruta=productos/editar" enctype="multipart/form-data">
 
-        <input type="hidden" name="id" value="<?php echo $producto['id_pro']; ?>">
-        <input type="hidden" name="imagen_actual" value="<?php echo $producto['imagen']; ?>">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($producto['id_pro']); ?>">
+        <input type="hidden" name="imagen_actual" value="<?php echo htmlspecialchars($producto['imagen'] ?? ''); ?>">
 
         <div class="image-upload">
           <?php if ($producto['imagen']): ?>
-              <img src="/ProyectoSENA/public/img/<?php echo $producto['imagen']; ?>" alt="Imagen actual">
+              <img src="/ProyectoSENA/public/img/<?php echo htmlspecialchars($producto['imagen'] ?? ''); ?>" alt="Imagen actual">
           <?php else: ?>
               <img src="/ProyectoSENA/public/img/LOGOTIPO.png" alt="Sin imagen">
           <?php endif; ?>
@@ -64,17 +64,17 @@
 
         <div class="form-group-custom">
           <label for="nombre" class="form-group-custom__label">Nombre del producto</label>
-          <input type="text" id="nombre" name="nombre" class="form-group-custom__input" value="<?php echo $producto['nombre_p']; ?>">
+          <input type="text" id="nombre" name="nombre" class="form-group-custom__input" value="<?php echo htmlspecialchars($producto['nombre_p']); ?>">
         </div>
 
         <div class="form-group-custom">
           <label for="precio" class="form-group-custom__label">Precio</label>
-          <input type="number" id="precio" name="precio" class="form-group-custom__input" value="<?php echo $producto['precio']; ?>">
+          <input type="number" id="precio" name="precio" class="form-group-custom__input" value="<?php echo htmlspecialchars($producto['precio']); ?>">
         </div>
 
         <div class="form-group-custom">
           <label for="descripcion" class="form-group-custom__label">Descripción</label>
-          <textarea id="descripcion" name="descripcion" class="form-group-custom__input"><?php echo $producto['descripcion']; ?></textarea>
+          <textarea id="descripcion" name="descripcion" class="form-group-custom__input"><?php echo htmlspecialchars($producto['descripcion'] ?? ''); ?></textarea>
         </div>
 
         <div class="form-actions">

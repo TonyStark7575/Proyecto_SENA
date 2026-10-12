@@ -53,7 +53,7 @@
           <select id="id_cliente" name="id_cliente" class="form-group-custom__input">
             <option value="" disabled selected>Selecciona un cliente</option>
             <?php foreach ($clientes as $cliente): ?>
-              <option value="<?php echo $cliente['id_cliente']; ?>"><?php echo $cliente['nombre_c']; ?></option>
+              <option value="<?php echo htmlspecialchars($cliente['id_cliente']); ?>"><?php echo htmlspecialchars($cliente['nombre_c']); ?></option>
             <?php endforeach; ?>
           </select>
         </div>
@@ -72,8 +72,8 @@
               <select id="id_producto" name="id_producto" class="form-group-custom__input">
                 <option value="" disabled selected>Selecciona un producto</option>
                 <?php foreach ($productos as $producto): ?>
-                  <option value="<?php echo $producto['id_pro']; ?>">
-                    <?php echo $producto['nombre_p']; ?> — $<?php echo number_format($producto['precio'], 0, ',', '.'); ?>
+                  <option value="<?php echo htmlspecialchars($producto['id_pro']); ?>">
+                    <?php echo htmlspecialchars($producto['nombre_p']); ?> — $<?php echo htmlspecialchars(number_format($producto['precio'], 0, ',', '.')); ?>
                   </option>
                 <?php endforeach; ?>
               </select>

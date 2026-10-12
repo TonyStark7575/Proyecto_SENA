@@ -45,21 +45,21 @@
             <div class="form-card">
                 <div class="detail-header">
                     <h3 class="form-card__title">Información del Cliente</h3>
-                    <a href="/ProyectoSENA/public/index.php?ruta=clientes/editar&id=<?php echo $cliente['id_cliente']; ?>">
+                    <a href="/ProyectoSENA/public/index.php?ruta=clientes/editar&id=<?php echo htmlspecialchars($cliente['id_cliente']); ?>">
                         <i class="bi bi-pencil-square detail-header__edit-icon"></i>
                     </a>
                 </div>
 
                 <div class="profile-data profile-data--left">
-                    <p class="profile-data__row">Correo: <?php echo $cliente['email_c']; ?></p>
-                    <p class="profile-data__row">Nombre: <?php echo $cliente['nombre_c']; ?></p>
-                    <p class="profile-data__row">Telefono: <?php echo $cliente['telefono_c']; ?></p>
-                    <p class="profile-data__row">Fecha registro: <?php echo date('d/m/Y', strtotime($cliente['fecha_registro'])); ?></p>
-                    <p class="profile-data__row">Registrado por: <?php echo $usuarioRegistro['nombre_u']; ?></p>
+                    <p class="profile-data__row">Correo: <?php echo htmlspecialchars($cliente['email_c']); ?></p>
+                    <p class="profile-data__row">Nombre: <?php echo htmlspecialchars($cliente['nombre_c']); ?></p>
+                    <p class="profile-data__row">Telefono: <?php echo htmlspecialchars($cliente['telefono_c']); ?></p>
+                    <p class="profile-data__row">Fecha registro: <?php echo htmlspecialchars(date('d/m/Y', strtotime($cliente['fecha_registro']))); ?></p>
+                    <p class="profile-data__row">Registrado por: <?php echo htmlspecialchars($usuarioRegistro['nombre_u']); ?></p>
                 </div>
 
                 <form method="POST" action="/ProyectoSENA/public/index.php?ruta=clientes/eliminar">
-                    <input type="hidden" name="id" value="<?php echo $cliente['id_cliente']; ?>">
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($cliente['id_cliente']); ?>">
                     <button type="submit" class="btn-primary-custom btn-primary-custom--secondary" onclick="return confirm('¿Seguro que querés eliminar este cliente?');">
                         <i class="bi bi-trash"></i> Eliminar cliente
                     </button>

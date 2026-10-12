@@ -32,7 +32,7 @@
       </button>
     </div>
 
-    <span class="users-header-bar__title">PEDIDOS/ DETALLE #<?php echo $pedido['id_pedido']; ?></span>
+    <span class="users-header-bar__title">PEDIDOS/ DETALLE #<?php echo htmlspecialchars($pedido['id_pedido']); ?></span>
 
   </header>
 
@@ -42,12 +42,12 @@
   <section class="users-content">
 
     <div class="form-card">
-      <h3 class="form-card__title">Detalle del Pedido #<?php echo $pedido['id_pedido']; ?></h3>
+      <h3 class="form-card__title">Detalle del Pedido #<?php echo htmlspecialchars($pedido['id_pedido']); ?></h3>
 
       <div class="profile-data profile-data--left">
-        <p class="profile-data__row">ID del pedido: #<?php echo $pedido['id_pedido']; ?></p>
-        <p class="profile-data__row">Fecha: <?php echo date('d/m/Y', strtotime($pedido['fecha_registro'])); ?></p>
-        <p class="profile-data__row">Cliente: <?php echo $pedido['nombre_c']; ?></p>
+        <p class="profile-data__row">ID del pedido: #<?php echo htmlspecialchars($pedido['id_pedido']); ?></p>
+        <p class="profile-data__row">Fecha: <?php echo htmlspecialchars(date('d/m/Y', strtotime($pedido['fecha_registro']))); ?></p>
+        <p class="profile-data__row">Cliente: <?php echo htmlspecialchars($pedido['nombre_c']); ?></p>
         <p class="profile-data__row">
           Estado: 
           <?php
@@ -58,7 +58,7 @@
                 default => 'badge-status--repartidor',
             };
           ?>
-          <span class="badge-status <?php echo $claseBadge; ?>"><?php echo $pedido['estado']; ?></span>
+          <span class="badge-status <?php echo $claseBadge; ?>"><?php echo htmlspecialchars($pedido['estado']); ?></span>
         </p>
       </div>
 
@@ -68,14 +68,14 @@
         <?php foreach ($lineas as $linea): ?>
         <div class="order-row">
           <div>
-            <p class="order-row__id"><strong><?php echo $linea['nombre_p']; ?></strong></p>
-            <p class="order-row__code">Cantidad: <?php echo $linea['cantidad']; ?> · $<?php echo number_format($linea['precio'], 0, ',', '.'); ?> c/u</p>
+            <p class="order-row__id"><strong><?php echo htmlspecialchars($linea['nombre_p']); ?></strong></p>
+            <p class="order-row__code">Cantidad: <?php echo htmlspecialchars($linea['cantidad']); ?> · $<?php echo htmlspecialchars(number_format($linea['precio'], 0, ',', '.')); ?> c/u</p>
           </div>
           <div class="order-row__actions">
-            <span class="order-row__code"><strong>$<?php echo number_format($linea['subtotal'], 0, ',', '.'); ?></strong></span>
+            <span class="order-row__code"><strong>$<?php echo htmlspecialchars(number_format($linea['subtotal'], 0, ',', '.')); ?></strong></span>
             <form method="POST" action="/ProyectoSENA/public/index.php?ruta=pedidos/eliminarLinea" style="display: inline;">
-              <input type="hidden" name="id_detalle" value="<?php echo $linea['id_detalle']; ?>">
-              <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+              <input type="hidden" name="id_detalle" value="<?php echo htmlspecialchars($linea['id_detalle']); ?>">
+              <input type="hidden" name="id_pedido" value="<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
               <button type="submit" style="background:none; border:none; padding:0;" onclick="return confirm('¿Quitar este producto del pedido?');">
                 <i class="bi bi-trash order-row__icon order-row__icon--delete"></i>
               </button>
@@ -86,12 +86,12 @@
 
         <div class="order-row">
           <span class="order-row__id"><strong>Total</strong></span>
-          <span class="order-row__code"><strong>$<?php echo number_format($pedido['total'], 0, ',', '.'); ?></strong></span>
+          <span class="order-row__code"><strong>$<?php echo htmlspecialchars(number_format($pedido['total'], 0, ',', '.')); ?></strong></span>
         </div>
 
         <div class="order-row">
           <span class="order-row__id">Saldo pendiente</span>
-          <span class="order-row__code">$<?php echo number_format($pedido['saldo'], 0, ',', '.'); ?></span>
+          <span class="order-row__code">$<?php echo htmlspecialchars(number_format($pedido['saldo'], 0, ',', '.')); ?></span>
         </div>
       </div>
 
@@ -99,7 +99,7 @@
         <h4 class="subsection__title">Agregar producto a este pedido</h4>
 
         <form method="POST" action="/ProyectoSENA/public/index.php?ruta=pedidos/agregarProducto">
-          <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+          <input type="hidden" name="id_pedido" value="<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
 
           <div class="form-row">
             <div class="form-group-custom">
@@ -107,8 +107,8 @@
               <select id="id_producto" name="id_producto" class="form-group-custom__input">
                 <option value="" disabled selected>Selecciona un producto</option>
                 <?php foreach ($productos as $producto): ?>
-                  <option value="<?php echo $producto['id_pro']; ?>">
-                    <?php echo $producto['nombre_p']; ?> — $<?php echo number_format($producto['precio'], 0, ',', '.'); ?>
+                  <option value="<?php echo htmlspecialchars($producto['id_pro']); ?>">
+                    <?php echo htmlspecialchars($producto['nombre_p']); ?> — $<?php echo htmlspecialchars(number_format($producto['precio'], 0, ',', '.')); ?>
                   </option>
                 <?php endforeach; ?>
               </select>
@@ -132,8 +132,8 @@
       </div>
 
       <div class="form-actions form-actions--end">
-        <a href="/ProyectoSENA/public/index.php?ruta=pedidos/editar&id=<?php echo $pedido['id_pedido']; ?>" class="btn-primary-custom">Editar</a>
-        <a href="/ProyectoSENA/public/index.php?ruta=pagos/crear&id_pedido=<?php echo $pedido['id_pedido']; ?>" class="btn-primary-custom btn-primary-custom--secondary">Registrar pago</a>
+        <a href="/ProyectoSENA/public/index.php?ruta=pedidos/editar&id=<?php echo htmlspecialchars($pedido['id_pedido']); ?>" class="btn-primary-custom">Editar</a>
+        <a href="/ProyectoSENA/public/index.php?ruta=pagos/crear&id_pedido=<?php echo htmlspecialchars($pedido['id_pedido']); ?>" class="btn-primary-custom btn-primary-custom--secondary">Registrar pago</a>
         <a href="/ProyectoSENA/public/index.php?ruta=pedidos/lista" class="btn-primary-custom btn-primary-custom--secondary">Volver</a>
       </div>
 
