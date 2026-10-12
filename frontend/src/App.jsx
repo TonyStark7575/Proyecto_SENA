@@ -1,24 +1,72 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TarjetaProducto from './components/TarjetaProducto'
 
-// Datos fijos con la MISMA forma que devuelve tu API (GET api/productos)
-const productos = [
-  { id_pro: 1, nombre_p: 'Gorro tejido', precio: '45000.00', imagen: null },
-  { id_pro: 2, nombre_p: 'Bufanda de lana', precio: '60000.00', imagen: '' },
-  { id_pro: 3, nombre_p: 'Amigurumi conejo', precio: '35000.50', imagen: null },
-  { id_pro: 4, nombre_p: 'Gorro de lana para bebé', precio: '38000.00', imagen: null },
-  { id_pro: 5, nombre_p: 'Mantita tejida', precio: '90000.00', imagen: null },
-]
+const URL_API = '/ProyectoSENA/public/index.php?ruta=api/productos'
 
 function App() {
-  // Estado: lo que el usuario escribe en el buscador
+  const [productos, setProductos] = useState([])   // llegan de la API
+  const [cargando, setCargando] = useState(true)   // ¿todavía esperando?
+  const [error, setError] = useState(null)         // mensaje si algo falla
   const [busqueda, setBusqueda] = useState('')
 
-  // Dato derivado: se recalcula en cada redibujo, no necesita su propio estado
+  // Se ejecuta UNA vez, después del primer dibujo ([] = no depende de nada)
+  useEffect(() => {
+    async function cargarProductos() {
+      try {
+        const respuesta = await fetch(URL_API)
+
+        if (respuesta.status === 401) {
+          setError('No hay sesión iniciada. Inicia sesión en la aplicación y recarga esta página.')
+          return
+        }
+        if (!respuesta.ok) {
+          setError(`Error del servidor (${respuesta.status}).`)
+          return
+        }
+
+        const datos = await respuesta.json()
+        setProductos(datos)
+      } catch {
+        // Sin conexión, o la respuesta no era JSON (el famoso "Unexpected token '<'")
+        setError('No se pudo conectar con el servidor o la respuesta no es válida.')
+      } finally {
+        // Se ejecuta siempre: con éxito, con error y también después de un return
+        setCargando(false)
+      }
+    }
+
+    cargarProductos()
+  }, [])
+
+  // Dato derivado, igual que antes
   const texto = busqueda.trim().toLowerCase()
   const productosFiltrados = productos.filter((producto) =>
     producto.nombre_p.toLowerCase().includes(texto)
   )
+
+  // Qué mostrar según el estado: cargando, error o la lista
+  let contenido
+  if (cargando) {
+    contenido = <p className="text-center text-muted">Cargando productos…</p>
+  } else if (error) {
+    contenido = <div className="alert alert-danger">{error}</div>
+  } else if (productosFiltrados.length === 0) {
+    contenido = (
+      <p className="text-center text-muted">
+        {busqueda
+          ? `No hay productos que coincidan con "${busqueda}".`
+          : 'Todavía no hay productos registrados.'}
+      </p>
+    )
+  } else {
+    contenido = (
+      <div className="products-grid">
+        {productosFiltrados.map((producto) => (
+          <TarjetaProducto key={producto.id_pro} producto={producto} />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <main className="users-page">
@@ -49,19 +97,7 @@ function App() {
         </div>
       </header>
 
-      <section className="users-content">
-        {productosFiltrados.length === 0 && (
-          <p className="text-center text-muted">
-            No hay productos que coincidan con "{busqueda}".
-          </p>
-        )}
-
-        <div className="products-grid">
-          {productosFiltrados.map((producto) => (
-            <TarjetaProducto key={producto.id_pro} producto={producto} />
-          ))}
-        </div>
-      </section>
+      <section className="users-content">{contenido}</section>
     </main>
   )
 }

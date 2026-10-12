@@ -1,5 +1,5 @@
-// Las imágenes las sirve Apache (XAMPP debe estar prendido)
-const URL_IMAGENES = 'http://localhost/ProyectoSENA/public/img/'
+// Las imágenes llegan por el proxy de Vite, igual que la API
+const URL_IMAGENES = '/ProyectoSENA/public/img/'
 
 function TarjetaProducto({ producto }) {
   // Igual que el if/else de lista.php: si no tiene imagen, se usa el logo
