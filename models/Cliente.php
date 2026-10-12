@@ -15,6 +15,10 @@ class Cliente {
         return $consulta->fetchAll();
     }
 
+    public function contar() {
+        return (int) $this->conexion->query("SELECT COUNT(*) FROM cliente")->fetchColumn();
+    }
+
     public function obtenerPorId($id) {
         $sql = "SELECT * FROM cliente WHERE id_cliente = :id";
         $consulta = $this->conexion->prepare($sql);

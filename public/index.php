@@ -231,6 +231,7 @@ switch ($recurso) {
             'pedidos'   => 'PedidoApiController',
             'pagos'     => 'PagoApiController',
             'usuarios'  => 'UsuarioApiController',
+            'dashboard' => 'DashboardApiController',
         ];
 
         if (isset($recursosApi[$accion])) {

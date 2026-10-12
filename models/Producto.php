@@ -15,6 +15,10 @@ class Producto {
         return $consulta->fetchAll();
     }
 
+    public function contar() {
+        return (int) $this->conexion->query("SELECT COUNT(*) FROM producto")->fetchColumn();
+    }
+
     public function obtenerPorId($id) {
         $sql = "SELECT * FROM producto WHERE id_pro = :id";
         $consulta = $this->conexion->prepare($sql);

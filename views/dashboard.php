@@ -57,7 +57,7 @@
 
         <div class="stat-card">
           <p class="stat-card__label">Ventas Hoy</p>
-          <p class="stat-card__value">$0</p>
+          <p class="stat-card__value">$<?php echo htmlspecialchars(number_format($ventasHoy, 0, ',', '.')); ?></p>
         </div>
 
         <div class="stat-card">

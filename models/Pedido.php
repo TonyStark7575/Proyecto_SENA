@@ -64,6 +64,28 @@ class Pedido {
         return $consulta->execute();
     }
 
+    public function obtenerRecientes($limite) {
+        $sql = "SELECT pedido.*, cliente.nombre_c
+                FROM pedido
+                JOIN cliente ON pedido.id_cliente_p = cliente.id_cliente
+                ORDER BY pedido.fecha_registro DESC
+                LIMIT :limite";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->bindParam(':limite', $limite, PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->fetchAll();
+    }
+
+    // Ventas de hoy: suma de los pedidos registrados hoy, sin contar los cancelados
+    public function ventasDeHoy() {
+        $sql = "SELECT COALESCE(SUM(total), 0) AS total, COUNT(*) AS cantidad
+                FROM pedido
+                WHERE DATE(fecha_registro) = CURDATE() AND estado <> 'Cancelado'";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute();
+        return $consulta->fetch();
+    }
+
     public function contarPorEstado($estado) {
         $sql = "SELECT COUNT(*) as total FROM pedido WHERE estado = :estado";
         $consulta = $this->conexion->prepare($sql);

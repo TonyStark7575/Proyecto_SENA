@@ -20,6 +20,8 @@ class DashboardController {
         $totalClientes = count($this->clienteModelo->obtenerTodos());
         $totalProductos = count($this->productoModelo->obtenerTodos());
         $pedidosPendientes = $this->pedidoModelo->contarPorEstado('Pendiente');
+        // Suma de los pedidos registrados hoy, sin contar los cancelados
+        $ventasHoy = $this->pedidoModelo->ventasDeHoy()['total'];
 
         $todosLosPedidos = $this->pedidoModelo->obtenerTodos();
         $pedidosRecientes = array_slice($todosLosPedidos, 0, 5);
