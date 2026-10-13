@@ -6,6 +6,7 @@ Proyecto formativo SENA.
 
 - **Backend:** API REST en PHP 8 (MVC sin framework, PDO) + MySQL/MariaDB.
 - **Frontend:** React 19 + React Router + Vite, con Bootstrap 5 y Bootstrap Icons.
+- **App móvil:** Android nativa en Java (`movil/`), cliente de la misma API. Ver [movil/README.md](movil/README.md).
 
 ## Acceso rápido (datos de demostración)
 
@@ -32,6 +33,7 @@ ProyectoSENA/
 ├── frontend/              Código fuente de la app React (Vite)
 ├── helpers/               ImagenProducto: validación y guardado de imágenes
 ├── models/                Modelos (consultas SQL con PDO)
+├── movil/                 App Android (Java) que consume la misma API
 └── public/                Lo único accesible desde el navegador
     ├── index.php          Punto de entrada de la API (?ruta=api/...)
     ├── img/               Logos e imágenes subidas de productos

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos de la interfaz. Los mensajes de validación salen de Validador.java y de la API -->
+<resources>
+    <string name="app_name">Los Hilos de Maya</string>
+
+    <!-- ===== Generales ===== -->
+    <string name="buscar">Buscar…</string>
+    <string name="guardar">Guardar</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="quitar">Quitar</string>
+    <string name="lista_sin_coincidencias">Ningún resultado coincide con la búsqueda.</string>
+    <string name="fecha">Fecha</string>
+    <string name="fecha_registro">Fecha de registro</string>
+    <string name="registrado_por">Registrado por</string>
+    <string name="registro_por_fecha">%1$s · %2$s</string>
+    <string name="confirmar_eliminar">¿Eliminar \"%1$s\"? Esta acción no se puede deshacer.</string>
+
+    <!-- ===== Campos de formulario ===== -->
+    <string name="campo_nombre">Nombre</string>
+    <string name="campo_correo">Correo electrónico</string>
+    <string name="campo_telefono">Teléfono</string>
+    <string name="campo_password">Contraseña</string>
+    <string name="campo_precio">Precio</string>
+    <string name="campo_descripcion">Descripción</string>
+    <string name="campo_cliente">Cliente</string>
+    <string name="campo_estado">Estado</string>
+    <string name="campo_producto">Producto</string>
+    <string name="campo_cantidad">Cantidad</string>
+    <string name="campo_pedido">Pedido</string>
+    <string name="campo_monto">Monto</string>
+    <string name="campo_metodo">Método de pago</string>
+    <string name="campo_rol">Rol</string>
+    <string name="campo_servidor">URL del servidor</string>
+
+    <!-- ===== Inicio de sesión ===== -->
+    <string name="login_titulo">Bienvenida</string>
+    <string name="login_subtitulo">Inicia sesión para gestionar el emprendimiento</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="login_servidor">Servidor</string>
+    <string name="ayuda_servidor">Emulador: http://10.0.2.2/ProyectoSENA/public/ · Celular: http://IP-de-tu-PC/ProyectoSENA/public/</string>
+    <string name="error_servidor">Escribe una URL válida, por ejemplo http://10.0.2.2/ProyectoSENA/public/</string>
+
+    <!-- ===== Dashboard ===== -->
+    <string name="saludo">Hola, %1$s · %2$s</string>
+    <string name="ventas_hoy">Ventas hoy</string>
+    <string name="cobrado_hoy">Cobrado hoy</string>
+    <string name="pedidos_pendientes">Pedidos pendientes</string>
+    <string name="por_entregar">por atender</string>
+    <string name="registrados">registrados</string>
+    <string name="en_catalogo">en el catálogo</string>
+    <string name="modulos">Módulos</string>
+    <string name="pedidos_recientes">Pedidos recientes</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="confirmar_cerrar_sesion">¿Quieres cerrar la sesión en este celular?</string>
+    <plurals name="cantidad_pedidos">
+        <item quantity="one">%d pedido</item>
+        <item quantity="other">%d pedidos</item>
+    </plurals>
+    <plurals name="cantidad_pagos">
+        <item quantity="one">%d pago</item>
+        <item quantity="other">%d pagos</item>
+    </plurals>
+
+    <!-- ===== Nombres de los módulos ===== -->
+    <string name="modulo_productos">Productos</string>
+    <string name="modulo_clientes">Clientes</string>
+    <string name="modulo_pedidos">Pedidos</string>
+    <string name="modulo_pagos">Pagos</string>
+    <string name="modulo_usuarios">Usuarios</string>
+
+    <!-- ===== Productos ===== -->
+    <string name="sin_productos">Todavía no hay productos en el catálogo.</string>
+    <string name="nuevo_producto">Nuevo producto</string>
+    <string name="editar_producto">Editar producto</string>
+    <string name="detalle_producto">Producto</string>
+    <string name="eliminar_producto">Eliminar producto</string>
+    <string name="producto_guardado">Producto guardado</string>
+    <string name="producto_eliminado">Producto eliminado</string>
+    <string name="imagen_producto">Imagen del producto</string>
+    <string name="cambiar_imagen">Cambiar imagen</string>
+    <string name="quitar_imagen">Quitar imagen</string>
+    <string name="confirmar_quitar_imagen">El producto volverá a mostrar el logo de la marca.</string>
+    <string name="imagen_actualizada">Imagen actualizada</string>
+    <string name="error_leer_imagen">No se pudo leer la imagen elegida. Prueba con otra.</string>
+    <string name="nota_imagen_producto">Después de guardar podrás agregarle una imagen desde el detalle del producto.</string>
+
+    <!-- ===== Clientes ===== -->
+    <string name="sin_clientes">Todavía no hay clientes registrados.</string>
+    <string name="nuevo_cliente">Nuevo cliente</string>
+    <string name="editar_cliente">Editar cliente</string>
+    <string name="detalle_cliente">Cliente</string>
+    <string name="eliminar_cliente">Eliminar cliente</string>
+    <string name="cliente_guardado">Cliente guardado</string>
+    <string name="cliente_eliminado">Cliente eliminado</string>
+    <string name="historial_pedidos">Pedidos</string>
+    <string name="historial_pagos">Pagos</string>
+
+    <!-- ===== Pedidos ===== -->
+    <string name="sin_pedidos">Todavía no hay pedidos.</string>
+    <string name="nuevo_pedido">Nuevo pedido</string>
+    <string name="editar_pedido_numero">Editar pedido #%1$d</string>
+    <string name="detalle_pedido">Pedido</string>
+    <string name="eliminar_pedido">Eliminar pedido</string>
+    <string name="pedido_guardado">Pedido guardado</string>
+    <string name="pedido_eliminado">Pedido eliminado</string>
+    <string name="productos_pedido">Productos</string>
+    <string name="agregar_producto">Agregar producto</string>
+    <string name="quitar_producto">Quitar producto</string>
+    <string name="confirmar_quitar_producto">¿Quitar \"%1$s\" del pedido? El cambio se guarda de inmediato.</string>
+    <string name="cantidad_por_precio">%1$d × %2$s</string>
+    <string name="sin_lineas">Aún no has agregado productos.</string>
+    <string name="error_elige_producto">Elige un producto de la lista</string>
+    <string name="nota_lineas_inmediatas">Los productos que agregues o quites se guardan de inmediato.</string>
+    <string name="nota_pedido_cerrado">El pedido está %1$s: ya no se pueden cambiar sus productos.</string>
+    <string name="total">Total</string>
+    <string name="total_valor">Total: %1$s</string>
+    <string name="pagado">Pagado</string>
+    <string name="saldo">Saldo</string>
+    <string name="saldo_pendiente_valor">Debe %1$s</string>
+
+    <!-- ===== Pagos ===== -->
+    <string name="sin_pagos">Todavía no hay pagos registrados.</string>
+    <string name="registrar_pago">Registrar pago</string>
+    <string name="editar_pago">Editar pago</string>
+    <string name="detalle_pago">Pago</string>
+    <string name="eliminar_pago">Eliminar pago</string>
+    <string name="confirmar_eliminar_pago">¿Eliminar el pago %1$s? El monto volverá al saldo del pedido.</string>
+    <string name="pago_guardado">Pago guardado</string>
+    <string name="pago_eliminado">Pago eliminado</string>
+    <string name="ver_pedido">Ver pedido ›</string>
+    <string name="totales_pedido">Total %1$s · Saldo %2$s</string>
+    <string name="opcion_pedido">Pedido #%1$d · %2$s · debe %3$s</string>
+    <string name="info_pedido_pago">Total del pedido: %1$s\nFalta por pagar: %2$s</string>
+    <string name="info_editar_pago">Este pago puede llegar hasta %1$s (lo que falta por pagar más lo que ya vale este pago).</string>
+    <string name="sin_pedidos_con_saldo">No hay pedidos con saldo pendiente.</string>
+    <string name="descripcion_pago">Pago %1$s</string>
+
+    <!-- ===== Usuarios ===== -->
+    <string name="sin_usuarios">No hay usuarios.</string>
+    <string name="nuevo_usuario">Nuevo usuario</string>
+    <string name="editar_usuario">Editar usuario</string>
+    <string name="detalle_usuario">Usuario</string>
+    <string name="eliminar_usuario">Eliminar usuario</string>
+    <string name="usuario_guardado">Usuario guardado</string>
+    <string name="usuario_eliminado">Usuario eliminado</string>
+    <string name="usuario_activo">Puede iniciar sesión</string>
+    <string name="usuario_activado">Usuario activado</string>
+    <string name="usuario_desactivado">Usuario desactivado</string>
+    <string name="inactivo">Inactivo</string>
+    <string name="registros_usuario">Ha registrado</string>
+    <string name="registros_valor">%1$d cliente(s) y %2$d pedido(s)</string>
+    <string name="nota_activo">Si lo desactivas, ya no podrá iniciar sesión, pero su historial se conserva.</string>
+    <string name="nota_inactivo">Está desactivado: no puede iniciar sesión.</string>
+    <string name="nota_no_desactivarse">No puedes desactivar tu propio usuario mientras tienes la sesión iniciada.</string>
+    <string name="confirmar_eliminar_usuario_con_registros">\"%1$s\" tiene %2$d cliente(s) y %3$d pedido(s) registrados, así que no se puede borrar: se desactivará para conservar su historial.</string>
+    <string name="ayuda_password_nueva">Mínimo 8 caracteres</string>
+    <string name="ayuda_password_editar">Déjala vacía para conservar la contraseña actual</string>
+</resources>

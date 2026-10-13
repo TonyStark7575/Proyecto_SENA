@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Maya.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/recargar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <!-- Indicadores del día -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2">
+
+                    <include
+                        android:id="@+id/indicadorVentas"
+                        layout="@layout/item_indicador" />
+
+                    <include
+                        android:id="@+id/indicadorCobrado"
+                        layout="@layout/item_indicador" />
+
+                    <include
+                        android:id="@+id/indicadorPendientes"
+                        layout="@layout/item_indicador" />
+
+                    <include
+                        android:id="@+id/indicadorClientes"
+                        layout="@layout/item_indicador" />
+
+                    <include
+                        android:id="@+id/indicadorProductos"
+                        layout="@layout/item_indicador" />
+                </GridLayout>
+
+                <!-- Accesos a los módulos -->
+                <TextView
+                    style="@style/Maya.Seccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/modulos" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3">
+
+                    <include
+                        android:id="@+id/moduloProductos"
+                        layout="@layout/item_modulo" />
+
+                    <include
+                        android:id="@+id/moduloClientes"
+                        layout="@layout/item_modulo" />
+
+                    <include
+                        android:id="@+id/moduloPedidos"
+                        layout="@layout/item_modulo" />
+
+                    <include
+                        android:id="@+id/moduloPagos"
+                        layout="@layout/item_modulo" />
+
+                    <include
+                        android:id="@+id/moduloUsuarios"
+                        layout="@layout/item_modulo" />
+                </GridLayout>
+
+                <!-- Últimos pedidos registrados -->
+                <TextView
+                    style="@style/Maya.Seccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/pedidos_recientes" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listaRecientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/sinRecientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/sin_pedidos"
+                    android:textColor="@color/texto_suave"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

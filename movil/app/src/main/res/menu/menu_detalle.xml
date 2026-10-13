@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Acciones de las pantallas de detalle -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/accion_editar"
+        android:icon="@drawable/ic_editar"
+        android:title="@string/editar"
+        app:iconTint="@color/blanco"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/accion_eliminar"
+        android:icon="@drawable/ic_eliminar"
+        android:title="@string/eliminar"
+        app:iconTint="@color/blanco"
+        app:showAsAction="ifRoom" />
+</menu>

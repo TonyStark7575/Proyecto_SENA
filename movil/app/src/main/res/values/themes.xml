@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- windowBackground en el color de la marca: es lo que se ve detrás de la barra de estado
+         y de la barra de navegación (BaseActivity deja ese espacio libre con los insets) -->
+    <style name="Theme.LosHilosDeMaya" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primario</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="colorPrimaryContainer">@color/secundario</item>
+        <item name="colorOnPrimaryContainer">@color/primario_oscuro</item>
+        <item name="colorSecondary">@color/primario</item>
+        <item name="colorSecondaryContainer">@color/secundario</item>
+        <item name="colorOnSecondaryContainer">@color/primario_oscuro</item>
+        <item name="colorSurface">@color/blanco</item>
+        <item name="android:colorBackground">@color/fondo</item>
+        <item name="android:windowBackground">@color/primario</item>
+    </style>
+
+    <!-- Raíz de los estilos propios: Maya.Etiqueta, Maya.Valor... heredan de aquí por su nombre -->
+    <style name="Maya" />
+
+    <!-- Barra superior morada con título blanco -->
+    <style name="Maya.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/primario</item>
+        <item name="titleTextColor">@color/blanco</item>
+        <item name="subtitleTextColor">@color/secundario</item>
+        <item name="navigationIconTint">@color/blanco</item>
+        <item name="android:theme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
+    </style>
+
+    <!-- Tarjeta de contenido -->
+    <style name="Maya.Tarjeta" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/blanco</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
+    <!-- Textos -->
+    <style name="Maya.Etiqueta">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/texto_suave</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="Maya.Valor">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/texto</item>
+    </style>
+
+    <style name="Maya.Seccion">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primario</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="Maya.Estado">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:background">@drawable/fondo_estado</item>
+    </style>
+
+    <!-- Esquinas redondeadas de las imágenes de productos -->
+    <style name="Maya.FormaImagen">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <!-- Campo de formulario con menú desplegable -->
+    <style name="Maya.CampoLista" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" />
+</resources>

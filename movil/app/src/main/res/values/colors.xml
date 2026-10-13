@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mismos colores de la app web (frontend/src/styles/base.css) -->
+<resources>
+    <color name="primario">#5B3673</color>
+    <color name="primario_oscuro">#432857</color>
+    <color name="secundario">#FFE4C3</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="fondo">#F7F3F9</color>
+    <color name="texto">#292124</color>
+    <color name="texto_suave">#6C757D</color>
+    <color name="borde">#DEE2E6</color>
+
+    <!-- Estados de pedido -->
+    <color name="estado_pendiente">#D98E04</color>
+    <color name="estado_en_proceso">#2F80ED</color>
+    <color name="estado_entregado">#2E9E5B</color>
+    <color name="estado_cancelado">#8A8F98</color>
+    <color name="peligro">#C0392B</color>
+</resources>

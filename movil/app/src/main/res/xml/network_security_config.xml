@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ambiente de desarrollo: XAMPP sirve la API por HTTP. En producción se usaría HTTPS y se quitaría este permiso -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

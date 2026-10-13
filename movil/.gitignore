@@ -1,0 +1,12 @@
+# Archivos generados por Gradle y Android Studio
+.gradle/
+build/
+app/build/
+.idea/
+*.iml
+.kotlin/
+# Ruta local del SDK (cambia en cada computador)
+local.properties
+# Firma de la APK de producción (no va en Git)
+*.jks
+*.keystore
